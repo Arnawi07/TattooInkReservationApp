@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "49844355024",
+    "firebase_url": "https://tattoo-ink-cloud-c8382.firebaseio.com",
+    "project_id": "tattoo-ink-cloud-c8382",
+    "storage_bucket": "tattoo-ink-cloud-c8382.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49844355024:android:f85478aecb55ea60",
+        "android_client_info": {
+          "package_name": "com.forand.TattooInkReservation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49844355024-afc7813gl2ebphuqeuip75rnc4qbh4dr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzNUgs96Hq2-7SpPd-Kt0PGFBL_WmF2Ms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49844355024-afc7813gl2ebphuqeuip75rnc4qbh4dr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "49844355024-3lk2obpt1g6dn3pcbc31nthqsih7tmig.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.forand.TattooInkReservation"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

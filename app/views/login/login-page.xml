@@ -1,0 +1,38 @@
+<Page class="page" loaded="loaded">
+    <Page.actionBar>
+        <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
+    </Page.actionBar>
+
+    <FlexboxLayout class="loginLayout">
+        <StackLayout class="formLayout">
+            <Image class="logo" src="~/resources/img/logoTattoShop.png" />
+
+            <!--<StackLayout class="input-field">
+				<TextField id="usernameXML" class="input" text="{{ username }}" hint="Nombre de usuario" 
+                autocorrect="false" autocapitalizationType="none"/>
+				<Label class="hr-light" />
+			</StackLayout>-->
+
+            <StackLayout class="input-field">
+				<TextField id="emailXML" class="input" text="{{ email }}" hint="Correo electrónico" 
+                keyboardType="email" autocorrect="false" autocapitalizationType="none" />
+				<Label class="hr-light"/>
+			</StackLayout>
+
+            <StackLayout class="input-field">
+				<TextField id="passwordXML" class="input" text="{{ password }}" hint="Contraseña" secure="true" />
+				<Label class="hr-light" />
+			</StackLayout>
+
+            <StackLayout class="input-field" visibility="{{ showTxtField ? 'collapse' : 'visible' }}">
+				<TextField id="passwordConfirmationXML" class="input" hint="Confirmar contraseña" secure="true" />
+				<Label class="hr-light" />
+			</StackLayout>
+            
+            <Button class="btn btn-primary" text="{{ isLoggingIn ? 'Inicia sesión' : 'Regístrate' }}"
+                tap="submit" />
+            <Button text="{{ isLoggingIn ? 'Regístrate' : 'Volver a inicio de sesión' }}"
+                tap="toggleDisplay" />
+        </StackLayout>
+    </FlexboxLayout>
+</Page>

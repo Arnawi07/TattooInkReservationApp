@@ -1,0 +1,38 @@
+.loginLayout {
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(62, 62, 62);
+  }
+  .formLayout {
+    padding: 0 30 0 30;
+    flex-grow: 2;
+    vertical-align: middle;
+  }
+  .logo {
+    margin-bottom: 20;
+    height: 200;
+  }
+  Button, TextField {
+    margin-bottom: 5;
+  }
+  .btn-primary {
+    height: 50;
+    margin: 30 70 15 70;
+    border-radius: 5;
+    font-size: 20;
+    font-weight: 600;
+  }
+  .input-field {
+    margin-bottom: 25;
+  }
+  .input {
+    font-size: 18;
+    color: #fff;
+    placeholder-color: rgb(255, 255, 255, 0.6);
+  }
+  .hr-light{
+    background-color: #fff;
+  }
+  .buttons{
+  
+  }
