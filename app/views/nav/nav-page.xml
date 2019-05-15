@@ -3,7 +3,7 @@
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
 	<GridLayout rows="*" columns="*">
-		<TabView id="tabView" loaded="onLoaded" selectedIndex="{{tabSelectedIndex}}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom" class="icon">
+		<TabView id="tabView" loaded="onLoaded" selectedIndex="{{tabSelectedIndex}}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom">
 			<TabViewItem title="Inicio" iconSource="~/resources/home_icon.png">
 				<Frame id="firstFrame" defaultPage="views/home/home-page"/>
 			</TabViewItem>
