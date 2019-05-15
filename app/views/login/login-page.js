@@ -45,7 +45,7 @@ function login() {
     user.login()
         .then(function () {
             console.info("INFO: Usuario logueado.");
-            frameModule.topmost().navigate("views/home/home-page");
+            frameModule.topmost().navigate("views/nav/nav-page");
         })
         .catch(function (error) {
             console.error("ERROR: login() -> " + error);

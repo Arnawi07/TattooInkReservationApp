@@ -24,6 +24,7 @@ function User(info) {
         password: viewModel.get("password"),
         emailVerified: false
       }).then(function (user) {
+        alert(JSON.stringify(user));
           console.log(JSON.stringify(user));
           sendEmailVerification();
           return user;          
@@ -40,9 +41,13 @@ function User(info) {
       }).then(function (user) {
             config.uid = user.uid
             console.log(JSON.stringify(user));
-            if(!user.emailVerified){
+            alert(JSON.stringify(user));
+            /*if(!user.emailVerified){
               console.warn("WARN: Cuenta no verificada.")
               throw new Error("WARN: Cuenta no verificada.");
+            }else*/ if(user.additionalUserInfo.profile !== "admin"){
+              console.warn("WARN: Cuenta sin permisos.")
+              throw new Error("WARN: Cuenta sin role de admin.");
             }
             return user;
         });
