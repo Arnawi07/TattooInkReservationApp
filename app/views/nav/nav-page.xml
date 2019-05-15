@@ -8,15 +8,11 @@
 				<Frame id="firstFrame" defaultPage="views/home/home-page"/>
 			</TabViewItem>
 			<TabViewItem title="Stats">
-				<StackLayout>
-					<Label text="{{ tabSelectedIndexResult }}" class="h2 m-t-16 text-center" textWrap="true" />
-					<Button text="Change Tab" tap="changeTab" class="btn btn-primary btn-active" />
-				</StackLayout>
+				<Label text="hola 1" class="h2 m-t-16 text-center" textWrap="true" />	
 			</TabViewItem>
 			<TabViewItem title="Settings">
 				<StackLayout>
-					<Label text="{{ tabSelectedIndexResult }}" class="h2 m-t-16 text-center" textWrap="true" />
-					<Button text="Change Tab" tap="changeTab" class="btn btn-primary btn-active" />
+					<Label text="hola 2" class="h2 m-t-16 text-center" textWrap="true" />					
 				</StackLayout>
 			</TabViewItem>
 		</TabView>

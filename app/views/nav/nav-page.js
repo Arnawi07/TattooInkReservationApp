@@ -1,17 +1,16 @@
 const observableModule = require("tns-core-modules/data/observable");
 const dialogs = require("tns-core-modules/ui/dialogs");
-// >> tab-view-navigation-code
-function onLoaded(args) {
+var vm = new observableModule.Observable();
+
+exports.onLoaded = function (args) {
     const tabView = args.object;
-    const vm = new observableModule.Observable();
     vm.set("tabSelectedIndex", 0);
-    vm.set("tabSelectedIndexResult", "Profile Tab (tabSelectedIndex = 0 )");
+    //vm.set("tabSelectedIndexResult", "Profile Tab (tabSelectedIndex = 0 )");
 
     tabView.bindingContext = vm;
 }
 
-function changeTab(args) {
-    const vm = args.object.bindingContext;
+/*function changeTab(args) {
     const tabSelectedIndex = vm.get("tabSelectedIndex");
     if (tabSelectedIndex === 0) {
         vm.set("tabSelectedIndex", 1);
@@ -20,12 +19,12 @@ function changeTab(args) {
     } else if (tabSelectedIndex === 2) {
         vm.set("tabSelectedIndex", 0);
     }
-}
+}*/
+
 // displaying the old and new TabView selectedIndex
-function onSelectedIndexChanged(args) {
-    if (args.oldIndex !== -1) {
+exports.onSelectedIndexChanged = function (args) {
+    /*if (args.oldIndex !== -1) {
         const newIndex = args.newIndex;
-        const vm = args.object.bindingContext;
         if (newIndex === 0) {
             vm.set("tabSelectedIndexResult", "Profile Tab (tabSelectedIndex = 0 )");
         } else if (newIndex === 1) {
@@ -37,9 +36,6 @@ function onSelectedIndexChanged(args) {
             .then(() => {
                 console.log("Dialog closed!");
             });*/
-    }
+    //}
 }
-exports.onLoaded = onLoaded;
-exports.changeTab = changeTab;
-exports.onSelectedIndexChanged = onSelectedIndexChanged;
 // << tab-view-navigation-code
