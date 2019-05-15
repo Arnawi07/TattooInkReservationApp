@@ -1,19 +1,20 @@
 <Page loaded="onLoaded" xmlns="http://www.nativescript.org/tns.xsd">
 	<Page.actionBar>
-        <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
+        <ActionBar class="action-bar" title="Tattoo Ink Reservation">
+			<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>
+			<ActionItem ios.systemIcon="16" ios.position="right" text="Salir" android.position="popup"></ActionItem>	
+		</ActionBar>
     </Page.actionBar>
 	<GridLayout rows="*" columns="*">
-		<TabView id="tabView" loaded="onLoaded" selectedIndex="{{tabSelectedIndex}}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom">
+		<TabView class="tab-view" loaded="onLoaded" selectedIndex="{{tabSelectedIndex}}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom">
 			<TabViewItem title="Inicio" iconSource="~/resources/home_icon.png">
 				<Frame id="firstFrame" defaultPage="views/home/home-page"/>
 			</TabViewItem>
 			<TabViewItem title="Reservas" iconSource="~/resources/calendar_icon.png">
-				<StackLayout>
-				</StackLayout>
+				<StackLayout></StackLayout>
 			</TabViewItem>
-			<TabViewItem title="Opciones" iconSource="~/resources/settings_icon.png">
-				<StackLayout>					
-				</StackLayout>
+			<TabViewItem title="Mi Cuenta" iconSource="~/resources/img/user_profile_icon.png">
+				<StackLayout></StackLayout>
 			</TabViewItem>
 		</TabView>
 	</GridLayout>
