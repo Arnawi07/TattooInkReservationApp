@@ -1,4 +1,4 @@
-<Page xmlns="http://www.nativescript.org/tns.xsd">
+<Page loaded="onLoaded" xmlns="http://www.nativescript.org/tns.xsd">
 	<Page.actionBar>
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
