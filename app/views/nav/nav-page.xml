@@ -1,9 +1,9 @@
-<Page xmlns="http://www.nativescript.org/tns.xsd">
+<Page loaded="onLoaded" xmlns="http://www.nativescript.org/tns.xsd">
 	<Page.actionBar>
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
 	<GridLayout rows="*" columns="*">
-		<TabView loaded="onLoaded" selectedIndex="{{tabSelectedIndex}}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom">
+		<TabView selectedIndex="{{tabSelectedIndex}}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom">
 			<TabViewItem title="Profile">
 				<Frame id="firstFrame" defaultPage="views/home/home-page"/>
 			</TabViewItem>
