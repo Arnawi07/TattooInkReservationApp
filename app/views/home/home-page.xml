@@ -1,4 +1,7 @@
-<Page loaded="loaded" xmlns:lv="nativescript-ui-listview">
+<Page actionBarHidden="true" loaded="loaded" xmlns:lv="nativescript-ui-listview">
+    <Page.actionBar>
+        <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
+    </Page.actionBar>
     <GridLayout rows="auto, *">
         <GridLayout row="0" columns="*, auto" class="add-bar">
             <TextField text="{{ tattooShop }}" id="tattooShopXML" col="0" />

@@ -1,10 +1,8 @@
-
 <Page xmlns="http://www.nativescript.org/tns.xsd">
 	<Page.actionBar>
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
 	<GridLayout rows="*" columns="*">
-		<!-- >> tab-view-navigation-xml -->
 		<TabView loaded="onLoaded" selectedIndex="{{tabSelectedIndex}}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom">
 			<TabViewItem title="Profile">
 				<Frame id="firstFrame" defaultPage="views/home/home-page"/>
@@ -22,6 +20,5 @@
 				</StackLayout>
 			</TabViewItem>
 		</TabView>
-		<!-- << tab-view-navigation-xml -->
 	</GridLayout>
 </Page>

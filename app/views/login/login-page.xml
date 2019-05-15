@@ -1,8 +1,4 @@
 <Page class="page" loaded="loaded">
-    <Page.actionBar>
-        <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
-    </Page.actionBar>
-
     <FlexboxLayout class="loginLayout">
         <StackLayout class="formLayout">
             <Image class="logo" src="~/resources/img/logoTattoShop.png" />
