@@ -3,16 +3,16 @@
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
 	<GridLayout rows="*" columns="*">
-		<TabView loaded="onLoaded" selectedIndex="{{tabSelectedIndex}}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom">
-			<TabViewItem title="Profile">
+		<TabView id="tabView" loaded="onLoaded" selectedIndex="{{tabSelectedIndex}}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom" class="icon">
+			<TabViewItem title="Inicio" iconSource="~/resources/home_icon.png">
 				<Frame id="firstFrame" defaultPage="views/home/home-page"/>
 			</TabViewItem>
-			<TabViewItem title="Stats">
-				<Label text="hola 1" class="h2 m-t-16 text-center" textWrap="true" />	
-			</TabViewItem>
-			<TabViewItem title="Settings">
+			<TabViewItem title="Reservas" iconSource="~/resources/calendar_icon.png">
 				<StackLayout>
-					<Label text="hola 2" class="h2 m-t-16 text-center" textWrap="true" />					
+				</StackLayout>
+			</TabViewItem>
+			<TabViewItem title="Opciones" iconSource="~/resources/settings_icon.png">
+				<StackLayout>					
 				</StackLayout>
 			</TabViewItem>
 		</TabView>
