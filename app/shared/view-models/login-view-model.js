@@ -24,7 +24,6 @@ function User(info) {
         password: viewModel.get("password"),
         emailVerified: false
       }).then(function (user) {
-        alert(JSON.stringify(user));
           console.log(JSON.stringify(user));
           sendEmailVerification();
           return user;          
