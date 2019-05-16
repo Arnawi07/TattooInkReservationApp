@@ -7,7 +7,6 @@ var pageData = new observableModule.fromObject({});
 exports.onLoaded = function (args) {
     page = args.object;
     pageData.set("tabSelectedIndex", 0);
-
     page.bindingContext = pageData;
 }
 
