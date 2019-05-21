@@ -1,4 +1,3 @@
-var observableModule = require("tns-core-modules/data/observable");
 var ObservableArray = require("tns-core-modules/data/observable-array").ObservableArray;
 var firebase = require("nativescript-plugin-firebase");
 var config = require("../config");
@@ -15,8 +14,6 @@ function TattooShopsList(items){
   
         if (result.type === "ChildAdded") {
           if (result.value.UID === config.uid) {
-            //alert("UID user ->"+result.value.UID);
-            //alert("KEY Registro ->"+result.key);
             viewModel.push({
               name: result.value.name,
               key: result.key
@@ -53,8 +50,7 @@ function TattooShopsList(items){
       return firebase.push('/tattooShops',{
         UID: config.uid,  
         name : tattooShop          
-      }
-      ).then(function (response) {
+      }).then(function (response) {
           //console.log("created key: " + result.key);
           return JSON.stringify(response);
           }

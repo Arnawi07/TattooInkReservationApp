@@ -1,14 +1,27 @@
 const observableModule = require("tns-core-modules/data/observable");
-const dialogs = require("tns-core-modules/ui/dialogs");
+var firebase = require("nativescript-plugin-firebase")
 
 var page;
 var pageData = new observableModule.fromObject({});
+
 exports.onLoaded = function (args) {
     page = args.object;
     pageData.set("tabSelectedIndex", 0);
-
     page.bindingContext = pageData;
 }
+
+function signOut(args) {
+    firebase.logout().then(function() {
+        const button = args.object;
+        const page = button.page;
+        page.frame.navigate("views/login/login-page");
+        console.log('Signed Out');
+      }, function(error) {
+        console.error('Sign Out Error', error);
+      });
+}
+
+exports.signOut = signOut;
 
 /*function changeTab(args) {
     const tabSelectedIndex = vm.get("tabSelectedIndex");
