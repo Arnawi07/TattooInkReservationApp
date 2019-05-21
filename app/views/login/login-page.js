@@ -29,9 +29,9 @@ exports.toggleDisplay = function () {
     user.set("showTxtField", showTxtField);
 };
 
-exports.submit = function () {
+exports.submit = function (args) {
     if (isLoggingIn) {
-        login();
+        login(args);
     } else {
         if (page.getViewById("passwordXML").text == page.getViewById("passwordConfirmationXML").text){
            signUp();
@@ -41,11 +41,18 @@ exports.submit = function () {
     }
 };
 
-function login() {
+function login(args) {
     user.login()
         .then(function () {
             console.info("INFO: Usuario logueado.");
-            frameModule.topmost().navigate("views/nav/nav-page");
+            const button = args.object;
+            const page = button.page;
+            const myFrame = page.frame;
+            const navigationEntry = {
+                moduleName: "views/nav/nav-page",
+                clearHistory: true //En este caso el clearHistory lo hacemos para que cuando el usuario este en el home y tire hacia atras se vaya fuera de la aplicación, y no a la pantalla login.
+            };
+            myFrame.navigate(navigationEntry);           
         })
         .catch(function (error) {
             console.error("ERROR: login() -> " + error);

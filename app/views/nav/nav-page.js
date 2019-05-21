@@ -1,8 +1,11 @@
 const observableModule = require("tns-core-modules/data/observable");
-var firebase = require("nativescript-plugin-firebase")
+var firebase = require("nativescript-plugin-firebase");
+var frameModule = require("tns-core-modules/ui/frame");
 
 var page;
 var pageData = new observableModule.fromObject({});
+
+
 
 exports.onLoaded = function (args) {
     page = args.object;
@@ -14,7 +17,12 @@ function signOut(args) {
     firebase.logout().then(function() {
         const button = args.object;
         const page = button.page;
-        page.frame.navigate("views/login/login-page");
+        const myFrame = page.frame;
+        const navigationEntry = {
+            moduleName: "views/login/login-page",
+            clearHistory: true //Este atributo es super importante, ya que sin él el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion
+        };
+        myFrame.navigate(navigationEntry);
         console.log('Signed Out');
       }, function(error) {
         console.error('Sign Out Error', error);
