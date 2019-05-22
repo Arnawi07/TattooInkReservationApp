@@ -5,31 +5,28 @@ var frameModule = require("tns-core-modules/ui/frame");
 var page;
 var pageData = new observableModule.fromObject({});
 
-
-
 exports.onLoaded = function (args) {
     page = args.object;
     pageData.set("tabSelectedIndex", 0);
     page.bindingContext = pageData;
 }
 
-function signOut(args) {
-    firebase.logout().then(function() {
-        const button = args.object;
-        const page = button.page;
-        const myFrame = page.frame;
-        const navigationEntry = {
-            moduleName: "views/login/login-page",
-            clearHistory: true //Este atributo es super importante, ya que sin él el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion
-        };
-        myFrame.navigate(navigationEntry);
-        console.log('Signed Out');
-      }, function(error) {
-        console.error('Sign Out Error', error);
+exports.signOut = function (args) {
+    firebase.logout()
+        .then(function() {
+            console.info("INFO: Sesión cerrada.");
+            const button = args.object;
+            const page = button.page;
+            const myFrame = page.frame;
+            const navigationEntry = {
+                moduleName: "views/login/login-page",
+                clearHistory: true //Este atributo es super importante, ya que sin él el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion
+            };
+            myFrame.navigate(navigationEntry);    
+        }, function(error) {
+            console.error("ERROR: signOut() -> " + error);
       });
 }
-
-exports.signOut = signOut;
 
 /*function changeTab(args) {
     const tabSelectedIndex = vm.get("tabSelectedIndex");

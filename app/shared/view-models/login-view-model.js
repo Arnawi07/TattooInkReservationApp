@@ -51,10 +51,7 @@ function User(info) {
 
   viewModel.resetPassword = function(email){
     return firebase.sendPasswordResetEmail(email)
-      .then(function(){
-        
-      }).catch(function (error) {
-        console.warn("WARN: resetPassword() -> " + error);
+      .then(function(){        
       });
   }
 
@@ -64,7 +61,7 @@ function User(info) {
 
 
 function sendEmailVerification(){
- firebase.sendEmailVerification().then(
+  firebase.sendEmailVerification().then(
     function () {
       console.info("INFO: Correo de verificación de cuenta enviado.");
     },
