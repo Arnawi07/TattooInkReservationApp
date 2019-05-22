@@ -48,6 +48,16 @@ function User(info) {
         });
   }
 
+
+  viewModel.resetPassword = function(email){
+    return firebase.sendPasswordResetEmail(email)
+      .then(function(){
+        
+      }).catch(function (error) {
+        console.warn("WARN: resetPassword() -> " + error);
+      });
+  }
+
   
   return viewModel;
 }

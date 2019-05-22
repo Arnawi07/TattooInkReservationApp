@@ -21,7 +21,7 @@
 			</StackLayout>
 
             <StackLayout>
-				<Label id="recoverPassword" text="¿ Has olvidado la contraseña ?" tap="alert"/>
+				<Label id="recoverPassword" text="¿ Has olvidado la contraseña ?" tap="resetPassword"/>
 			</StackLayout>
 
             <StackLayout class="input-field" visibility="{{ showTxtField ? 'collapse' : 'visible' }}">

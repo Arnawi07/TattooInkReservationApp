@@ -79,6 +79,15 @@ function signUp() {
 }
 
 
-exports.alert = function(){
-    alert("Hola")
+exports.resetPassword =  function(){
+    user.resetPassword(page.getViewById("emailXML").text)
+        .then(function(){
+            console.info("INFO: Mail de reset de contraseña enviado.")
+        }).catch(function(error){
+            console.error("ERROR: resetPassword() -> " + error);
+            dialogsModule.alert({
+                message: error,
+                okButtonText: "OK"
+            });
+        })
 }
