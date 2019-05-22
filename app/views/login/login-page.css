@@ -36,3 +36,9 @@
   .buttons{
   
   }
+
+#recoverPassword {
+ text-align: right;
+ color: #fff; 
+ text-decoration: underline;
+}

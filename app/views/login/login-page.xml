@@ -20,6 +20,10 @@
 				<Label class="hr-light" />
 			</StackLayout>
 
+            <StackLayout>
+				<Label id="recoverPassword" text="¿ Has olvidado la contraseña ?" tap="alert"/>
+			</StackLayout>
+
             <StackLayout class="input-field" visibility="{{ showTxtField ? 'collapse' : 'visible' }}">
 				<TextField id="passwordConfirmationXML" class="input" hint="Confirmar contraseña" secure="true" />
 				<Label class="hr-light" />

@@ -8,13 +8,13 @@
 	<GridLayout rows="*" columns="*">
 		<TabView class="tab-view" loaded="onLoaded" selectedIndex="{{tabSelectedIndex}}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom">
 			<TabViewItem title="Inicio" iconSource="~/resources/home_icon.png">
-				<Frame id="firstFrame" defaultPage="views/home/home-page"/>
+				<Frame id="homeFrame" defaultPage="views/home/home-page"/>
 			</TabViewItem>
 			<TabViewItem title="Reservas" iconSource="~/resources/calendar_icon.png">
-				<StackLayout></StackLayout>
+				<Frame id="reservationFrame" defaultPage="views/reservations/reservations-page"/>
 			</TabViewItem>
 			<TabViewItem title="Mi Cuenta" iconSource="~/resources/img/user_profile_icon.png">
-				<StackLayout></StackLayout>
+				<Frame id="userProfileFrame" defaultPage="views/user-profile/user-profile-page"/>
 			</TabViewItem>
 		</TabView>
 	</GridLayout>

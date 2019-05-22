@@ -1,0 +1,5 @@
+<Page actionBarHidden="true">
+    <Page.actionBar>
+            <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
+    </Page.actionBar>
+</Page>

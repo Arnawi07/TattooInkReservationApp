@@ -77,3 +77,8 @@ function signUp() {
             });
         });
 }
+
+
+exports.alert = function(){
+    alert("Hola")
+}
