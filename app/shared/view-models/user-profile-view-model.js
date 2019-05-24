@@ -1,10 +1,14 @@
+var observableModule = require("tns-core-modules/data/observable");
 var firebase = require("nativescript-plugin-firebase");
 var observableModule = require("tns-core-modules/data/observable");
 
 function UserProfile(info){
     info = info || {};
 
-    var viewModel = new observableModule.fromObject({});
+    // Object
+    var viewModel = new observableModule.fromObject({
+        isEditable: false
+    });
 
     viewModel.changePassword = function(newPassword){
         return firebase.updatePassword(newPassword)

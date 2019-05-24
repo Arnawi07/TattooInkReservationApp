@@ -3,20 +3,18 @@ var UserProfile = require("../../shared/view-models/user-profile-view-model");
 var userProfile = new UserProfile({});
 
 var page;
-var bool;
-var data = new observableModule.fromObject({
-    isEditing : false
-  });
+var isEditable;
+
 
 exports.loaded = function (args) {
     page = args.object;
-    bool = data.isEditing;
-    page.bindingContext = data;
+    isEditable = userProfile.isEditable;
+    page.bindingContext = userProfile;
 };
 
 exports.editingProfile = function () {
-   bool = !bool;
-   data.set("isEditing", bool); 
+    isEditable = !isEditable;
+    userProfile.set("isEditable", isEditable);
 };
 
 exports.changePassword = function(newPassword){
@@ -33,6 +31,6 @@ exports.changeEmail = function(newEmail){
         .then(function(){
             console.info("INFO: Correo electrónico actualizado.")
         }).catch(function(error){
-            console.error("ERROR: changeEmail() -> " +error);
+            console.error("ERROR: changeEmail() -> " + error);
         });
 }
