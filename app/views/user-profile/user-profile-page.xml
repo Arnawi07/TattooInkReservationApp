@@ -6,22 +6,22 @@
         <StackLayout class="formLayout" >
            
                 <Image  id="imageUser" src="~/resources/img/user_profile.jpg" />
-                <Image  id="iconEdit1" src="~/resources/edit_icon.png" tap="editingProfile" />    
+                <Image  id="iconPhoto" src="~/resources/edit_icon.png" tap="editingProfile" />    
 
             <StackLayout class="input-field">
                 <GridLayout columns="auto,100" rows="auto,auto">
                         <TextField col="0" row="0" id="emailXML" class="input" editable="{{ isEditing ? 'true' : 'false' }}" text="forand2019@gmail.com" 
                         keyboardType="email" autocorrect="false" autocapitalizationType="none" />
-                        <Image col="1" row="0" id="iconEdit2" src="~/resources/edit_icon.png" tap="editingProfile" />
-                        <Label col="0" row="1" class="hr-light" />    
+                        <Image col="1" row="0" id="iconDataUser" src="~/resources/edit_icon.png" tap="editingProfile" />
+                        <Label col="0" row="1" class="hr-light" visibility="{{ isEditing ? 'collapse' : 'visible' }}"/>    
                 </GridLayout>   
             </StackLayout>
 
             <StackLayout class="input-field">
                 <GridLayout columns="auto,100" rows="auto,auto">
                         <TextField id="passwordXML" editable="{{ isEditing ? 'true' : 'false' }}" class="input" text="pepe123" secure="true" />
-                        <Image col="1" row="0" id="iconEdit3" src="~/resources/edit_icon.png" tap="editingProfile" />
-                        <Label col="0" row="1" class="hr-light"  />    
+                        <Image col="1" row="0" id="iconDataUser" src="~/resources/edit_icon.png" tap="editingProfile" />
+                        <Label col="0" row="1" class="hr-light" visibility="{{ isEditing ? 'collapse' : 'visible' }}"/>    
                 </GridLayout>   
             </StackLayout>
         

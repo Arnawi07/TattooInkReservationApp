@@ -8,8 +8,6 @@ var data = new observableModule.fromObject({
     isEditing : false
   });
 
-
-
 exports.loaded = function (args) {
     page = args.object;
     bool = data.isEditing;
