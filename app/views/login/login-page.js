@@ -82,7 +82,7 @@ function signUp() {
 exports.resetPassword =  function(){
     user.resetPassword(page.getViewById("emailXML").text)
         .then(function(){
-            console.info("INFO: Mail de reset de contraseña enviado.")
+            console.info("INFO: Correo de reset de contraseña enviado.")
         }).catch(function(error){
             console.error("ERROR: resetPassword() -> " + error);
             dialogsModule.alert({
