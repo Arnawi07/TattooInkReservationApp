@@ -1,5 +1,6 @@
 var observableModule = require("tns-core-modules/data/observable");
 var firebase = require("nativescript-plugin-firebase");
+var observableModule = require("tns-core-modules/data/observable");
 
 function UserProfile(info){
     info = info || {};

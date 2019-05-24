@@ -3,24 +3,27 @@
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
     <FlexboxLayout class="loginLayout">  
-        <StackLayout class="formLayout">           
-            <Image id="imageUser" src="~/resources/img/user_profile.jpg"/>
-            <Image id="iconEdit1" src="~/resources/edit_icon.png" tap="editingProfile"/>    
+        <StackLayout class="formLayout" >
+           
+                <Image  id="imageUser" src="~/resources/img/user_profile.jpg" />
+                <Image  id="iconPhoto" src="~/resources/edit_icon.png" tap="editingProfile" />    
 
             <StackLayout class="input-field">
                 <GridLayout columns="auto,100" rows="auto,auto">
                         <TextField col="0" row="0" id="emailXML" class="input" editable="{{ isEditable }}" text="{{ email }}" 
-                        keyboardType="email" autocorrect="false" autocapitalizationType="none"/>
-                        <Image col="1" row="0" id="iconEdit2" src="~/resources/edit_icon.png" tap="editingProfile"/>
-                        <Label col="0" row="1" class="hr-light"/>    
+                        keyboardType="email" autocorrect="false" autocapitalizationType="none" />
+                        <Image col="1" row="0" id="iconDataUser" src="{{ isEditable ? '~/resources/delete.png' :'~/resources/edit_icon.png' }}" tap="editingProfile" />
+                        <Image col="2" row="0" id="iconSave" src="~/resources/save_icon.png" tap="editingProfile;changeEmail" visibility="{{ isEditable ? 'visible' :'collapse' }}" />
+                        <Label col="0" row="1" class="hr-light" visibility="{{ isEditable ? 'visible' :'collapse' }}"/>    
                 </GridLayout>   
             </StackLayout>
 
             <StackLayout class="input-field">
                 <GridLayout columns="auto,100" rows="auto,auto">
-                        <TextField id="passwordXML" editable="{{ isEditable }}" class="input" text="pepe123" secure="true"/>
-                        <Image col="1" row="0" id="iconEdit3" src="~/resources/edit_icon.png" tap="editingProfile"/>
-                        <Label col="0" row="1" class="hr-light"/>    
+                        <TextField id="passwordXML" editable="{{ isEditable }}" class="input" text="pepe123" secure="true" />
+                        <Image col="1" row="0" id="iconDataUser" src="{{ isEditable ? '~/resources/delete.png' :'~/resources/edit_icon.png' }}" tap="editingProfile" />
+                        <Image col="2" row="0" id="iconSave" src="~/resources/save_icon.png" tap="editingProfile" visibility="{{ isEditable ? 'visible' :'collapse' }}" />
+                        <Label col="0" row="1" class="hr-light" visibility="{{ isEditable ? 'visible' :'collapse' }}"/>    
                 </GridLayout>   
             </StackLayout>
         </StackLayout>
