@@ -9,6 +9,7 @@ var isEditable;
 exports.loaded = function (args) {
     page = args.object;
     isEditable = userProfile.isEditable;
+    getCurrentUser();
     page.bindingContext = userProfile;
 };
 
@@ -17,20 +18,29 @@ exports.editingProfile = function () {
     userProfile.set("isEditable", isEditable);
 };
 
-exports.changePassword = function(newPassword){
-    userProfile.changePassword(newPassword)
-        .then(function(){
-            console.info("INFO: Contraseña actualizada.");
+function getCurrentUser(){
+    userProfile.getCurrentUser()
+        .then(function(user){
+            userProfile.set("email", user.email);
         }).catch(function(error){
-            console.error("ERROR: changePassword() -> " + error);
-        });
+            console.error("ERROR: getCurrentUser() -> " + error);
+        })
 }
 
-exports.changeEmail = function(newEmail){
-    userProfile.changeEmail(newEmail)
+exports.changeEmail = function(){
+    userProfile.changeEmail(userProfile.email)
         .then(function(){
             console.info("INFO: Correo electrónico actualizado.")
         }).catch(function(error){
             console.error("ERROR: changeEmail() -> " + error);
+        });
+}
+
+exports.changePassword = function(){
+    userProfile.changePassword(userProfile.password)
+        .then(function(){
+            console.info("INFO: Contraseña actualizada.");
+        }).catch(function(error){
+            console.error("ERROR: changePassword() -> " + error);
         });
 }

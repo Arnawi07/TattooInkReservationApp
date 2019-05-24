@@ -9,7 +9,7 @@
 
             <StackLayout class="input-field">
                 <GridLayout columns="auto,100" rows="auto,auto">
-                        <TextField col="0" row="0" id="emailXML" class="input" editable="{{isEditable}}" text="forand2019@gmail.com" 
+                        <TextField col="0" row="0" id="emailXML" class="input" editable="{{ isEditable }}" text="{{ email }}" 
                         keyboardType="email" autocorrect="false" autocapitalizationType="none"/>
                         <Image col="1" row="0" id="iconEdit2" src="~/resources/edit_icon.png" tap="editingProfile"/>
                         <Label col="0" row="1" class="hr-light"/>    
@@ -18,7 +18,7 @@
 
             <StackLayout class="input-field">
                 <GridLayout columns="auto,100" rows="auto,auto">
-                        <TextField id="passwordXML" editable="{{isEditable}}" class="input" text="pepe123" secure="true"/>
+                        <TextField id="passwordXML" editable="{{ isEditable }}" class="input" text="pepe123" secure="true"/>
                         <Image col="1" row="0" id="iconEdit3" src="~/resources/edit_icon.png" tap="editingProfile"/>
                         <Label col="0" row="1" class="hr-light"/>    
                 </GridLayout>   
