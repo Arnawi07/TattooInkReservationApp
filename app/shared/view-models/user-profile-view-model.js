@@ -7,16 +7,16 @@ function UserProfile(info){
 
     // Object
     var viewModel = new observableModule.fromObject({
-        email,
-        password,
-        isEditable: false
+        email: info.email || "",
+        password: info.password || "",
+        isEditableEmail: false,
+        isEditablePassword: false
     });
 
     viewModel.getCurrentUser = function(){
         return firebase.getCurrentUser()
             .then(function(user){
                 console.log("User uid: " + user.uid);
-                alert(JSON.stringify(user));
                 return user;
             });
     }

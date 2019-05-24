@@ -20,7 +20,7 @@ exports.signOut = function (args) {
             const myFrame = page.frame;
             const navigationEntry = {
                 moduleName: "views/login/login-page",
-                clearHistory: true //Este atributo es super importante, ya que sin él el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion
+                clearHistory: true //Este atributo es super importante, ya que sin él, el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion sin tener que iniciar sesion
             };
             myFrame.navigate(navigationEntry);    
         }, function(error) {
