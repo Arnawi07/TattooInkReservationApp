@@ -5,8 +5,8 @@
     <FlexboxLayout class="loginLayout">  
         <StackLayout class="formLayout" >
            
-                <Image  id="imageUser" src="~/resources/img/user_profile.jpg" />
-                <Image  id="iconEdit" src="~/resources/edit_icon.png" tap="editingProfile" />
+                <Image  id="imageUser" src="{{ imagePath }}" />
+                <Image  id="iconEdit" src="~/resources/edit_icon.png" tap="editingPhoto" />
                     
             <StackLayout class="input-field">
                 <GridLayout columns="auto,100" rows="auto,auto">

@@ -1,16 +1,25 @@
 var observableModule = require("tns-core-modules/data/observable");
+var imagepicker = require("nativescript-imagepicker");
+var imageSourceModule = require("tns-core-modules/image-source");
+var fs = require("tns-core-modules/file-system");
+var platformModule = require("tns-core-modules/platform");
+
 var firebase = require("nativescript-plugin-firebase");
 var UserProfile = require("../../shared/view-models/user-profile-view-model");
 var userProfile = new UserProfile({});
 
 var page;
+var currentUser;
 var isEditableEmail;
 var isEditablePassword;
+var imagePath;
 
 exports.loaded = function (args) {
     page = args.object;
     isEditableEmail = userProfile.isEditableEmail;
     isEditablePassword = userProfile.isEditablePassword;
+    imagePath = userProfile.imagePath;
+    alert(imagePath);
     getCurrentUser();
     page.bindingContext = userProfile;
 };
@@ -40,11 +49,48 @@ function editingEmail() {
     userProfile.set("isEditableEmail", isEditableEmail);
 };
 
+exports.editingPhoto = function(){
+  var milliseconds = (new Date).getTime;
+  var context = imagepicker.create({ mode: "single" }); // use "multiple" for multiple selection
+  context
+    .authorize()
+    .then(function() {
+        return context.present();
+    })
+    .then(function(selection) {
+        selection.forEach(function(selected) {
+         
+            var localPath = null;
+
+            if (platformModule.device.os === "Android") {
+                localPath = selected._android;
+              
+            } else {
+                // selected_item.ios for iOS is PHAsset and not path - so we are creating own path
+                let folder = fs.knownFolders.documents();
+                let path = fs.path.join(folder.path, milliseconds+".png");
+                let saved = imagesource.saveToFile(path, "png");
+
+                localPath = path;
+                
+            }        
+            userProfile.set("imagePath", localPath);
+        });
+        //list.items = selection;
+    }).catch(function (error) {
+        alert(error)
+        console.error("ERROR ImagePicker: -> " + error);
+    });
+}
+
 function getCurrentUser(){
     userProfile.getCurrentUser()
         .then(function(user){
             userProfile.set("email", user.email);
             userProfile.set("password", "********");
+            user.updateProfile({
+              photoURL: "/imagePath/pepe"
+            });
         }).catch(function(error){
             console.error("ERROR: getCurrentUser() -> " + error);
         });
@@ -77,6 +123,8 @@ function sendEmailVerification(){
     }
   );
 }
+
+
 
 exports.changeEmail = function(args){
     userProfile.changeEmail(userProfile.email)
