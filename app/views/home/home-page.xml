@@ -1,27 +1,17 @@
-<Page actionBarHidden="true" loaded="loaded" xmlns:lv="nativescript-ui-listview">
+<Page actionBarHidden="true" loaded="loaded" xmlns:Card="nativescript-cardview" xmlns:lv="nativescript-ui-listview">
     <Page.actionBar>
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
-    <GridLayout rows="auto, *">
-        <GridLayout row="0" columns="*, auto" class="add-bar">
-            <TextField text="{{ tattooShop }}" id="tattooShopXML" col="0" />
-            <Image src="~/resources/img/add.png" tap="add" col="1" />
-        </GridLayout>
-        <lv:RadListView items="{{ tattooShopsList }}" row="1"
-            itemSwipeProgressStarted="onSwipeCellStarted" swipeActions="true">
-            <lv:RadListView.itemTemplate>
-                <GridLayout class="grocery-list-item">
-                    <Label class="p-15" text="{{ name }}"/>
-                </GridLayout>
-            </lv:RadListView.itemTemplate>
+    <ScrollView>
+        <StackLayout>
 
-            <lv:RadListView.itemSwipeTemplate>
-                <GridLayout columns="*,auto" backgroundColor="red">
-                    <StackLayout id="delete-view" col="1" tap="delete" class="delete-view">
-                        <Image src="~/resources/img/delete.png" />
-                    </StackLayout>
+            <Card:CardView margin="10" id="jokerCard" elevation="35" shadowColor="#FE00FC" shadowOpacity="2">
+                <GridLayout rows="200, auto, auto" columns="auto, auto, *">
+                    <Image src="~/resources/img/logoTattoShop.png" stretch="aspectFit" colSpan="3" row="0" /> 
+                    <label text="Tu que miras pargela?" class="info" textWrap="true" row="1" colSpan="3" />
                 </GridLayout>
-            </lv:RadListView.itemSwipeTemplate>
-        </lv:RadListView>
-    </GridLayout>
+            </Card:CardView>
+
+        </StackLayout>
+    </ScrollView>
 </Page>

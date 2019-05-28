@@ -1,0 +1,27 @@
+<Page actionBarHidden="true" loaded="loaded" xmlns:lv="nativescript-ui-listview">
+    <Page.actionBar>
+        <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
+    </Page.actionBar>
+    <GridLayout rows="auto, *">
+        <GridLayout row="0" columns="*, auto" class="add-bar">
+            <TextField text="{{ tattooShop }}" id="tattooShopXML" col="0" />
+            <Image src="~/resources/img/add.png" tap="add" col="1" />
+        </GridLayout>
+        <lv:RadListView items="{{ tattooShopsList }}" row="1"
+            itemSwipeProgressStarted="onSwipeCellStarted" swipeActions="true">
+            <lv:RadListView.itemTemplate>
+                <GridLayout class="grocery-list-item">
+                    <Label class="p-15" text="{{ name }}"/>
+                </GridLayout>
+            </lv:RadListView.itemTemplate>
+
+            <lv:RadListView.itemSwipeTemplate>
+                <GridLayout columns="*,auto" backgroundColor="red">
+                    <StackLayout id="delete-view" col="1" tap="delete" class="delete-view">
+                        <Image src="~/resources/img/delete.png" />
+                    </StackLayout>
+                </GridLayout>
+            </lv:RadListView.itemSwipeTemplate>
+        </lv:RadListView>
+    </GridLayout>
+</Page>

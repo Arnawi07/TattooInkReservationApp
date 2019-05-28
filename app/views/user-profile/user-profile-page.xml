@@ -5,27 +5,23 @@
     <FlexboxLayout class="loginLayout">  
         <StackLayout class="formLayout" >
            
-                <Image  id="imageUser" src="{{ imagePath }}" />
-                <Image  id="iconEdit" src="~/resources/edit_icon.png" tap="editingPhoto" />
+            <Image  id="imageUser" src="{{ imagePath }}" />
+            <Image  id="iconEdit" src="~/resources/edit_icon.png" tap="editingPhoto" />
                     
             <StackLayout class="input-field">
                 <GridLayout columns="auto,100" rows="auto,auto">
-                        <TextField col="0" row="0" id="emailXML" class="input" editable="{{ isEditableEmail }}" text="{{ email }}" 
-                        keyboardType="email" autocorrect="false" autocapitalizationType="none" />
-                        <Image col="1" row="0" id="iconDataUser" src="{{ isEditableEmail ? '~/resources/delete.png' :'~/resources/edit_icon.png' }}" tap="editingEmail" />
-                        <Image col="2" row="0" id="iconSave" src="~/resources/save_icon.png" tap="changeEmail" visibility="{{ isEditableEmail ? 'visible' :'collapse' }}" />
-                        <Label col="0" row="1" class="hr-light" visibility="{{ isEditableEmail ? 'visible' :'collapse' }}"/>    
+                        <Label col="0" row="0" id="emailXML" text="{{ email }}"/>
+                        <Image col="1" row="0" id="iconEdit" src="~/resources/edit_icon.png" tap="changeEmail"/>
                 </GridLayout>   
             </StackLayout>
 
             <StackLayout class="input-field">
                 <GridLayout columns="auto,100" rows="auto,auto">
-                        <TextField id="passwordXML" editable="{{ isEditablePassword }}" class="input" text="{{ password }}" secure="true" />
-                        <Image col="1" row="0" id="iconDataUser" src="{{ isEditablePassword ? '~/resources/delete.png' :'~/resources/edit_icon.png' }}" tap="editingPassword" />
-                        <Image col="2" row="0" id="iconSave" src="~/resources/save_icon.png" visibility="{{ isEditablePassword ? 'visible' :'collapse' }}" tap="changePassword"/>
-                        <Label col="0" row="1" class="hr-light" visibility="{{ isEditablePassword ? 'visible' :'collapse' }}"/>    
+                        <Label id="passwordXML" text="{{ password }}" secure="true"/>
+                        <Image col="1" row="0" id="iconEdit" src="~/resources/edit_icon.png" tap="changePassword" />                        
                 </GridLayout>   
             </StackLayout>
+
         </StackLayout>
     </FlexboxLayout>
 </Page>

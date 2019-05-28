@@ -2,7 +2,7 @@
 	<Page.actionBar>
     <ActionBar class="action-bar" title="Tattoo Ink Reservation">
 			<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>
-			<ActionItem tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>	
+			<ActionItem id="logOut" tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>	
 		</ActionBar>
   </Page.actionBar>
 	<GridLayout rows="*" columns="*">
