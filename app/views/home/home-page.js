@@ -1,9 +1,33 @@
+var observableModule = require("tns-core-modules/data/observable");
+
+var HomeViewModel = require("../../shared/view-models/home-view-model");
+var home = new HomeViewModel([]);
+
+var pageData = new observableModule.fromObject({
+    photosURLList: home
+});
+
+
 function loaded(args) {
     var page = args.object;
-    page.bindingContext = page;
-    /*if (platform_1.isAndroid && platform_1.device.sdkVersion >= '21') {
-        var window_1 = application_1.android.startActivity.getWindow();
-        window_1.setStatusBarColor(new color_1.Color('#004c40').android);
-    }*/
+    page.bindingContext = pageData;
+
+    home.empty();
+    home.getToMyDatabase();
 }
+
+exports.animationCard = function (args) {
+    const page = args.object;   
+    const card = page.getViewById('jokerCard');
+    card
+      .animate({
+        translate: { x: 0 , y: 100 },
+        scale : {x: 1, y: 2},
+        duration: 1000
+      })
+      .then(() => {
+        //card.visibility = 'collapse';
+      });
+}
+
 exports.loaded = loaded;

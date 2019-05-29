@@ -9,7 +9,8 @@ var firebase = require("nativescript-plugin-firebase");
 var config = require("../app/shared/config");
 
 firebase.init({
-  url: config.apiUrl
+  url: config.apiUrl,
+  storageBucket: "gs://tattoo-ink-cloud-c8382.appspot.com"
 }).then(
     function (instance) {
       console.info("INFO: Firebase inicializado.");

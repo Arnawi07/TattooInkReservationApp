@@ -4,14 +4,16 @@
     </Page.actionBar>
     <ScrollView>
         <StackLayout>
-
-            <Card:CardView margin="10" id="jokerCard" elevation="35" shadowColor="#FE00FC" shadowOpacity="2">
-                <GridLayout rows="200, auto, auto" columns="auto, auto, *">
-                    <Image src="~/resources/img/logoTattoShop.png" stretch="aspectFit" colSpan="3" row="0" /> 
-                    <label text="Tu que miras pargela?" class="info" textWrap="true" row="1" colSpan="3" />
-                </GridLayout>
-            </Card:CardView>
-
+            <Repeater items="{{ photosURLList }}">
+                <Repeater.itemTemplate>
+                    <Card:CardView margin="10" id="jokerCard" elevation="35" shadowColor="#FE00FC" shadowOpacity="2" tap="animationCard">
+                        <GridLayout rows="200, auto, auto" columns="auto, auto, *">
+                            <Image src="{{ photoURL }}" stretch="aspectFill" colSpan="3" row="0" />
+                            <label text="{{ title }}" class="info" textWrap="true" row="1" colSpan="3" />
+                        </GridLayout>
+                    </Card:CardView>
+                </Repeater.itemTemplate>
+            </Repeater>
         </StackLayout>
     </ScrollView>
 </Page>

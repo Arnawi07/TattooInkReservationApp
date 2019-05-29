@@ -1,7 +1,7 @@
 var dialogsModule = require("tns-core-modules/ui/dialogs");
 var frameModule = require("tns-core-modules/ui/frame");
 
-var HomeViewModel = require("../../shared/view-models/home-view-model");
+var HomeViewModel = require("../../shared/view-models/homeTemp-view-model");
 var TattooShopsListViewModel = require("../../shared/view-models/tattoo-shops-list-view-model");
 var observableModule = require("tns-core-modules/data/observable");
 var ObservableArray = require("tns-core-modules/data/observable-array").ObservableArray;
