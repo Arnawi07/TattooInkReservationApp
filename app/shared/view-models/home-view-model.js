@@ -1,37 +1,36 @@
 var ObservableArray = require("tns-core-modules/data/observable-array").ObservableArray;
-var observableModule = require("tns-core-modules/data/observable");
 var firebase = require("nativescript-plugin-firebase");
 
-function Home(items){
-        let viewModel = new ObservableArray(items);
+function TattooPhotosList(items){
+    let viewModel = new ObservableArray(items);
 
-        viewModel.getToMyDatabase = function() {
-            return firebase.getValue("/photosURLHome")
-                .then(function(result){
-                    for (let key in result.value) {
-                        firebase.getValue("/photosURLHome/"+key)
+    viewModel.empty = function(){
+        while(viewModel.length){
+            viewModel.pop();
+        }
+    }
+
+    viewModel.getAllTattooPhotos = function() {
+        return firebase.getValue("/photosURLHome")
+            .then(function(result){
+                for (let key in result.value) {
+                    firebase.getValue("/photosURLHome/"+key)
                         .then(function(result){
                             viewModel.push({
-                                photoURL : result.value.url,
+                                photoUrl : result.value.url,
                                 title : result.value.title
                             });
                         }).catch(function(error){
-                            alert("ERROR: getToMyDatabase().getValue() -> " + error);
+                            console.error("ERROR: getAllTattooPhotos().getValue() -> " + error);
                         });
-                    }
-                }).catch(function(error){
-                    alert("ERROR: getToMyDatabase() -> " + error);
-                });
-                
-        }
+                }
+            }).catch(function(error){
+                console.error("ERROR: getAllTattooPhotos() -> " + error);
+            });
+            
+    }
 
-        viewModel.empty = function(){
-            while(viewModel.length){
-                viewModel.pop();
-            }
-        }
-
-        return viewModel;
+    return viewModel;
 }
 
-module.exports = Home;
+module.exports = TattooPhotosList;

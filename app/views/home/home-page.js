@@ -1,23 +1,22 @@
 var observableModule = require("tns-core-modules/data/observable");
 
-var HomeViewModel = require("../../shared/view-models/home-view-model");
-var home = new HomeViewModel([]);
+var TattooPhotosList = require("../../shared/view-models/home-view-model");
+var tattooPhotosList = new TattooPhotosList([]);
 
+var page;
 var pageData = new observableModule.fromObject({
-    photosURLList: home
+  tattooPhotosList: tattooPhotosList
 });
 
 
-function loaded(args) {
-    var page = args.object;
+exports.loaded = function(args) {
+    page = args.object;
+    tattooPhotosList.empty();
+    tattooPhotosList.getAllTattooPhotos();
     page.bindingContext = pageData;
-
-    home.empty();
-    home.getToMyDatabase();
 }
 
-exports.animationCard = function (args) {
-    const page = args.object;   
+/*exports.animationCard = function () {
     const card = page.getViewById('jokerCard');
     card
       .animate({
@@ -26,8 +25,6 @@ exports.animationCard = function (args) {
         duration: 1000
       })
       .then(() => {
-        //card.visibility = 'collapse';
+        card.visibility = 'collapse';
       });
-}
-
-exports.loaded = loaded;
+}*/

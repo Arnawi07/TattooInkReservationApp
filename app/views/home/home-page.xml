@@ -4,12 +4,12 @@
     </Page.actionBar>
     <ScrollView>
         <StackLayout>
-            <Repeater items="{{ photosURLList }}">
+            <Repeater items="{{ tattooPhotosList }}">
                 <Repeater.itemTemplate>
-                    <Card:CardView margin="10" id="jokerCard" elevation="35" shadowColor="#FE00FC" shadowOpacity="2" tap="animationCard">
+                    <Card:CardView margin="10" elevation="35" shadowColor="#FE00FC" shadowOpacity="2" tap="">
                         <GridLayout rows="200, auto, auto" columns="auto, auto, *">
-                            <Image src="{{ photoURL }}" stretch="aspectFill" colSpan="3" row="0" />
-                            <label text="{{ title }}" class="info" textWrap="true" row="1" colSpan="3" />
+                            <Image src="{{ photoUrl }}" stretch="aspectFill"  row="0" colSpan="3"/>
+                            <label text="{{ title }}" class="info" textWrap="true" row="1" colSpan="3"/>
                         </GridLayout>
                     </Card:CardView>
                 </Repeater.itemTemplate>
