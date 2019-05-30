@@ -13,6 +13,7 @@ var pageData = new observableModule.fromObject({
 exports.loaded = function(args) {
     page = args.object;
     
+    //alert(pageData.get("isLoading"));
     if(pageData.get("isLoading")){
       tattooPhotosList.getAllTattooPhotosOrderBy().then(function(){
           pageData.set("isLoading", false);
