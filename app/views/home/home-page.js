@@ -5,14 +5,19 @@ var tattooPhotosList = new TattooPhotosList([]);
 
 var page;
 var pageData = new observableModule.fromObject({
-  tattooPhotosList: tattooPhotosList
+  tattooPhotosList: tattooPhotosList,
+  isLoading : true
 });
 
 
 exports.loaded = function(args) {
     page = args.object;
-    tattooPhotosList.empty();
-    tattooPhotosList.getAllTattooPhotos();
+    
+    if(pageData.get("isLoading")){
+      tattooPhotosList.getAllTattooPhotosOrderBy().then(function(){
+          pageData.set("isLoading", false);
+      });
+    }
     page.bindingContext = pageData;
 }
 

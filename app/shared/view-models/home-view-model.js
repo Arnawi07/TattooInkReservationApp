@@ -11,10 +11,10 @@ function TattooPhotosList(items){
     }
 
     viewModel.getAllTattooPhotos = function() {
-        return firebase.getValue("/photosURLHome")
+        return firebase.getValue("/photosUrlHome")
             .then(function(result){
                 for (let key in result.value) {
-                    firebase.getValue("/photosURLHome/"+key)
+                    firebase.getValue("/photosUrlHome/"+key)
                         .then(function(result){
                             viewModel.push({
                                 photoUrl : result.value.url,
@@ -26,10 +26,38 @@ function TattooPhotosList(items){
                 }
             }).catch(function(error){
                 console.error("ERROR: getAllTattooPhotos() -> " + error);
-            });
-            
+            });            
     }
 
+    viewModel.getAllTattooPhotosOrderBy = function(){
+        var onQueryEvent = function(result) {
+            if (!result.error) {
+                viewModel.unshift({
+                    photoUrl : result.value.url,
+                    title : result.value.title
+                });
+            }
+        };
+    
+        return firebase.query(
+            onQueryEvent,
+            "/photosUrlHome",
+            {
+                singleEvent: false,
+                
+                orderBy: {
+                    type: firebase.QueryOrderByType.CHILD,
+                    value: 'creationDate' 
+                },
+                limit: {
+                    type: firebase.QueryLimitType.LAST,
+                    value: 'since'
+                }
+            }
+        );
+
+    };
+    
     return viewModel;
 }
 

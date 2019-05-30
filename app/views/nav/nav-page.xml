@@ -11,7 +11,7 @@
 				<Frame id="homeFrame" defaultPage="views/home/home-page"/>
 			</TabViewItem>
 			<TabViewItem title="Reservas" iconSource="~/resources/calendar_icon.png">
-				<Frame id="reservationFrame" defaultPage="views/homeTemp/home-page"/>
+				<Frame id="reservationFrame" defaultPage="views/reservations/reservations-page"/>
 			</TabViewItem>
 			<TabViewItem title="Mi Cuenta" iconSource="~/resources/img/user_profile_icon.png">
 				<Frame id="userProfileFrame" defaultPage="views/user-profile/user-profile-page"/>
