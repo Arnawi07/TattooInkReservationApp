@@ -46,12 +46,11 @@ exports.changeEmail = function(args){
                     });
                 });
 
-            signOut(args);
 
             dialogsModule.alert({
                 title: "Verificar Correo Electrónico",
-                message: "Debes verificar tu nuevo correo electrónico para poder iniciar sesión de nuevo",
-                okButtonText: "Vale"
+                message: "Debes verificar tu nuevo correo electrónico para poder iniciar sesión de nuevo la próxima vez.",
+                okButtonText: "Aceptar"
             });
         }
     });

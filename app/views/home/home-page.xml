@@ -6,9 +6,9 @@
         <StackLayout>
             <Repeater items="{{ tattooPhotosList }}">
                 <Repeater.itemTemplate>
-                    <Card:CardView margin="10" elevation="35" shadowColor="#FE00FC" shadowOpacity="2" tap="">
+                    <Card:CardView margin="10" elevation="35" shadowColor="#FE00FC" shadowOpacity="2">
                         <GridLayout rows="200, auto, auto" columns="auto, auto, *">
-                            <Image src="{{ photoUrl }}" stretch="aspectFill"  row="0" colSpan="3"/>
+                            <Image id="{{ title }}" src="{{ photoUrl }}" stretch="aspectFill"  row="0" colSpan="3" tap="openModal" />
                             <Label text="{{ title }}" class="info" textWrap="true" row="1" colSpan="3"/>
                         </GridLayout>
                     </Card:CardView>

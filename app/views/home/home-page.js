@@ -22,6 +22,15 @@ exports.loaded = function(args) {
     page.bindingContext = pageData;
 }
 
+exports.openModal = function(args) {
+  const modalViewModule = "views/photo/photo-modal";
+  const mainView = args.object;
+  const context = { photoUrl: mainView.src,  title : mainView.id};
+  const fullscreen = true;
+  mainView.showModal(modalViewModule, context, function(photoUrl, title) {
+  }, fullscreen);
+}
+
 /*exports.animationCard = function () {
     const card = page.getViewById('jokerCard');
     card
