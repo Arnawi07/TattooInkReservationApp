@@ -2,10 +2,59 @@
     <Page.actionBar>
             <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
-    <calendar:RadCalendar id="calendar" dateSelected="onDateSelected" viewMode="Month">
+    <calendar:RadCalendar id="calendar" dateSelected="onDateSelected" viewMode="Month" locale="es-ES">
+
+        <!-- calendar-monthview-styling -->
+        <!-->
+        <calendar:RadCalendar.monthViewStyle>
+            <calendar:CalendarMonthViewStyle backgroundColor="Gray" showTitle="true" showWeekNumbers="true" showDayNames="true" >
+                <calendar:CalendarMonthViewStyle.todayCellStyle>
+                    <calendar:DayCellStyle cellBackgroundColor="#66bbae" cellBorderWidth="2" cellBordecalendarolor="#f1e8ca" cellTextColor="#5b391e" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="14" />
+                </calendar:CalendarMonthViewStyle.todayCellStyle>
+
+                <calendar:CalendarMonthViewStyle.dayCellStyle>
+                    <calendar:DayCellStyle showEventsText="true" eventTextColor="White" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8" 
+                                            cellAlignment="VerticalCenter" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#9ebd9e" 
+                                            cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" ios:cellTextSize="12" android:cellTextSize="10"/>
+                </calendar:CalendarMonthViewStyle.dayCellStyle>
+
+                <calendar:CalendarMonthViewStyle.weekendCellStyle>
+                    <calendar:DayCellStyle eventTextColor="BlueViolet" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8" 
+                                            cellAlignment="VerticalCenter" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#dd855c" 
+                                            cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="12" />
+                </calendar:CalendarMonthViewStyle.weekendCellStyle>
+
+                <calendar:CalendarMonthViewStyle.selectedDayCellStyle>
+                    <calendar:DayCellStyle eventTextColor="Blue" eventFontName="Times New Roman" eventFontStyle="Bold" eventTextSize="8" 
+                                            cellAlignment="VerticalCenter" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#dbcbbb" 
+                                            cellBorderWidth="2" cellBordecalendarolor="#745151" cellTextColor="Black" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="18" />
+                </calendar:CalendarMonthViewStyle.selectedDayCellStyle>
+
+                <calendar:CalendarMonthViewStyle.weekNumbecalendarellStyle>
+                    <calendar:CellStyle cellBackgroundColor="#bbcbdb" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="8" />
+                </calendar:CalendarMonthViewStyle.weekNumbecalendarellStyle>
+
+                <calendar:CalendarMonthViewStyle.dayNameCellStyle>
+                    <calendar:CellStyle  cellBackgroundColor="#f1e8ca" cellBorderWidth="1" cellBordecalendarolor="#745151" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="10" />
+                </calendar:CalendarMonthViewStyle.dayNameCellStyle>
+
+                <calendar:CalendarMonthViewStyle.titleCellStyle>
+                    <calendar:CellStyle  cellBackgroundColor="#bbcbdb" cellBorderWidth="1" cellBordecalendarolor="#745151" cellTextColor="#dd855c" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="18" />
+                </calendar:CalendarMonthViewStyle.titleCellStyle>
+            
+                <calendar:CalendarMonthviewStyle.inlineEventCellStyle>
+                    <calendar:InlineEventCellStyle cellBackgroundColor="LightPink" eventTextColor="Gold" eventFontName="Avenir" eventFontStyle="BoldItalic" eventTextSize="12" 
+                                            timeTextColor="DeepSkyBlue" timeFontName="Courier" timeFontStyle="Regular" timeTextSize="14"/>
+                </calendar:CalendarMonthviewStyle.inlineEventCellStyle>
+
+            </calendar:CalendarMonthViewStyle>
+        </calendar:RadCalendar.monthViewStyle>
+        -->
+        <!-- finish calendar-monthview-styling -->
+
         <!-- >> calendar-dayview-styling -->
         <calendar:RadCalendar.dayViewStyle>
-        <calendar:CalendarDayViewStyle backgroundColor="#dd855c" showTitle="true" showWeekNumbers="true" showDayNames="true" >
+        <calendar:CalendarDayViewStyle backgroundColor="#dd855c" showTitle="true" showWeekNumbers="false" showDayNames="true" >
         <!--
                 <calendar:CalendarDayViewStyle.todayCellStyle>
                     <calendar:DayCellStyle cellBackgroundColor="#dd855c" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="14" />
@@ -46,12 +95,12 @@
                         timeLabelFormat="HH:mm" timeLabelTextColor="#0023ff"
                         timeLabelTextSize="12"/>
                 </calendar:CalendarDayViewStyle.dayEventsViewStyle>
-<!--
+<!--                
                 <calendar:CalendarDayViewStyle.allDayEventsViewStyle>
                     <calendar:AllDayEventsViewStyle backgroundColor="#00ffff"
                         allDayText="DAILY" allDayTextIsVisible="true" />
-                </calendar:CalendarDayViewStyle.allDayEventsViewStyle>
-                -->
+                </calendar:CalendarDayViewStyle.allDayEventsViewStyle>            
+-->                
             </calendar:CalendarDayViewStyle>
         </calendar:RadCalendar.dayViewStyle>
         <!-- << calendar-dayview-styling -->

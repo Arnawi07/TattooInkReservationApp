@@ -20,7 +20,7 @@
 				<Label class="hr-light" />
 			</StackLayout>
 
-            <StackLayout>
+            <StackLayout visibility="{{ showTxtField ? 'visible' : 'collapse' }}">
 				<Label id="recoverPassword" text="¿ Has olvidado la contraseña ?" tap="resetPassword"/>
 			</StackLayout>
 
