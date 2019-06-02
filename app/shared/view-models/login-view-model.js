@@ -8,8 +8,10 @@ function User(info) {
     // Object
     var viewModel = new observableModule.fromObject({
       //username: info.username || "",
-      email: info.email || "",
-      password: info.password || "",
+      /*email: info.email || "",
+      password: info.password || "",*/
+      email: "forand2019@gmail.com" || "",
+      password: "pepe123" || "",
       isLoggingIn: true,
       showTxtField: true
     });

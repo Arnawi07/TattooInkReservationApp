@@ -11,3 +11,9 @@ exports.onShownModally = function(args) {
 exports.onCloseModal = function(args) {
     args.object.closeModal();
 }
+
+exports.onNavigatedFrom = function(args) {
+    if (args.isBackNavigation === true) {
+        args.object.closeModal();
+    }
+}

@@ -1,5 +1,59 @@
-<Page actionBarHidden="true">
+<Page actionBarHidden="true" loaded="loaded" xmlns:calendar="nativescript-ui-calendar">
     <Page.actionBar>
             <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
+    <calendar:RadCalendar id="calendar" dateSelected="onDateSelected" viewMode="Month">
+        <!-- >> calendar-dayview-styling -->
+        <calendar:RadCalendar.dayViewStyle>
+        <calendar:CalendarDayViewStyle backgroundColor="#dd855c" showTitle="true" showWeekNumbers="true" showDayNames="true" >
+        <!--
+                <calendar:CalendarDayViewStyle.todayCellStyle>
+                    <calendar:DayCellStyle cellBackgroundColor="#dd855c" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="14" />
+                </calendar:CalendarDayViewStyle.todayCellStyle>
+
+                <calendar:CalendarDayViewStyle.dayCellStyle>
+                    <calendar:DayCellStyle showEventsText="true" eventTextColor="White" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8"
+                                            cellAlignment="VerticalCenter" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#9ebd9e"
+                                            cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" ios:cellTextSize="12" android:cellTextSize="10"/>
+                </calendar:CalendarDayViewStyle.dayCellStyle>
+
+                <calendar:CalendarDayViewStyle.weekendCellStyle>
+                    <calendar:DayCellStyle eventTextColor="BlueViolet" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8"
+                                            cellAlignment="VerticalCenter" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#f1e8ca"
+                                            cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="12" />
+                </calendar:CalendarDayViewStyle.weekendCellStyle>
+
+                <calendar:CalendarDayViewStyle.selectedDayCellStyle>
+                    <calendar:DayCellStyle eventTextColor="Blue" eventFontName="Times New Roman" eventFontStyle="Bold" eventTextSize="8"
+                                            cellAlignment="VerticalCenter" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#745151"
+                                            cellBorderWidth="2" cellBordecalendarolor="#f1e8ca" cellTextColor="Black" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="18" />
+                </calendar:CalendarDayViewStyle.selectedDayCellStyle>
+
+                <calendar:CalendarDayViewStyle.weekNumbecalendarellStyle>
+                    <calendar:CellStyle cellBackgroundColor="#bbcbdb" cellBorderWidth="2" cellBordecalendarolor="#745151" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="8" />
+                </calendar:CalendarDayViewStyle.weekNumbecalendarellStyle>
+
+                <calendar:CalendarDayViewStyle.dayNameCellStyle>
+                    <calendar:CellStyle  cellBackgroundColor="#bbcbdb" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="10" />
+                </calendar:CalendarDayViewStyle.dayNameCellStyle>
+
+                <calendar:CalendarDayViewStyle.titleCellStyle>
+                    <calendar:CellStyle cellBackgroundColor="#dd855c" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="18" />
+                </calendar:CalendarDayViewStyle.titleCellStyle>
+-->
+                <calendar:CalendarDayViewStyle.dayEventsViewStyle>
+                    <calendar:DayEventsViewStyle backgroundColor="#B5B5F9"
+                        timeLabelFormat="HH:mm" timeLabelTextColor="#0023ff"
+                        timeLabelTextSize="12"/>
+                </calendar:CalendarDayViewStyle.dayEventsViewStyle>
+<!--
+                <calendar:CalendarDayViewStyle.allDayEventsViewStyle>
+                    <calendar:AllDayEventsViewStyle backgroundColor="#00ffff"
+                        allDayText="DAILY" allDayTextIsVisible="true" />
+                </calendar:CalendarDayViewStyle.allDayEventsViewStyle>
+                -->
+            </calendar:CalendarDayViewStyle>
+        </calendar:RadCalendar.dayViewStyle>
+        <!-- << calendar-dayview-styling -->
+    </calendar:RadCalendar>
 </Page>
