@@ -1,14 +1,20 @@
-<Page actionBarHidden="true" loaded="loaded" xmlns:calendar="nativescript-ui-calendar" xmlns:dropDown="nativescript-drop-down">
+<Page actionBarHidden="true" loaded="loaded" xmlns:calendar="nativescript-ui-calendar" xmlns:dropDown="nativescript-drop-down" xmlns:floatingButton="nativescript-floatingactionbutton">
     <Page.actionBar>
             <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
     <StackLayout>
         <GridLayout id="actionBar" columns="auto,auto" rows="auto,auto" >
                 <Label col="0" row="0" text="Tatuador: "/>
-                <dropDown:DropDown id="dropDown" col="1" row="0" items="{{ workersList.workersListNames }}" selectedIndex="0"/> 
-        </GridLayout>    
-              
-        <calendar:RadCalendar id="calendar" eventSource="{{ calendarReservations }}" dateSelected="onDateSelected" viewMode="Month" locale="es-ES">
+                <dropDown:DropDown id="dropDown" col="1" row="0" items="{{ workersList.workersListNames }}" selectedIndex="{{ selectedIndex }}" selectedIndexChanged="getSelectedIndexChanged"/>                
+        </GridLayout>  
+        <StackLayout orientation="horizontal">
+                <Button id="month" text="Mes" tap="changeViewMode"/>
+                <Button id="day" text="Día" tap="changeViewMode"/>
+                <Button id="today" text="Hoy" tap="changeViewMode"/>
+        </StackLayout>
+
+        <GridLayout id="actionBar" rows="auto, *" >              
+        <calendar:RadCalendar id="calendar" row="1" eventSource="{{ calendarReservations }}" navigatedToDate="navigatedToDate" dateSelected="onDateSelected" viewMode="Month" locale="es-ES">
 
             <!-- calendar-monthview-styling -->
             <calendar:RadCalendar.monthViewStyle>
@@ -107,5 +113,13 @@
             </calendar:RadCalendar.dayViewStyle>
             <!-- << calendar-dayview-styling -->
         </calendar:RadCalendar>
+    
+        <floatingButton:fab tap="fabTap"      
+                     visibility="{{ showFloatingButton ? 'visible' : 'collapse' }}"
+                     row="1"
+                     icon="~/resources/delete.png"
+                     rippleColor="#f1f1f1"
+                     class="fab-button" />
+        </GridLayout>
     </StackLayout>
 </Page>

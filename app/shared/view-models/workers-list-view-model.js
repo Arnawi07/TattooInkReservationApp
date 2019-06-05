@@ -12,7 +12,7 @@ function WorkersList(){
 
     viewModel.getWorkersList = function(){
         var onQueryEvent = function(result) {
-            if (!result.error) {
+            if (!result.error) {                
                 viewModel.workersListNames.push(result.value.name+" "+result.value.surname);
                 viewModel.workersListTimeTables.push(result.value.nameTimeTable);
             }
@@ -34,9 +34,11 @@ function WorkersList(){
             }
         );
     };
-/*
 
-    viewModel.getReservationsList = function(month){
+   
+
+
+    viewModel.getReservationsList = function(timeTableWorker, month){
         var onQueryEvent = function(result) {
             if (!result.error) {
                 viewModel.get("reservationsList").push({
@@ -49,7 +51,7 @@ function WorkersList(){
     
         return firebase.query(
             onQueryEvent,
-            "/timeTables/"+month,
+            "/timeTables/"+timeTableWorker+"/"+month,
             {
                 singleEvent: false,
                 
@@ -64,7 +66,7 @@ function WorkersList(){
             }
         );
     };
-*/
+
     return viewModel;
 }
 
