@@ -1,6 +1,7 @@
 var observableModule = require("tns-core-modules/data/observable");
 var ObservableArray = require("tns-core-modules/data/observable-array").ObservableArray;
 var calendarModule = require("nativescript-ui-calendar");
+var timerModule = require("tns-core-modules/timer");
 
 var WorkersList = require("../../shared/view-models/workers-list-view-model");
 var workersList =  new WorkersList();
@@ -11,47 +12,54 @@ var pageData = new observableModule.fromObject({
     workersList: workersList,
     selectedIndex: 0,
     actualMonthCalendar: 0,
-    calendarReservations: [],
+    timeTableWorker : "",
     showFloatingButton: false
 });
-
 
 exports.loaded = function (args) {
     page = args.object;
     today = new Date();
-    pageData.set("actualMonthCalendar", today.getMonth());
-    workersList.getWorkersList();
-    //setCalendarReservations();  //Carga las reservas
-
+    pageData.set("actualMonthCalendar", today.getMonth()); //Se settea la variable del mes al mes actual.
+    workersList.getWorkersList(); //Se rellenan las listas de los nombres de los trabajadores y de sus timeTables.
+    
     page.bindingContext = pageData;
 };
 
+
 exports.getSelectedIndexChanged = function(args){
     const dropDown = args.object;
-    pageData.set("selectedIndex", dropDown.selectedIndex);
+    pageData.set("selectedIndex", dropDown.selectedIndex);//Se recoge el indice del drop down y se settea en la variable "selectedIndex"
 
+    //Hace un for para recoger el nombre de la tabla del trabajador en funcion del indice seleccionado.
     workersList.workersListTimeTables.forEach(function(nameTimeTable, index) {
         if(index == pageData.get("selectedIndex")){
-            timeTableWorker = nameTimeTable; //alberto_rodriguez
+            pageData.set("timeTableWorker", nameTimeTable); 
         }    
     });
 
-    const actualMonthReservation = monthsOfYear[pageData.get("actualMonthCalendar")];
-    workersList.getReservationsList(timeTableWorker, actualMonthReservation);
-};
+    const actualMonthReservation = monthsOfYear[pageData.get("actualMonthCalendar")]; //Cuando se cambia el tatuador, se recoge el mes en el que esta el usuario y se coge el nombre del mes.  
+    workersList.getReservationsListForMonth(pageData.get("timeTableWorker"), actualMonthReservation);  //Se llama a la funcion para que se rellene la lista con las reservas de ese mes y de ese trabajador.
+    setTimeout(function(){
+        setCalendarReservations(); //Con la lista de las reservas rellena, se rellena el calendario con las reservas de ese mes
+    }, 400);  
+};      
 
 //Sirve para cuando estes deslizando de un mes a otro, setee la variable 'actualMonthCalendar' si es diferente mes.
 exports.navigatedToDate = function(args){
     const calendar = args.object;
     const dateChanged = args.date;
     const monthOfDateChanged = dateChanged.getMonth();
-
+    
+    //Mirar si el "timeTableWorker" es vacio o no
     if(pageData.get("actualMonthCalendar") != monthOfDateChanged){
         pageData.set("actualMonthCalendar", monthOfDateChanged);
+        const actualMonthReservation = monthsOfYear[pageData.get("actualMonthCalendar")]; //Se recoge el mes previamente setteado y se coge el nombre del mes.
+        //workersList.getReservationsListForMonth(pageData.get("timeTableWorker"), actualMonthReservation); //Se llama a la funcion para que se rellene la lista con las reservas de ese mes y de ese trabajador.
+        //setCalendarReservations(); //Con la lista de las reservas rellena, se rellena el calendario con las reservas de ese mes.
     }
 };
 
-// Recoge la fecha seleccionada y cambia a la vista 'Day' si estas en la vista 'Month'.
+//Recoge la fecha seleccionada y cambia a la vista 'Day' si estas en la vista 'Month'.
 exports.onDateSelected = function(args) {
     const calendar = args.object;
     const dateSelected = args.date;
@@ -90,15 +98,14 @@ exports.changeViewMode = function(args){
 
 function setCalendarReservations(){
     let reservations = [];  //El que se rellena de reservas hacia la vista calendar.
-    let reservationsList = [{endDate: "", startDate:"", displayName: "Zizquito Viñuales"}]; //El que se recoge de bbdd
-    let j = 1;
-    for (let i = 0; i < reservationsList.length; i++) {
-        const now = new Date();
-        const startDate = new Date(now.getFullYear(), now.getMonth(), j * 2);
-        const endDate = new Date(now.getFullYear(), now.getMonth(), (j * 2) + (j % 3));
-        const reservation = new calendarModule.CalendarEvent(reservationsList[i].displayName, startDate, endDate);
+
+    workersList.reservationsCalendar.forEach(function(reserve) {
+        const startDate = new Date(reserve.startDate);
+        const endDate = new Date(reserve.endDate);      
+
+        const reservation = new calendarModule.CalendarEvent(reserve.displayName, startDate, endDate);
         reservations.push(reservation);
-        j++;
-    }
-    this.set("calendarReservations", reservations);
+    });
+    
+    pageData.set("calendarReservations", reservations);
 }

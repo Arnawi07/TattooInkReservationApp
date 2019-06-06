@@ -14,7 +14,7 @@ function WorkersList(){
         var onQueryEvent = function(result) {
             if (!result.error) {                
                 viewModel.workersListNames.push(result.value.name+" "+result.value.surname);
-                viewModel.workersListTimeTables.push(result.value.nameTimeTable);
+                viewModel.workersListTimeTables.push(result.value.nameTimeTable);                
             }
         };
     
@@ -35,23 +35,36 @@ function WorkersList(){
         );
     };
 
-   
-
-
-    viewModel.getReservationsList = function(timeTableWorker, month){
+   //Comprueba el ano cabron.
+    viewModel.getReservationsListForMonth = function(timeTableWorker, month){
         var onQueryEvent = function(result) {
             if (!result.error) {
-                viewModel.get("reservationsList").push({
-                    endDate : result.value.endDate,
-                    startDate : result.value.startDate,
-                    uidClient : result.value.uidClient
-                });
-            }
-        };
-    
+               
+                const day = result.key; 
+                
+                for (let key in result.value){
+                    //alert(key); //-L50HJKIOPO
+                    firebase.getValue("/timeTables/" + timeTableWorker + "/" + month + "/" + day + "/" + key)
+                        .then(function(reservation){
+                            //alert("OBJETO => "+JSON.stringify(reservation));
+                            viewModel.reservationsCalendar.push({
+                                endDate: reservation.value.endDate,
+                                startDate: reservation.value.startDate,
+                                uidClient: reservation.value.uidClient,
+                                displayName: reservation.value.displayName
+                            });
+                            
+                            //alert("END DATE => "+ reservation.value.endDate); // 2019-06-30T20:00:00
+                            //alert("START DATE => "+ reservation.value.startDate); // 2019-06-30T19:30:00
+                            //alert("UIDCLIENT => "+ reservation.value.uidClient); // dKxUY52t0hgNDF10wd0ZPytT59o1
+                            //alert("DISPLAY NAME => "+reservation.value.displayName); // Pepe de los palotes
+                    });        
+                }
+            }           
+        }
+        
         return firebase.query(
-            onQueryEvent,
-            "/timeTables/"+timeTableWorker+"/"+month,
+            onQueryEvent, "/timeTables/" + timeTableWorker + "/" + month,
             {
                 singleEvent: false,
                 
