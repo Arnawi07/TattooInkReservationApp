@@ -9,6 +9,11 @@
 				<Label class="hr-light" />
 			</StackLayout>-->
 
+            <StackLayout class="input-field" visibility="{{ showTxtField ? 'collapse' : 'visible' }}">
+				<TextField id="displayNameXML" class="input" text="{{ displayName }}" hint="Nombre y apellido"/>
+				<Label class="hr-light"/>
+			</StackLayout>
+
             <StackLayout class="input-field">
 				<TextField id="emailXML" class="input" text="{{ email }}" hint="Correo electrónico" 
                 keyboardType="email" autocorrect="false" autocapitalizationType="none" />

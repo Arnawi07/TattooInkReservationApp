@@ -14,10 +14,10 @@ var page;
 var currentUser;
 var imagePath;
 
-exports.loaded = function (args) {
+exports.loadedUserProfile = function (args) {
     page = args.object;
     imagePath = userProfile.imagePath;
-    //alert(imagePath);
+    //alert("loadedUserProfile");
     getCurrentUser();
     page.bindingContext = userProfile;
 };

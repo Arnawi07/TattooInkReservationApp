@@ -7,7 +7,7 @@ function User(info) {
 
     // Object
     var viewModel = new observableModule.fromObject({
-      //username: info.username || "",
+      displayName: info.displayName || "",
       /*email: info.email || "",
       password: info.password || "",*/
       email: "forand2019@gmail.com" || "",
@@ -20,11 +20,13 @@ function User(info) {
     /* Functions */
     viewModel.register = function() {
       return firebase.createUser({
-          //displayName: viewModel.get("username"),
           email: viewModel.get("email"),
           password: viewModel.get("password"),
           emailVerified: false
         }).then(function (user) {
+            firebase.updateProfile({
+              displayName: viewModel.get("displayName")
+            });
             console.log(JSON.stringify(user));
             sendEmailVerification();
             return user;          

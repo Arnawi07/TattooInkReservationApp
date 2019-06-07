@@ -1,15 +1,15 @@
-<Page actionBarHidden="true" loaded="loaded" xmlns:calendar="nativescript-ui-calendar" xmlns:dropDown="nativescript-drop-down" xmlns:floatingButton="nativescript-floatingactionbutton">
+<Page id="pageReservations" actionBarHidden="true" loaded="loadedReservation" xmlns:calendar="nativescript-ui-calendar" xmlns:dropDown="nativescript-drop-down" xmlns:floatingButton="nativescript-floatingactionbutton">
     <Page.actionBar>
             <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
     <StackLayout>
         <GridLayout id="actionBar" columns="auto,auto" rows="auto,auto" >
                 <Label col="0" row="0" text="Tatuador: "/>
-                <dropDown:DropDown id="dropDown" col="1" row="0" items="{{ workersList.workersListNames }}" selectedIndex="{{ selectedIndex }}" selectedIndexChanged="getSelectedIndexChanged"/>                
+                <dropDown:DropDown id="dropDown" col="1" row="0" items="{{ reservations.workersListNames }}" selectedIndex="{{ selectedIndex }}" selectedIndexChanged="getSelectedIndexChanged"/>                
         </GridLayout>  
         <StackLayout orientation="horizontal">
                 <Button id="month" text="Mes" tap="changeViewMode"/>
-                <Button id="day" text="Día" tap="changeViewMode"/>
+                <!--<Button id="day" text="Día" tap="changeViewMode"/>-->
                 <Button id="today" text="Hoy" tap="changeViewMode"/>
         </StackLayout>
 

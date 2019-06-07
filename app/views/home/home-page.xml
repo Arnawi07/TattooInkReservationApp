@@ -1,4 +1,4 @@
-<Page actionBarHidden="true" loaded="loaded" xmlns:Card="nativescript-cardview" xmlns:lv="nativescript-ui-listview">
+<Page id="pageHome" actionBarHidden="true" loaded="loadedHome" xmlns:Card="nativescript-cardview" xmlns:lv="nativescript-ui-listview">
     <Page.actionBar>
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>

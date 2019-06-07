@@ -20,7 +20,7 @@ exports.toggleDisplay = function () {
     showTxtField = !showTxtField;
     
     //Vacia los campos cuando cambia a registro/inicio sesión    
-    //page.getViewById("usernameXML").text = "" 
+    page.getViewById("displayNameXML").text = "" 
     page.getViewById("emailXML").text = ""
     page.getViewById("passwordXML").text = ""
     page.getViewById("passwordConfirmationXML").text = ""

@@ -10,9 +10,9 @@ var pageData = new observableModule.fromObject({
 });
 
 
-exports.loaded = function(args) {
+exports.loadedHome = function(args) {
     page = args.object;
-    
+    //alert("loadedHome");
     //alert(pageData.get("isLoading"));
     if(pageData.get("isLoading")){
       tattooPhotosList.getAllTattooPhotosOrderBy().then(function(){

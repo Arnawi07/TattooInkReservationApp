@@ -1,4 +1,4 @@
-<Page actionBarHidden="true" loaded="loaded">
+<Page id="pageUserProfile" actionBarHidden="true" loaded="loadedUserProfile">
     <Page.actionBar>
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>

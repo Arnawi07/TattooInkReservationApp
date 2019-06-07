@@ -6,7 +6,7 @@
 		</ActionBar>
   </Page.actionBar>
 	<GridLayout rows="*" columns="*">
-		<TabView class="tab-view" loaded="onLoaded" selectedIndex="{{tabSelectedIndex}}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom">
+		<TabView class="tab-view" loaded="onLoaded" selectedIndex="0" androidTabsPosition="bottom">
 			<TabViewItem title="Inicio" iconSource="~/resources/home_icon.png">
 				<Frame id="homeFrame" defaultPage="views/home/home-page"/>
 			</TabViewItem>
