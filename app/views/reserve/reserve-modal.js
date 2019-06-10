@@ -14,10 +14,25 @@ var pageData = new observableModule.fromObject({
 
 var page;
 var dayOfweekSelected;
+var startDateHour;
+var endDateHour;
+var startDateMin;
+var endDateMin;
+
+//Parametros para el metodo de recoger las reservas del dia
+var timeTableWorker;
+var actualMonthReservation;
+var dateOfDateSelected;
+
 
 exports.onShownModally = function(args) {
     const context = args.context;
     dayOfweekSelected = context.dayOfWeekSelected;
+    dateOfDateSelected = context.dateOfDateSelected;
+    timeTableWorker = context.timeTableWorker;
+    actualMonthReservation = context.actualMonthReservation;
+
+    alert("dayNumber: " + dayOfweekSelected);
     page = args.object;
 
     reservations.emptyArrayInfoTattoos();
@@ -26,8 +41,12 @@ exports.onShownModally = function(args) {
 
     setTimeout(function(){
       page.getViewById("timeTableshop").text = "Info. Horario: "+reservations.timeTableShop;
-    },300);
-
+      splitTimeTable =  reservations.timeTableShop.split(" - ");
+      startDateHour = splitTimeTable[0].substring(0,2);
+      endDateHour = splitTimeTable[1].substring(0,2);
+      startDateMin = splitTimeTable[0].substring(3,5);
+      endDateMin = splitTimeTable[1].substring(3,5);
+    },400);
     page.bindingContext = pageData;
 }
 
@@ -40,7 +59,7 @@ exports.onNavigatedFrom = function(args) {
 exports.onPickerLoaded = function(args) {
     const timePicker = args.object;
 
-    timePicker.hour=09;
+    timePicker.hour=10;
     timePicker.minute=0;
     timePicker.minuteInterval=15;
 
@@ -57,7 +76,6 @@ exports.getSelectedIndexChanged = function(args){
   var approxPrice;
 
   reservations.tattooPrices.forEach(function(price, index) {
-    alert(index);
     if(index == dropDownTattooType.selectedIndex){
       approxPrice = price;
     }    
@@ -68,21 +86,110 @@ exports.getSelectedIndexChanged = function(args){
 exports.makeReserve = function(args){
   const tpHour = parseInt(page.getViewById("timePicker").hour);
   const tpMin = parseInt(page.getViewById("timePicker").minute);
+  alert(dateOfDateSelected);
 
+  startDateSchedule = new Date(dateOfDateSelected+"T00:00:00");
+  endDateSchedule = new Date(dateOfDateSelected+"T00:00:00");
+  startDateSelected = new Date(dateOfDateSelected+"T00:00:00");
+  startDateSelected = new Date(dateOfDateSelected+"T00:00:00");
+  console.log("stDatScg: " + startDateSchedule);
+
+  startDateSchedule.setHours(startDateHour);  
+  startDateSchedule.setMinutes(startDateMin);
+  startDateSchedule.setSeconds(0);
+
+  endDateSchedule.setHours(endDateHour);
+  endDateSchedule.setMinutes(endDateMin);
+  endDateSchedule.setSeconds(0);
+
+  startDateSelected.setHours(tpHour);
+  startDateSelected.setMinutes(tpMin);
+  startDateSelected.setSeconds(0);
   
-  if((dayOfweekSelected == 5 || dayOfweekSelected == 6 ) && (tpHour < 10 || tpHour >= 14)){ //Coger horarios de BBDD
-    alert("Debes de seleccionar dentro del horario de apertura.");
-  }else if(tpHour < 9 && tpHour >= 20){
-    alert("Debes de seleccionar dentro del horario de apertura.");
+  if(!(startDateSelected >= startDateSchedule && startDateSelected < endDateSchedule)){
+    alert("Debes de seleccionar una hora dentro del horario de apertura.");       
   }else{
     var indexTypeTattoo = page.getViewById("dropDownType").selectedIndex;
     var durationTattoo;
+    var endDateSelected;
     reservations.tattooDurations.forEach(function(duration, index) {
       if(index == indexTypeTattoo){
-        durationTattoo = duration;
+        durationTattoo = duration;        
+        endDateSelected = new Date(startDateSelected);
+        endDateSelected.setMinutes(parseInt(startDateSelected.getMinutes() + durationTattoo));
       }    
     });
-    alert("DURACION DEL TATOO => "+durationTattoo);
-    alert("HORA DE LA RESERVA => "+tpHour+":"+tpMin);
+
+    reservations.emptyArrayReservationsCalendar();
+    reservations.getReservationsListForDay(timeTableWorker, actualMonthReservation, dateOfDateSelected);
+
+    setTimeout(function(){
+      var insert = true;
+      reservations.reservationsCalendar.forEach(function(reserve, index) {
+        //console.log(startDateSelected + ">=" + new Date(reserve.startDate) + "&&" + startDateSelected +"<" + new Date(reserve.endDate));
+        if(startDateSelected >= new Date(reserve.startDate) && startDateSelected < new Date(reserve.endDate)){
+          //alert("COINCIDE FECHA1");
+          insert = false;
+        }
+        //console.log(endDateSelected + ">=" + new Date(reserve.startDate) + "&&" + endDateSelected +"<" + new Date(reserve.endDate));
+        if(endDateSelected > new Date(reserve.startDate) && endDateSelected <= new Date(reserve.endDate)){
+          //alert("COINCIDE FECHA2");
+          insert = false;
+        }
+        
+        if( endDateSelected > endDateSchedule ){
+          insert = false;
+        }
+      });
+      //COMRPOBAR QUE NO SE SALGA DE LAS HORAS DE TRABAJO!!!
+      //hasta que no se seleccione el tamaño del tatto no se puede clicar "RESERVAR"
+
+      if(insert){
+        alert("ESTOY GRABANDO");
+        reservations.getCurrentUser()
+          .then(function(user){
+            const startDateFormatSelected = formatDate(startDateSelected);
+            //alert("startDateFormatSelected => "+startDateFormatSelected);
+
+            const endDateFormatSelected = formatDate(endDateSelected);
+            //alert("endDateFormatSelected => "+endDateFormatSelected);
+            alert("timeTableWorker => "+timeTableWorker);
+            alert("actualMonthReservation => "+actualMonthReservation);
+            alert("dateOfDateSelected => "+dateOfDateSelected);
+            reservations.putReserveIntoDay(timeTableWorker, actualMonthReservation, dateOfDateSelected, user.displayName, endDateFormatSelected, startDateFormatSelected, user.uid, user.email).catch(function(error){
+              alert("Error => "+error);
+            });
+          }).catch(function(){
+
+          });
+        
+      }else{
+        alert("Tu reserva coincide con la reserva de otro usuario.");
+      }
+    }, 300);
+
+
+    //alert("DURACION DEL TATOO => "+durationTattoo);
+    //alert("HORA DE LA RESERVA => "+tpHour+":"+tpMin);
+    /*if(moment(fechafinal).isSameOrBefore(fechacomprobarfinal)&&moment(fechafinal).isAfter(fechacomprobarinicio)){
+      insertar=false;
+      }
+      if(moment(dayselected).isSameOrAfter(fechacomprobarinicio)&&moment(dayselected).isBefore(fechacomprobarfinal)){
+      insertar=false;
+      }*/
+
+    
+
+      
   }
+}
+
+function formatDate(date){
+  const dayOfStartDateSelected = parseInt(date.getDate()) < 10 ? "0" + parseInt(date.getDate()) : parseInt(date.getDate());
+  const monthOfStartDateSelected = parseInt(date.getMonth()+1) < 10 ? "0" + parseInt(date.getMonth()+1) : parseInt(date.getMonth()+1);
+  const hourOfStartDateSelected = parseInt(date.getHours()) < 10 ? "0" + parseInt(date.getHours()) : parseInt(date.getHours());
+  const minutesOfStartDateSelected = parseInt(date.getMinutes()) < 10 ? "0" + parseInt(date.getMinutes()) : parseInt(date.getMinutes());
+  const secondsOfStartDateSelected = parseInt(date.getSeconds()) < 10 ? "0" + parseInt(date.getSeconds()) : parseInt(date.getSeconds());
+
+  return date.getFullYear()+"-"+monthOfStartDateSelected+"-"+dayOfStartDateSelected+"T"+hourOfStartDateSelected+":"+minutesOfStartDateSelected+":"+secondsOfStartDateSelected;
 }

@@ -9,11 +9,14 @@ function Reservations(){
     viewModel.workersListNames = new ObservableArray([]);
     viewModel.workersListTimeTables = new ObservableArray([]);
     viewModel.reservationsCalendar = new ObservableArray([]);
+    viewModel.holidaysCalendar = new ObservableArray([]);
     //Reserve-modal
     viewModel.tattooTypes = new ObservableArray([]);
     viewModel.tattooPrices = new ObservableArray([]);
     viewModel.tattooDurations = new ObservableArray([]);
     viewModel.timeTableShop = "";
+
+    
 
 
     viewModel.emptyArrayWorkersListNames = function(){                
@@ -73,13 +76,13 @@ function Reservations(){
     viewModel.getReservationsListForDay = function(timeTableWorker, month, date){
         var onQueryEvent = function(result) {
             if (!result.error) {               
-                console.log("res: "+ JSON.stringify(result.value));
                 viewModel.reservationsCalendar.push({
                     endDate: result.value.endDate,
                     startDate: result.value.startDate,
                     uidClient: result.value.uidClient,
                     displayName: result.value.displayName
                 });
+
                 //alert("END DATE => "+ reservation.value.endDate); // 2019-06-30T20:00:00
                 //alert("START DATE => "+ reservation.value.startDate); // 2019-06-30T19:30:00
                 //alert("UIDCLIENT => "+ reservation.value.uidClient); // dKxUY52t0hgNDF10wd0ZPytT59o1
@@ -133,22 +136,97 @@ function Reservations(){
     viewModel.getTimeTableShop = function(dayWeek){
         return firebase.getValue("/timeTableShop/scheduleShop/"+dayWeek)
             .then(function(result){
-                viewModel.timeTableShop = result.value.startDate+"-"+result.value.endDate;
+                viewModel.timeTableShop = result.value.startDate+"h - "+result.value.endDate + "h";
             }).catch(function(error){
                 console.error("ERROR: getAllTattooPhotos() -> " + error);
             });       
-    }; 
+    };
     
-    
+    viewModel.getReservesToday = function(timeTableWorker, month, date){
+        var onQueryEvent = function(result) {
+            if (!result.error) {               
+                viewModel.tattooTypes.push(result.key+" ( "+result.value.minMeasure+"cm - "+result.value.maxMeasure+"cm )");
+                viewModel.tattooPrices.push(result.value.approxPrice);
+                viewModel.tattooDurations.push(result.value.duration);
+            }           
+        }
+        
+        return firebase.query(
+            onQueryEvent, "/timeTables/" + timeTableWorker + "/" + month + "/" + date,
+            {
+                singleEvent: false,
+                
+                orderBy: {
+                    type: firebase.QueryOrderByType.CHILD,
+                    value: 'since' 
+                },
+                limit: {
+                    type: firebase.QueryLimitType.LAST,
+                    value: 'since'
+                }
+            }
+        );
+    }
 
-    viewModel.getCurrentUserUid = function(){
+    viewModel.putReserveIntoDay = function(timeTableWorker, month, date, displayName, endDate, startDate, uidClient, emailClient){
+        return firebase.push("/timeTables/" + timeTableWorker + "/" + month + "/" + date,{
+                    "displayName": displayName,
+                    "endDate": endDate,
+                    "startDate": startDate,
+                    "uidClient": uidClient
+                    //"email": emailClient
+            }
+        ).then(function (result) {
+            console.log("created key: " + result.key);
+            }
+        );
+    }; 
+
+    viewModel.getCurrentUser = function(){
         return firebase.getCurrentUser()
             .then(function(user){
                 //alert(JSON.stringify(user));
                 console.log("User uid: " + user.uid);
-                return user.uid;
+                return user;
             });
     }
+
+
+    viewModel.getHolidays = function(){
+        var onQueryEvent = function(result) {
+            if (!result.error) {               
+                viewModel.holidaysCalendar.push({
+                    endDate: result.value.endDate,
+                    startDate: result.value.startDate
+                });
+            }           
+        }
+        
+        return firebase.query(
+            onQueryEvent, "/timeTableShop/holidays",
+            {
+                singleEvent: false,
+                
+                orderBy: {
+                    type: firebase.QueryOrderByType.CHILD,
+                    value: 'since' 
+                },
+                limit: {
+                    type: firebase.QueryLimitType.LAST,
+                    value: 'since'
+                }
+            }
+        );
+
+    }
+
+    //Reservations-page
+
+    //Reserve-modal
+
+    //Extra
+
+
 
     return viewModel;
 }
