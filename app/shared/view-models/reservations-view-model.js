@@ -9,17 +9,42 @@ function Reservations(){
     viewModel.workersListNames = new ObservableArray([]);
     viewModel.workersListTimeTables = new ObservableArray([]);
     viewModel.reservationsCalendar = new ObservableArray([]);
+    //Reserve-modal
+    viewModel.tattooTypes = new ObservableArray([]);
+    viewModel.tattooPrices = new ObservableArray([]);
+    viewModel.tattooDurations = new ObservableArray([]);
+    viewModel.timeTableShop = "";
 
-    viewModel.emptyArrays = function(){                
+
+    viewModel.emptyArrayWorkersListNames = function(){                
         while(viewModel.workersListNames.length){
             viewModel.workersListNames.pop();
         }
         /*while(viewModel.workersListTimeTables.length){
             viewModel.workersListTimeTables.pop();
-        }
+        }*/
+       
+    }
+
+    viewModel.emptyArrayReservationsCalendar = function(){                
         while(viewModel.reservationsCalendar.length){
             viewModel.reservationsCalendar.pop();
-        }*/
+        }
+    }
+
+    viewModel.emptyArrayInfoTattoos = function(){                
+        while(viewModel.tattooPrices.length){
+            viewModel.tattooPrices.pop();
+        }
+        while(viewModel.tattooDurations.length){
+            viewModel.tattooDurations.pop();
+        }
+        while(viewModel.tattooTypes.length){
+            viewModel.tattooTypes.pop();
+        }
+        while(viewModel.timeTableShop.length){
+            viewModel.timeTableShop.pop();
+        }
     }
 
     viewModel.getWorkersList = function(){
@@ -46,8 +71,94 @@ function Reservations(){
             }
         );
     };
+    
+    viewModel.getReservationsListForDay = function(timeTableWorker, month, date){
+        var onQueryEvent = function(result) {
+            if (!result.error) {               
+                console.log("res: "+ JSON.stringify(result.value));
+                viewModel.reservationsCalendar.push({
+                    endDate: result.value.endDate,
+                    startDate: result.value.startDate,
+                    uidClient: result.value.uidClient,
+                    displayName: result.value.displayName
+                });
+                //alert("END DATE => "+ reservation.value.endDate); // 2019-06-30T20:00:00
+                //alert("START DATE => "+ reservation.value.startDate); // 2019-06-30T19:30:00
+                //alert("UIDCLIENT => "+ reservation.value.uidClient); // dKxUY52t0hgNDF10wd0ZPytT59o1
+                //alert("DISPLAY NAME => "+reservation.value.displayName); // Pepe de los palotes                
+            }           
+        }
+        
+        return firebase.query(
+            onQueryEvent, "/timeTables/" + timeTableWorker + "/" + month + "/" + date,
+            {
+                singleEvent: false,
+                
+                orderBy: {
+                    type: firebase.QueryOrderByType.CHILD,
+                    value: 'since' 
+                },
+                limit: {
+                    type: firebase.QueryLimitType.LAST,
+                    value: 'since'
+                }
+            }
+        );
+    };
 
-   //Comprueba el ano cabron.
+    viewModel.getInfoTattoos = function(){
+        var onQueryEvent = function(result) {
+            if (!result.error) {               
+                viewModel.tattooTypes.push(result.key+" ( "+result.value.minMeasure+"cm - "+result.value.maxMeasure+"cm )");
+                viewModel.tattooPrices.push(result.value.approxPrice);
+                viewModel.tattooDurations.push(result.value.duration);
+            }           
+        }
+        
+        return firebase.query(
+            onQueryEvent, "/tattooType",
+            {
+                singleEvent: false,
+                
+                orderBy: {
+                    type: firebase.QueryOrderByType.CHILD,
+                    value: 'since' 
+                },
+                limit: {
+                    type: firebase.QueryLimitType.LAST,
+                    value: 'since'
+                }
+            }
+        );
+    }; 
+
+    viewModel.getTimeTableShop = function(dayWeek){
+        return firebase.getValue("/timeTableShop/scheduleShop/"+dayWeek)
+            .then(function(result){
+                viewModel.timeTableShop = result.value.startDate+"-"+result.value.endDate;
+            }).catch(function(error){
+                console.error("ERROR: getAllTattooPhotos() -> " + error);
+            });       
+    }; 
+    
+    
+
+    viewModel.getCurrentUserUid = function(){
+        return firebase.getCurrentUser()
+            .then(function(user){
+                //alert(JSON.stringify(user));
+                console.log("User uid: " + user.uid);
+                return user.uid;
+            });
+    }
+
+    return viewModel;
+}
+
+module.exports = Reservations;
+
+/*
+  
     viewModel.getReservationsListForMonth = function(timeTableWorker, month, year){
         var onQueryEvent = function(result) {
             if (!result.error) {               
@@ -92,53 +203,4 @@ function Reservations(){
             }
         );
     };
-
-    /**
-     *      viewModel.getReservationsListForMonth = function(timeTableWorker, month, date){
-            var onQueryEvent = function(result) {
-                if (!result.error) {               
-                    console.log("res: "+ JSON.stringify(result.value));
-                    viewModel.reservationsCalendar.push({
-                        endDate: result.value.endDate,
-                        startDate: result.value.startDate,
-                        uidClient: result.value.uidClient,
-                        displayName: result.value.displayName
-                    });
-                    //alert("END DATE => "+ reservation.value.endDate); // 2019-06-30T20:00:00
-                    //alert("START DATE => "+ reservation.value.startDate); // 2019-06-30T19:30:00
-                    //alert("UIDCLIENT => "+ reservation.value.uidClient); // dKxUY52t0hgNDF10wd0ZPytT59o1
-                    //alert("DISPLAY NAME => "+reservation.value.displayName); // Pepe de los palotes                
-                }           
-            }
-            
-            return firebase.query(
-                onQueryEvent, "/timeTables/" + timeTableWorker + "/" + month + "/" + date,
-                {
-                    singleEvent: false,
-                    
-                    orderBy: {
-                        type: firebase.QueryOrderByType.CHILD,
-                        value: 'since' 
-                    },
-                    limit: {
-                        type: firebase.QueryLimitType.LAST,
-                        value: 'since'
-                    }
-                }
-            );
-        };
-     */
-
-    viewModel.getCurrentUserUid = function(){
-        return firebase.getCurrentUser()
-            .then(function(user){
-                //alert(JSON.stringify(user));
-                console.log("User uid: " + user.uid);
-                return user.uid;
-            });
-    }
-
-    return viewModel;
-}
-
-module.exports = Reservations;
+*/

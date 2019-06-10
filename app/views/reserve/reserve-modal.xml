@@ -1,5 +1,26 @@
-<Page xmlns="http://www.nativescript.org/tns.xsd" shownModally="onShownModally" navigatingFrom="onNavigatedFrom">
-    <GridLayout>
-        
-    </GridLayout>
+<Page xmlns="http://www.nativescript.org/tns.xsd" xmlns:dropDown="nativescript-drop-down" xmlns:datetime="nativescript-datetimepicker" shownModally="onShownModally" navigatingFrom="onNavigatedFrom">
+    <FlexboxLayout class="loginLayout">
+        <StackLayout class="formLayout">
+            <Label text="RESERVA CONSULTA"/>
+            <Label text="Hora para la consulta" style="text-decoration: underline"/>
+            <!--<datetime:TimePickerField pickerTitle="Reserva" hint="Selecciona hora" timeFormat="HH:mm" locale="es_ES"/>-->
+            <TimePicker id="timePicker" loaded="onPickerLoaded"/>
+            <Label id="timeTableshop" text=""/>
+            <Label text="Tipos de tatuajes" style="text-decoration: underline"/>
+
+            <StackLayout orientation="horizontal">
+                <Label text="Tamaño: "/>
+                <dropDown:DropDown id="dropDownType" items="{{ reservations.tattooTypes }}" selectedIndexChanged="getSelectedIndexChanged"/>
+            </StackLayout>
+
+            <StackLayout orientation="horizontal">
+                <Label text="Zona: "/>
+                <dropDown:DropDown id="dropDownAreas" items="{{ tattooAreas }}" selectedIndex="0"/>
+            </StackLayout>
+
+            <Label id="priceTattoo" text=""/>
+
+            <Button text="RESERVAR" tap="makeReserve"/>
+        </StackLayout>
+    </FlexboxLayout>
 </Page>

@@ -9,6 +9,7 @@ var reservations =  new Reservations();
 var monthsOfYear = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
 
 var page;
+var dayOfWeekSelected = -1;
 var pageData = new observableModule.fromObject({
     reservations: reservations,
     selectedIndex: 0,
@@ -23,14 +24,12 @@ exports.loadedReservation = function (args) {
     //alert("loadedReservation");
     page = args.object;
     today = new Date();
-    reservations.emptyArrays();
+    reservations.emptyArrayWorkersListNames();
     pageData.set("actualMonthCalendar", today.getMonth()); //Se settea la variable del mes al mes actual.
     pageData.set("actualYearCalendar", today.getFullYear()); //Se settea la variable del mes al mes actual.
-    //setTimeout(function(){
-        reservations.getWorkersList(); //Se rellenan las listas de los nombres de los trabajadores y de sus timeTables.
-    //}, 400);
+    reservations.getWorkersList(); //Se rellenan las listas de los nombres de los trabajadores y de sus timeTables.
     
-    
+
     page.bindingContext = pageData;
 };
 
@@ -45,13 +44,13 @@ exports.getSelectedIndexChanged = function(args){
             pageData.set("timeTableWorker", nameTimeTable); 
         }    
     });
-
+/*
     const actualMonthReservation = monthsOfYear[pageData.get("actualMonthCalendar")]; //Cuando se cambia el tatuador, se recoge el mes en el que esta el usuario y se coge el nombre del mes.  
     const actualYearReservation = pageData.get("actualYearCalendar");
     reservations.getReservationsListForMonth(pageData.get("timeTableWorker"), actualMonthReservation, actualYearReservation);  //Se llama a la funcion para que se rellene la lista con las reservas de ese mes y de ese trabajador.
     setTimeout(function(){
         setCalendarReservations(); //Con la lista de las reservas rellena, se rellena el calendario con las reservas de ese mes
-    }, 400); 
+    }, 400); */
 };      
 
 //Sirve para cuando estes deslizando de un mes a otro, setee la variable 'actualMonthCalendar' si es diferente mes.
@@ -61,20 +60,35 @@ exports.navigatedToDate = function(args){
     const monthOfDateChanged = dateChanged.getMonth();
     const yearOfDateChanged = dateChanged.getFullYear();
 
+    const dayOfDateSelected = parseInt(dateChanged.getDate()) < 10 ? "0" + parseInt(dateChanged.getDate()) : parseInt(dateChanged.getDate());
+    const monthOfDateSelected = parseInt(dateChanged.getMonth()+1) < 10 ? "0" + parseInt(dateChanged.getMonth()+1) : parseInt(dateChanged.getMonth()+1);
+    const yearOfDateSelected = dateChanged.getFullYear();
+    var dateOfDateSelected = yearOfDateSelected + "-" + monthOfDateSelected + "-" + dayOfDateSelected;
+
+
+   
+
     //alert("monthChanged: " + monthOfDateChanged + "monthActual: " + pageData.get("actualMonthCalendar"));
     //Mirar si el "timeTableWorker" es vacio o no
     if(pageData.get("actualMonthCalendar") != monthOfDateChanged || pageData.get("actualYearCalendar") != yearOfDateChanged && calendar.viewMode != calendarModule.CalendarViewMode.Year){
         pageData.set("actualYearCalendar", yearOfDateChanged);
-        pageData.set("actualMonthCalendar", monthOfDateChanged);
+        pageData.set("actualMonthCalendar", monthOfDateChanged); 
+    }
 
-       
-        const actualMonthReservation = monthsOfYear[pageData.get("actualMonthCalendar")]; //Se recoge el mes previamente setteado y se coge el nombre del mes.
-        reservations.getReservationsListForMonth(pageData.get("timeTableWorker"), actualMonthReservation, pageData.get("actualYearCalendar")); //Se llama a la funcion para que se rellene la lista con las reservas de ese mes y de ese trabajador.        
+    if(calendar.viewMode == calendarModule.CalendarViewMode.Day){      
+        //alert("He cambiado a la vista del dia");
+        //alert("timeT; "+ pageData.get("timeTableWorker"));
+        //if(pageData.get("timeTableWorker") !== ""){
+        reservations.emptyArrayReservationsCalendar();
+        // alert("date; "+ dateOfDateSelected);
+        const actualMonthReservation = monthsOfYear[pageData.get("actualMonthCalendar")]; //Cuando se cambia el tatuador, se recoge el mes en el que esta el usuario y se coge el nombre del mes.  
+        // alert("date; "+ actualMonthReservation);
+        reservations.getReservationsListForDay(pageData.get("timeTableWorker"), actualMonthReservation, dateOfDateSelected);  //Se llama a la funcion para que se rellene la lista con las reservas de ese mes y de ese trabajador.
         setTimeout(function(){
             setCalendarReservations(); //Con la lista de las reservas rellena, se rellena el calendario con las reservas de ese mes
-        }, 400);     
+        }, 200); 
+        //}
     }
-    
     
 };
 
@@ -85,33 +99,19 @@ exports.onDateSelected = function(args) {
     //pageData.set("actualMonthCalendar", monthOfDateSelected);
     //pageData.set("actualYearCalendar", yearOfDateSelected);
     
-    if (calendar.viewMode == calendarModule.CalendarViewMode.Month) {   //Si esta en la vista 'Month' cambiará a 'Day' solamente cuando seleccione/clique una fecha.
-        pageData.set("showFloatingButton", true);
-        calendar.viewMode = calendarModule.CalendarViewMode.Day;
-        calendar.selectedDate = args.date;
-        calendar.displayedDate = args.date;        
-    }
-
-    /**
-        const dayOfDateSelected = dateSelected.getDate();
-        const monthOfDateSelected = parseInt(dateSelected.getMonth()+1) < 10 ? "0" + parseInt(dateSelected.getMonth()+1) : parseInt(dateSelected.getMonth()+1);
-        const yearOfDateSelected = dateSelected.getFullYear();
-        var dateOfDateSelected = yearOfDateSelected + "-" + monthOfDateSelected + "-" + dayOfDateSelected;
-        console.log("timeT; "+ pageData.get("timeTableWorker"));
-        if(pageData.get("timeTableWorker") !== ""){
-            reservations.emptyArrays();
-            console.log("date; "+ dateOfDateSelected);
-            const actualMonthReservation = monthsOfYear[pageData.get("actualMonthCalendar")]; //Cuando se cambia el tatuador, se recoge el mes en el que esta el usuario y se coge el nombre del mes.  
-            console.log("date; "+ actualMonthReservation);
-            reservations.getReservationsListForMonth(pageData.get("timeTableWorker"), actualMonthReservation, dateOfDateSelected);  //Se llama a la funcion para que se rellene la lista con las reservas de ese mes y de ese trabajador.
-            setTimeout(function(){
-                setCalendarReservations(); //Con la lista de las reservas rellena, se rellena el calendario con las reservas de ese mes
-            }, 400); 
-        }else{
-            alert("Debes seleccionar un tatuador.");
+    if(pageData.get("timeTableWorker") !== ""){
+        if (calendar.viewMode == calendarModule.CalendarViewMode.Month) {   //Si esta en la vista 'Month' cambiará a 'Day' solamente cuando seleccione/clique una fecha.
+            dayOfWeekSelected = dateSelected.getDay();
+            pageData.set("showFloatingButton", true);
+            calendar.viewMode = calendarModule.CalendarViewMode.Day;
+            calendar.selectedDate = args.date;
+            calendar.displayedDate = args.date;        
         }
-     */
-    
+    }else{
+        alert("Debes seleccionar un tatuador.");
+    } 
+
+   
 }
 
 exports.changeViewMode = function(args){
@@ -158,5 +158,15 @@ function setCalendarReservations(){
                 reservationsList.push(reservation);
             });
             pageData.set("calendarReservations", reservationsList);
-        });    
+    });    
 }
+
+
+exports.reserve = function(args) {
+    const modalViewModule = "views/reserve/reserve-modal";
+    const mainView = args.object;
+    const context = { dayOfWeekSelected: dayOfWeekSelected };
+    const fullscreen = true;
+    mainView.showModal(modalViewModule, context, function(dayOfWeekSelected) {
+    }, fullscreen);
+};

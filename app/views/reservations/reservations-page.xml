@@ -14,7 +14,7 @@
         </StackLayout>
 
         <GridLayout id="actionBar" rows="auto, *" >              
-        <calendar:RadCalendar id="calendar" row="1" eventSource="{{ calendarReservations }}" navigatedToDate="navigatedToDate" dateSelected="onDateSelected" viewMode="Month" locale="es-ES">
+        <calendar:RadCalendar id="calendar" row="1" firstDayOfWeek="1" eventSource="{{ calendarReservations }}" navigatedToDate="navigatedToDate" dateSelected="onDateSelected" viewMode="Month" locale="es-ES">
 
             <!-- calendar-monthview-styling -->
             <calendar:RadCalendar.monthViewStyle>
@@ -114,7 +114,7 @@
             <!-- << calendar-dayview-styling -->
         </calendar:RadCalendar>
     
-        <floatingButton:fab tap="fabTap"      
+        <floatingButton:fab tap="reserve"      
                      visibility="{{ showFloatingButton ? 'visible' : 'collapse' }}"
                      row="1"
                      icon="~/resources/delete.png"

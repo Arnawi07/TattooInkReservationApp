@@ -1,0 +1,10 @@
+.loginLayout {
+    justify-content: center;
+    align-items: center;
+}
+
+.formLayout {
+    padding: 0 30 0 30;
+    flex-grow: 2;
+    vertical-align: middle;
+}

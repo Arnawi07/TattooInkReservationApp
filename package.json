@@ -13,6 +13,7 @@
   "repository": "<fill-your-repository-here>",
   "dependencies": {
     "nativescript-cardview": "^3.1.1",
+    "nativescript-datetimepicker": "^1.2.1",
     "nativescript-drop-down": "^5.0.0",
     "nativescript-floatingactionbutton": "^5.0.3",
     "nativescript-imagepicker": "^6.2.0",
