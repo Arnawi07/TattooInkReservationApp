@@ -42,9 +42,7 @@ function Reservations(){
         while(viewModel.tattooTypes.length){
             viewModel.tattooTypes.pop();
         }
-        while(viewModel.timeTableShop.length){
-            viewModel.timeTableShop.pop();
-        }
+        viewModel.timeTableShop = "";
     }
 
     viewModel.getWorkersList = function(){

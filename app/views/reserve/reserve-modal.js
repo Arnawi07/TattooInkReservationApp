@@ -22,13 +22,11 @@ exports.onShownModally = function(args) {
 
     reservations.emptyArrayInfoTattoos();
     reservations.getInfoTattoos();
-    alert(dayOfweek);
-    reservations.getTimeTableShop(dayOfweek);
+    reservations.getTimeTableShop(dayOfweekSelected);
 
     setTimeout(function(){
-      alert(reservations.timeTableShop);
       page.getViewById("timeTableshop").text = "Info. Horario: "+reservations.timeTableShop;
-    },200);
+    },300);
 
     page.bindingContext = pageData;
 }
