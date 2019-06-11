@@ -5,11 +5,11 @@ const isAndroid = require("tns-core-modules/platform").isAndroid;
 const isIOS = require("tns-core-modules/platform").isIOS;
 
 var Reservations = require("../../shared/view-models/reservations-view-model");
-var reservations =  new Reservations();
+var reservations = new Reservations();
 
 var pageData = new observableModule.fromObject({
-  reservations : reservations,
-  tattooAreas : ["Muslo","Brazo","Espalda","Hombro","Pectoral","Abdomen","Costado","Dedos","Empeine","Gemelo","Rodilla","Cara","Cabeza"]
+  reservations: reservations,
+  tattooAreas: ["Muslo", "Brazo", "Espalda", "Hombro", "Pectoral", "Abdomen", "Costado", "Dedos", "Empeine", "Gemelo", "Rodilla", "Cara", "Cabeza"]
 });
 
 var page;
@@ -23,78 +23,79 @@ var endDateMin;
 var timeTableWorker;
 var actualMonthReservation;
 var dateOfDateSelected;
+var actualYearCalendar;
 
 
-exports.onShownModally = function(args) {
-    const context = args.context;
-    dayOfweekSelected = context.dayOfWeekSelected;
-    dateOfDateSelected = context.dateOfDateSelected;
-    timeTableWorker = context.timeTableWorker;
-    actualMonthReservation = context.actualMonthReservation;
+exports.onShownModally = function (args) {
+  const context = args.context;
+  page = args.object;
 
-    alert("dayNumber: " + dayOfweekSelected);
-    page = args.object;
+  dayOfweekSelected = context.dayOfWeekSelected;
+  dateOfDateSelected = context.dateOfDateSelected;
+  timeTableWorker = context.timeTableWorker;
+  actualMonthReservation = context.actualMonthReservation;
+  actualYearCalendar = context.actualYearCalendar;
 
-    reservations.emptyArrayInfoTattoos();
-    reservations.getInfoTattoos();
-    reservations.getTimeTableShop(dayOfweekSelected);
+  reservations.emptyArrayInfoTattoos();
+  reservations.getInfoTattoos();
+  reservations.getTimeTableShop(dayOfweekSelected);
 
-    setTimeout(function(){
-      page.getViewById("timeTableshop").text = "Info. Horario: "+reservations.timeTableShop;
-      splitTimeTable =  reservations.timeTableShop.split(" - ");
-      startDateHour = splitTimeTable[0].substring(0,2);
-      endDateHour = splitTimeTable[1].substring(0,2);
-      startDateMin = splitTimeTable[0].substring(3,5);
-      endDateMin = splitTimeTable[1].substring(3,5);
-    },400);
-    page.bindingContext = pageData;
+  setTimeout(function () {
+    page.getViewById("timeTableshop").text = "Info. Horario: " + reservations.timeTableShop;
+    splitTimeTable = reservations.timeTableShop.split(" - ");
+    startDateHour = splitTimeTable[0].substring(0, 2);
+    endDateHour = splitTimeTable[1].substring(0, 2);
+    startDateMin = splitTimeTable[0].substring(3, 5);
+    endDateMin = splitTimeTable[1].substring(3, 5);
+  }, 500);
+
+  page.bindingContext = pageData;
 }
 
-exports.onNavigatedFrom = function(args) {
-    if (args.isBackNavigation === true) {
-        args.object.closeModal();
-    }
+exports.onNavigatedFrom = function (args) {
+  if (args.isBackNavigation === true) {
+    args.object.closeModal();
+  }
 }
 
-exports.onPickerLoaded = function(args) {
-    const timePicker = args.object;
+exports.onPickerLoaded = function (args) {
+  const timePicker = args.object;
 
-    timePicker.hour=10;
-    timePicker.minute=0;
-    timePicker.minuteInterval=15;
+  timePicker.hour = 10;
+  timePicker.minute = 0;
+  timePicker.minuteInterval = 15;
 
-    if (isAndroid) {
-        timePicker.android.setIs24HourView(java.lang.Boolean.TRUE);
-    } else if (isIOS) {
-        const local = NSLocale.alloc().initWithLocaleIdentifier("ES");
-        timePicker.ios.locale = local;
-    }
+  if (isAndroid) {
+    timePicker.android.setIs24HourView(java.lang.Boolean.TRUE);
+  } else if (isIOS) {
+    const local = NSLocale.alloc().initWithLocaleIdentifier("ES");
+    timePicker.ios.locale = local;
+  }
 }
 
-exports.getSelectedIndexChanged = function(args){
+exports.getSelectedIndexChanged = function (args) {
   const dropDownTattooType = args.object;
   var approxPrice;
 
-  reservations.tattooPrices.forEach(function(price, index) {
-    if(index == dropDownTattooType.selectedIndex){
+  reservations.tattooPrices.forEach(function (price, index) {
+    if (index == dropDownTattooType.selectedIndex) {
       approxPrice = price;
-    }    
+    }
   });
-  page.getViewById("priceTattoo").text = 'Coste aproximado:  '+ approxPrice +'€'; 
-};   
+  page.getViewById("priceTattoo").text = 'Coste aproximado:  ' + approxPrice + '€';
+};
 
-exports.makeReserve = function(args){
+exports.makeReserve = function (args) {
   const tpHour = parseInt(page.getViewById("timePicker").hour);
   const tpMin = parseInt(page.getViewById("timePicker").minute);
-  alert(dateOfDateSelected);
+  const hour = "T00:00:00";
 
-  startDateSchedule = new Date(dateOfDateSelected+"T00:00:00");
-  endDateSchedule = new Date(dateOfDateSelected+"T00:00:00");
-  startDateSelected = new Date(dateOfDateSelected+"T00:00:00");
-  startDateSelected = new Date(dateOfDateSelected+"T00:00:00");
-  console.log("stDatScg: " + startDateSchedule);
+  startDateSchedule = new Date(dateOfDateSelected + hour);
+  endDateSchedule = new Date(dateOfDateSelected + hour);
+  startDateSelected = new Date(dateOfDateSelected + hour);
+  //startDateSelected = new Date(dateOfDateSelected + hour);
 
-  startDateSchedule.setHours(startDateHour);  
+  startDateSchedule.setHours(startDateHour);
   startDateSchedule.setMinutes(startDateMin);
   startDateSchedule.setSeconds(0);
 
@@ -105,91 +106,91 @@ exports.makeReserve = function(args){
   startDateSelected.setHours(tpHour);
   startDateSelected.setMinutes(tpMin);
   startDateSelected.setSeconds(0);
-  
-  if(!(startDateSelected >= startDateSchedule && startDateSelected < endDateSchedule)){
-    alert("Debes de seleccionar una hora dentro del horario de apertura.");       
-  }else{
+
+  if (!(startDateSelected >= startDateSchedule && startDateSelected < endDateSchedule)) {
+    alert("Debes de seleccionar una hora dentro del horario de apertura.");
+  } else {
     var indexTypeTattoo = page.getViewById("dropDownType").selectedIndex;
     var durationTattoo;
     var endDateSelected;
-    reservations.tattooDurations.forEach(function(duration, index) {
-      if(index == indexTypeTattoo){
-        durationTattoo = duration;        
+    reservations.tattooDurations.forEach(function (duration, index) {
+      if (index == indexTypeTattoo) {
+        durationTattoo = duration;
         endDateSelected = new Date(startDateSelected);
         endDateSelected.setMinutes(parseInt(startDateSelected.getMinutes() + durationTattoo));
-      }    
+      }
     });
 
+    //Primero vacio el array de reservas
     reservations.emptyArrayReservationsCalendar();
+    //Llamo al metodo para que me devuleva las reservas que hay en el dia "dateOfDateSelected";
     reservations.getReservationsListForDay(timeTableWorker, actualMonthReservation, dateOfDateSelected);
 
-    setTimeout(function(){
+    setTimeout(function () {
       var insert = true;
-      reservations.reservationsCalendar.forEach(function(reserve, index) {
+      reservations.reservationsCalendar.forEach(function (reserve, index) {
         //console.log(startDateSelected + ">=" + new Date(reserve.startDate) + "&&" + startDateSelected +"<" + new Date(reserve.endDate));
-        if(startDateSelected >= new Date(reserve.startDate) && startDateSelected < new Date(reserve.endDate)){
-          //alert("COINCIDE FECHA1");
+        if (startDateSelected >= new Date(reserve.startDate) && startDateSelected < new Date(reserve.endDate)) {
           insert = false;
         }
         //console.log(endDateSelected + ">=" + new Date(reserve.startDate) + "&&" + endDateSelected +"<" + new Date(reserve.endDate));
-        if(endDateSelected > new Date(reserve.startDate) && endDateSelected <= new Date(reserve.endDate)){
-          //alert("COINCIDE FECHA2");
+        if (endDateSelected > new Date(reserve.startDate) && endDateSelected <= new Date(reserve.endDate)) {
           insert = false;
         }
-        
-        if( endDateSelected > endDateSchedule ){
+        if (endDateSelected > endDateSchedule) {
           insert = false;
         }
       });
       //COMRPOBAR QUE NO SE SALGA DE LAS HORAS DE TRABAJO!!!
       //hasta que no se seleccione el tamaño del tatto no se puede clicar "RESERVAR"
 
-      if(insert){
+      if (insert) {
         alert("ESTOY GRABANDO");
         reservations.getCurrentUser()
-          .then(function(user){
-            const startDateFormatSelected = formatDate(startDateSelected);
-            //alert("startDateFormatSelected => "+startDateFormatSelected);
+          .then(function (user) {
+              const startDateFormatSelected = formatDate(startDateSelected);
+              //alert("startDateFormatSelected => "+startDateFormatSelected);
 
-            const endDateFormatSelected = formatDate(endDateSelected);
-            //alert("endDateFormatSelected => "+endDateFormatSelected);
-            alert("timeTableWorker => "+timeTableWorker);
-            alert("actualMonthReservation => "+actualMonthReservation);
-            alert("dateOfDateSelected => "+dateOfDateSelected);
-            reservations.putReserveIntoDay(timeTableWorker, actualMonthReservation, dateOfDateSelected, user.displayName, endDateFormatSelected, startDateFormatSelected, user.uid, user.email).catch(function(error){
-              alert("Error => "+error);
-            });
-          }).catch(function(){
-
+              const endDateFormatSelected = formatDate(endDateSelected);
+              //alert("endDateFormatSelected => "+endDateFormatSelected);
+              //alert("timeTableWorker => " + timeTableWorker);
+              //alert("actualMonthReservation => " + actualMonthReservation);
+              //alert("dateOfDateSelected => " + dateOfDateSelected);
+              reservations.putReserveIntoDay(timeTableWorker, actualMonthReservation, dateOfDateSelected, user.displayName, endDateFormatSelected, startDateFormatSelected, user.uid, user.email).catch(function (error) {
+                alert("Error => " + error);
+              });
           });
-        
-      }else{
+      } else {
         alert("Tu reserva coincide con la reserva de otro usuario.");
       }
     }, 300);
 
 
-    //alert("DURACION DEL TATOO => "+durationTattoo);
-    //alert("HORA DE LA RESERVA => "+tpHour+":"+tpMin);
+    reservations.reservationsCalendar.push({
+      
+    })
+    reservations.emptyArrayReservationsCalendar();
+    setTimeout(function(){
+      //LLamo al metodo de reservas del mes una vez ya he hecho la reserva, ya que previamente lo habia vaciado.
+      reservations.getReservationsListForMonth(timeTableWorker, actualMonthReservation, actualYearCalendar);
+
+    },200)
+    
     /*if(moment(fechafinal).isSameOrBefore(fechacomprobarfinal)&&moment(fechafinal).isAfter(fechacomprobarinicio)){
       insertar=false;
       }
       if(moment(dayselected).isSameOrAfter(fechacomprobarinicio)&&moment(dayselected).isBefore(fechacomprobarfinal)){
       insertar=false;
       }*/
-
-    
-
-      
   }
 }
 
-function formatDate(date){
+function formatDate(date) {
   const dayOfStartDateSelected = parseInt(date.getDate()) < 10 ? "0" + parseInt(date.getDate()) : parseInt(date.getDate());
-  const monthOfStartDateSelected = parseInt(date.getMonth()+1) < 10 ? "0" + parseInt(date.getMonth()+1) : parseInt(date.getMonth()+1);
+  const monthOfStartDateSelected = parseInt(date.getMonth() + 1) < 10 ? "0" + parseInt(date.getMonth() + 1) : parseInt(date.getMonth() + 1);
   const hourOfStartDateSelected = parseInt(date.getHours()) < 10 ? "0" + parseInt(date.getHours()) : parseInt(date.getHours());
   const minutesOfStartDateSelected = parseInt(date.getMinutes()) < 10 ? "0" + parseInt(date.getMinutes()) : parseInt(date.getMinutes());
   const secondsOfStartDateSelected = parseInt(date.getSeconds()) < 10 ? "0" + parseInt(date.getSeconds()) : parseInt(date.getSeconds());
 
-  return date.getFullYear()+"-"+monthOfStartDateSelected+"-"+dayOfStartDateSelected+"T"+hourOfStartDateSelected+":"+minutesOfStartDateSelected+":"+secondsOfStartDateSelected;
+  return date.getFullYear() + "-" + monthOfStartDateSelected + "-" + dayOfStartDateSelected + "T" + hourOfStartDateSelected + ":" + minutesOfStartDateSelected + ":" + secondsOfStartDateSelected;
 }

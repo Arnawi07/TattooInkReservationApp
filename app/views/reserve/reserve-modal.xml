@@ -1,4 +1,6 @@
-<Page xmlns="http://www.nativescript.org/tns.xsd" xmlns:dropDown="nativescript-drop-down" xmlns:datetime="nativescript-datetimepicker" shownModally="onShownModally" navigatingFrom="onNavigatedFrom">
+<Page xmlns="http://www.nativescript.org/tns.xsd" 
+    xmlns:dropDown="nativescript-drop-down" 
+    xmlns:datetime="nativescript-datetimepicker" shownModally="onShownModally" navigatingFrom="onNavigatedFrom">
     <FlexboxLayout class="loginLayout">
         <StackLayout class="formLayout">
             <Label text="RESERVA CONSULTA"/>

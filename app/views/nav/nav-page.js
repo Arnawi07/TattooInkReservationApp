@@ -13,7 +13,7 @@ exports.onLoaded = function (args) {
 
 exports.signOut = function (args) {
     firebase.logout()
-        .then(function() {
+        .then(function () {
             console.info("INFO: Sesión cerrada.");
             const button = args.object;
             const page = button.page;
@@ -22,10 +22,10 @@ exports.signOut = function (args) {
                 moduleName: "views/login/login-page",
                 clearHistory: true //Este atributo es super importante, ya que sin él, el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion sin tener que iniciar sesion
             };
-            myFrame.navigate(navigationEntry);    
-        }, function(error) {
+            myFrame.navigate(navigationEntry);
+        }, function (error) {
             console.error("ERROR: signOut() -> " + error);
-      });
+        });
 }
 
 /*function changeTab(args) {

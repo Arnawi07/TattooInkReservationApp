@@ -1,10 +1,11 @@
-<Page loaded="onLoaded" xmlns="http://www.nativescript.org/tns.xsd">
+<Page loaded="onLoaded" 
+	xmlns="http://www.nativescript.org/tns.xsd">
 	<Page.actionBar>
-    <ActionBar class="action-bar" title="Tattoo Ink Reservation">
+		<ActionBar class="action-bar" title="Tattoo Ink Reservation">
 			<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>
-			<ActionItem id="logOut" tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>	
+			<ActionItem id="logOut" tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>
 		</ActionBar>
-  </Page.actionBar>
+	</Page.actionBar>
 	<GridLayout rows="*" columns="*">
 		<TabView class="tab-view" loaded="onLoaded" selectedIndex="0" androidTabsPosition="bottom">
 			<TabViewItem title="Inicio" iconSource="~/resources/home_icon.png">

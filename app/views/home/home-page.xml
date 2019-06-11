@@ -1,4 +1,6 @@
-<Page id="pageHome" actionBarHidden="true" loaded="loadedHome" xmlns:Card="nativescript-cardview" xmlns:lv="nativescript-ui-listview">
+<Page id="pageHome" actionBarHidden="true" loaded="loadedHome" 
+    xmlns:Card="nativescript-cardview" 
+    xmlns:lv="nativescript-ui-listview">
     <Page.actionBar>
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
@@ -8,13 +10,13 @@
                 <Repeater.itemTemplate>
                     <Card:CardView margin="10" elevation="35" shadowColor="#FE00FC" shadowOpacity="2">
                         <GridLayout rows="200, auto, auto" columns="auto, auto, *">
-                            <Image id="{{ title }}" src="{{ photoUrl }}" stretch="aspectFill"  row="0" colSpan="3" tap="openModal" />
+                            <Image id="{{ title }}" src="{{ photoUrl }}" stretch="aspectFill" row="0" colSpan="3" tap="openModal" />
                             <Label text="{{ title }}" class="info" textWrap="true" row="1" colSpan="3"/>
                         </GridLayout>
                     </Card:CardView>
                 </Repeater.itemTemplate>
             </Repeater>
-           <ActivityIndicator busy="{{ isLoading }}" row="1" horizontalAlignment="center" verticalAlignment="center"/>
+            <ActivityIndicator busy="{{ isLoading }}" row="1" horizontalAlignment="center" verticalAlignment="center"/>
         </StackLayout>
     </ScrollView>
 </Page>

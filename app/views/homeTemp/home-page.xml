@@ -1,4 +1,5 @@
-<Page actionBarHidden="true" loaded="loaded" xmlns:lv="nativescript-ui-listview">
+<Page actionBarHidden="true" loaded="loaded" 
+    xmlns:lv="nativescript-ui-listview">
     <Page.actionBar>
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
@@ -7,8 +8,7 @@
             <TextField text="{{ tattooShop }}" id="tattooShopXML" col="0" />
             <Image src="~/resources/img/add.png" tap="add" col="1" />
         </GridLayout>
-        <lv:RadListView items="{{ tattooShopsList }}" row="1"
-            itemSwipeProgressStarted="onSwipeCellStarted" swipeActions="true">
+        <lv:RadListView items="{{ tattooShopsList }}" row="1" itemSwipeProgressStarted="onSwipeCellStarted" swipeActions="true">
             <lv:RadListView.itemTemplate>
                 <GridLayout class="grocery-list-item">
                     <Label class="p-15" text="{{ name }}"/>

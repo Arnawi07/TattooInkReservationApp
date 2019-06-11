@@ -2,13 +2,13 @@
 
     <GridLayout>
         <StackLayout>
-            <GridLayout id="actionBar" columns="auto,auto" rows="auto,auto" >
-                    <Image col="0" row="0" src="~/resources/close.png" tap="onCloseModal"/>
-                    <Label id="title" col="5" row="0" text="{{ title }}"/>
-            </GridLayout>   
+            <GridLayout id="actionBar" columns="auto,auto" rows="auto,auto">
+                <Image col="0" row="0" src="~/resources/close.png" tap="onCloseModal"/>
+                <Label id="title" col="5" row="0" text="{{ title }}"/>
+            </GridLayout>
             <GridLayout>
-                    <Image src="{{ photoUrl }}" horizontalAlignment="center" verticalAlignment="center"/>     
-            </GridLayout>   
-        </StackLayout>    
+                <Image src="{{ photoUrl }}" horizontalAlignment="center" verticalAlignment="center"/>
+            </GridLayout>
+        </StackLayout>
     </GridLayout>
 </Page>

@@ -1,7 +1,7 @@
 var observableModule = require("tns-core-modules/data/observable");
 var firebase = require("nativescript-plugin-firebase");
 
-function UserProfile(info){
+function UserProfile(info) {
     info = info || {};
 
     // Object
@@ -11,34 +11,34 @@ function UserProfile(info){
         imagePath: info.imagePath || ""
     });
 
-    viewModel.getCurrentUser = function(){
+    viewModel.getCurrentUser = function () {
         return firebase.getCurrentUser()
-            .then(function(user){
+            .then(function (user) {
                 //alert(JSON.stringify(user));
                 console.log("User uid: " + user.uid);
                 return user;
             });
     }
 
-    viewModel.changePassword = function(newPassword){
+    viewModel.changePassword = function (newPassword) {
         return firebase.updatePassword(newPassword)
-            .then(function () {                                
+            .then(function () {
             });
     }
 
-    viewModel.changeEmail = function(newEmail){
+    viewModel.changeEmail = function (newEmail) {
         return firebase.updateEmail(newEmail)
-            .then(function(){
+            .then(function () {
             });
     }
 
-    viewModel.updateProfile = function(imagePath){
+    viewModel.updateProfile = function (imagePath) {
         return firebase.updateProfile({
             photoURL: imagePath
-            }).then(function () {
-            }).catch(function (errorMessage){
-                console.log(errorMessage);
-            });
+        }).then(function () {
+        }).catch(function (errorMessage) {
+            console.log(errorMessage);
+        });
     }
 
     return viewModel;

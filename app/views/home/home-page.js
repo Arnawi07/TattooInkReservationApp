@@ -6,28 +6,28 @@ var tattooPhotosList = new TattooPhotosList([]);
 var page;
 var pageData = new observableModule.fromObject({
   tattooPhotosList: tattooPhotosList,
-  isLoading : true
+  isLoading: true
 });
 
 
-exports.loadedHome = function(args) {
-    page = args.object;
-    //alert("loadedHome");
-    //alert(pageData.get("isLoading"));
-    if(pageData.get("isLoading")){
-      tattooPhotosList.getAllTattooPhotosOrderBy().then(function(){
-          pageData.set("isLoading", false);
-      });
-    }
-    page.bindingContext = pageData;
+exports.loadedHome = function (args) {
+  page = args.object;
+  //alert("loadedHome");
+  //alert(pageData.get("isLoading"));
+  if (pageData.get("isLoading")) {
+    tattooPhotosList.getAllTattooPhotosOrderBy().then(function () {
+      pageData.set("isLoading", false);
+    });
+  }
+  page.bindingContext = pageData;
 }
 
-exports.openModal = function(args) {
+exports.openModal = function (args) {
   const modalViewModule = "views/photo/photo-modal";
   const mainView = args.object;
-  const context = { photoUrl: mainView.src,  title : mainView.id};
+  const context = { photoUrl: mainView.src, title: mainView.id };
   const fullscreen = true;
-  mainView.showModal(modalViewModule, context, function(photoUrl, title) {
+  mainView.showModal(modalViewModule, context, function (photoUrl, title) {
   }, fullscreen);
 }
 

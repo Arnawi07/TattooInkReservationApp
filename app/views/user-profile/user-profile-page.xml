@@ -2,23 +2,23 @@
     <Page.actionBar>
         <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
     </Page.actionBar>
-    <FlexboxLayout class="loginLayout">  
-        <StackLayout class="formLayout">           
-            <Image  id="imageUser" src="{{ imagePath }}"/>
-            <Image  id="iconEdit" src="~/resources/edit_icon.png" tap="editingPhoto"/>
-                    
+    <FlexboxLayout class="loginLayout">
+        <StackLayout class="formLayout">
+            <Image id="imageUser" src="{{ imagePath }}"/>
+            <Image id="iconEdit" src="~/resources/edit_icon.png" tap="editingPhoto"/>
+
             <StackLayout class="input-field">
                 <GridLayout columns="auto,100" rows="auto,auto">
-                        <Label col="0" row="0" id="emailXML" text="{{ email }}"/>
-                        <Image col="1" row="0" id="iconEdit" src="~/resources/edit_icon.png" tap="changeEmail"/>
-                </GridLayout>   
+                    <Label col="0" row="0" id="emailXML" text="{{ email }}"/>
+                    <Image col="1" row="0" id="iconEdit" src="~/resources/edit_icon.png" tap="changeEmail"/>
+                </GridLayout>
             </StackLayout>
 
             <StackLayout class="input-field">
                 <GridLayout columns="auto,100" rows="auto,auto">
-                        <Label id="passwordXML" text="{{ password }}" secure="true"/>
-                        <Image col="1" row="0" id="iconEdit" src="~/resources/edit_icon.png" tap="changePassword"/>                        
-                </GridLayout>   
+                    <Label id="passwordXML" text="{{ password }}" secure="true"/>
+                    <Image col="1" row="0" id="iconEdit" src="~/resources/edit_icon.png" tap="changePassword"/>
+                </GridLayout>
             </StackLayout>
         </StackLayout>
     </FlexboxLayout>

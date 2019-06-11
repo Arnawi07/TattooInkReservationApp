@@ -11,8 +11,8 @@ var tattooShopsList = new TattooShopsListViewModel([]);
 var page;
 var pageData = new observableModule.fromObject({
     tattooShopsList: tattooShopsList,
-    tattooShop:"",
-    isLoading: false 
+    tattooShop: "",
+    isLoading: false
 });
 
 exports.loaded = function (args) {
@@ -22,9 +22,9 @@ exports.loaded = function (args) {
 
     tattooShopsList.empty();
     pageData.set("isLoading", true);
-    tattooShopsList.load().then(function(){
+    tattooShopsList.load().then(function () {
         pageData.set("isLoading", false);
-    }).catch(function(error){
+    }).catch(function (error) {
         alert("ERROR:" + error);
     });
 };

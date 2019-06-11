@@ -18,13 +18,13 @@ exports.loaded = function (args) {
 exports.toggleDisplay = function () {
     isLoggingIn = !isLoggingIn;
     showTxtField = !showTxtField;
-    
+
     //Vacia los campos cuando cambia a registro/inicio sesión    
-    page.getViewById("displayNameXML").text = "" 
+    page.getViewById("displayNameXML").text = ""
     page.getViewById("emailXML").text = ""
     page.getViewById("passwordXML").text = ""
     page.getViewById("passwordConfirmationXML").text = ""
-    
+
     user.set("isLoggingIn", isLoggingIn);
     user.set("showTxtField", showTxtField);
 };
@@ -33,9 +33,9 @@ exports.submit = function (args) {
     if (isLoggingIn) {
         login(args);
     } else {
-        if (page.getViewById("passwordXML").text == page.getViewById("passwordConfirmationXML").text){
-           signUp();
-        } else{
+        if (page.getViewById("passwordXML").text == page.getViewById("passwordConfirmationXML").text) {
+            signUp();
+        } else {
             dialogsModule.alert("La contraseña de confirmación es diferente.");
         }
     }
@@ -52,7 +52,7 @@ function login(args) {
                 moduleName: "views/nav/nav-page",
                 clearHistory: true //En este caso el clearHistory lo hacemos para que cuando el usuario este en el home y tire hacia atras se vaya fuera de la aplicación, y no a la pantalla login.
             };
-            myFrame.navigate(navigationEntry);           
+            myFrame.navigate(navigationEntry);
         })
         .catch(function (error) {
             console.error("ERROR: login() -> " + error);
@@ -60,16 +60,16 @@ function login(args) {
                 message: "Desafortunadamente no encontramos tu cuenta." + error,
                 okButtonText: "OK"
             });
-        });        
+        });
 }
 
 function signUp() {
     user.register()
-        .then(function() {
+        .then(function () {
             console.info("INFO: Usuario registrado.");
             dialogsModule.alert("Tu cuenta ha sido creada correctamente.");
             //frameModule.topmost().navigate("views/login/login-page");
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.error("ERROR: signUp() -> " + error);
             dialogsModule.alert({
                 message: error,
@@ -79,11 +79,11 @@ function signUp() {
 }
 
 
-exports.resetPassword =  function(){
+exports.resetPassword = function () {
     user.resetPassword(page.getViewById("emailXML").text)
-        .then(function(){
+        .then(function () {
             console.info("INFO: Correo de reset de contraseña enviado.")
-        }).catch(function(error){
+        }).catch(function (error) {
             console.error("ERROR: resetPassword() -> " + error);
             dialogsModule.alert({
                 message: error,
