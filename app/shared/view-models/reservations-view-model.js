@@ -10,6 +10,7 @@ function Reservations() {
     viewModel.workersListTimeTables = new ObservableArray([]);
     viewModel.reservationsCalendar = new ObservableArray([]);
     viewModel.holidaysCalendar = new ObservableArray([]);
+    viewModel.holidaysDay = new ObservableArray([]);
     //Reserve-modal
     viewModel.tattooTypes = new ObservableArray([]);
     viewModel.tattooPrices = new ObservableArray([]);
@@ -23,6 +24,7 @@ function Reservations() {
         while (viewModel.workersListNames.length) {
             viewModel.workersListNames.pop();
         }
+
         /*while(viewModel.workersListTimeTables.length){
             viewModel.workersListTimeTables.pop();
         }*/
@@ -32,6 +34,9 @@ function Reservations() {
     viewModel.emptyArrayReservationsCalendar = function () {
         while (viewModel.reservationsCalendar.length) {
             viewModel.reservationsCalendar.pop();
+        }
+        while (viewModel.holidaysCalendar.length) {
+            viewModel.holidaysCalendar.pop();
         }
     }
 
@@ -62,7 +67,7 @@ function Reservations() {
                         //alert(key); //-L50HJKIOPO
                         firebase.getValue("/timeTables/" + timeTableWorker + "/" + month + "/" + day + "/" + key)
                             .then(function(reservation){
-                                //alert("OBJETO => "+JSON.stringify(reservation));
+                                console.log("OBJETO => "+JSON.stringify(reservation));
                                 viewModel.reservationsCalendar.push({
                                     endDate: reservation.value.endDate,
                                     startDate: reservation.value.startDate,
@@ -104,6 +109,7 @@ function Reservations() {
                     endDate: result.value.endDate,
                     startDate: result.value.startDate
                 });
+                viewModel.holidaysDay.push(result.key);
             }
         }
 

@@ -13,6 +13,9 @@
                 <Button id="month" text="Mes" tap="changeViewMode"/>
                 <Button id="today" text="Hoy" tap="changeViewMode"/>
             </StackLayout>
+            <StackLayout orientation="horizontal">                
+                <!--<Button id="update" text="Act" tap="updateReservationsCalendar"/>-->
+            </StackLayout>
         </GridLayout>
 
         <GridLayout id="actionBar" rows="auto, *">
