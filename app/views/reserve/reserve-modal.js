@@ -164,24 +164,6 @@ exports.makeReserve = function (args) {
         alert("Tu reserva coincide con la reserva de otro usuario.");
       }
     }, 300);
-
-
-    reservations.reservationsCalendar.push({
-      
-    })
-    reservations.emptyArrayReservationsCalendar();
-    setTimeout(function(){
-      //LLamo al metodo de reservas del mes una vez ya he hecho la reserva, ya que previamente lo habia vaciado.
-      reservations.getReservationsListForMonth(timeTableWorker, actualMonthReservation, actualYearCalendar);
-
-    },200)
-    
-    /*if(moment(fechafinal).isSameOrBefore(fechacomprobarfinal)&&moment(fechafinal).isAfter(fechacomprobarinicio)){
-      insertar=false;
-      }
-      if(moment(dayselected).isSameOrAfter(fechacomprobarinicio)&&moment(dayselected).isBefore(fechacomprobarfinal)){
-      insertar=false;
-      }*/
   }
 }
 

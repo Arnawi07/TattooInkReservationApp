@@ -24,21 +24,24 @@ function Reservations() {
         while (viewModel.workersListNames.length) {
             viewModel.workersListNames.pop();
         }
-
         /*while(viewModel.workersListTimeTables.length){
             viewModel.workersListTimeTables.pop();
         }*/
-
     }
 
-    viewModel.emptyArrayReservationCalendar = function () {
+    viewModel.emptyArrayReservationsCalendar = function () {
         while (viewModel.reservationsCalendar.length) {
             viewModel.reservationsCalendar.pop();
         }
-        /*
+    }
+
+    viewModel.emptyArrayHolidays = function () {
         while (viewModel.holidaysCalendar.length) {
             viewModel.holidaysCalendar.pop();
-        }*/
+        }
+        while (viewModel.holidaysDay.length) {
+            viewModel.holidaysDay.pop();
+        }
     }
 
     viewModel.emptyArrayInfoTattoos = function () {
@@ -53,22 +56,22 @@ function Reservations() {
         }
         viewModel.timeTableShop = "";
     }
-    
-    
+
+
 
 
     //Reservations-page -------------------------------------------------------------------------------------------
-    viewModel.getReservationsListForMonth = function(timeTableWorker, month, year){
-        var onQueryEvent = function(result) {
+    viewModel.getReservationsListForMonth = function (timeTableWorker, month, year) {
+        var onQueryEvent = function (result) {
             if (!result.error) {
                 const day = result.key;
-                if(day.includes(year)){
+                if (day.includes(year)) {
                     //alert(day); //2019-06-30
-                    for (let key in result.value){
+                    for (let key in result.value) {
                         //alert(key); //-L50HJKIOPO
                         firebase.getValue("/timeTables/" + timeTableWorker + "/" + month + "/" + day + "/" + key)
-                            .then(function(reservation){
-                                console.log("OBJETO => "+JSON.stringify(reservation));
+                            .then(function (reservation) {
+                                console.log("OBJETO => " + JSON.stringify(reservation));
                                 viewModel.reservationsCalendar.push({
                                     endDate: reservation.value.endDate,
                                     startDate: reservation.value.startDate,
@@ -80,7 +83,7 @@ function Reservations() {
                                 //alert("START DATE => "+ reservation.value.startDate); // 2019-06-30T19:30:00
                                 //alert("UIDCLIENT => "+ reservation.value.uidClient); // dKxUY52t0hgNDF10wd0ZPytT59o1
                                 //alert("DISPLAY NAME => "+reservation.value.displayName); // Pepe de los palotes
-                        });
+                            });
                     }
                 }
             }
@@ -190,31 +193,31 @@ function Reservations() {
         );
     };
     //Reserve-modal -------------------------------------------------------------------------------------------------
-/*    viewModel.getReservesToday = function (timeTableWorker, month, date) {
-        var onQueryEvent = function (result) {
-            if (!result.error) {
-                viewModel.tattooTypes.push(result.key + " ( " + result.value.minMeasure + "cm - " + result.value.maxMeasure + "cm )");
-                viewModel.tattooPrices.push(result.value.approxPrice);
-                viewModel.tattooDurations.push(result.value.duration);
-            }
-        }
-
-        return firebase.query(
-            onQueryEvent, "/timeTables/" + timeTableWorker + "/" + month + "/" + date,
-            {
-                singleEvent: false,
-
-                orderBy: {
-                    type: firebase.QueryOrderByType.CHILD,
-                    value: 'since'
-                },
-                limit: {
-                    type: firebase.QueryLimitType.LAST,
-                    value: 'since'
+    /*    viewModel.getReservesToday = function (timeTableWorker, month, date) {
+            var onQueryEvent = function (result) {
+                if (!result.error) {
+                    viewModel.tattooTypes.push(result.key + " ( " + result.value.minMeasure + "cm - " + result.value.maxMeasure + "cm )");
+                    viewModel.tattooPrices.push(result.value.approxPrice);
+                    viewModel.tattooDurations.push(result.value.duration);
                 }
             }
-        );
-    }*/
+    
+            return firebase.query(
+                onQueryEvent, "/timeTables/" + timeTableWorker + "/" + month + "/" + date,
+                {
+                    singleEvent: false,
+    
+                    orderBy: {
+                        type: firebase.QueryOrderByType.CHILD,
+                        value: 'since'
+                    },
+                    limit: {
+                        type: firebase.QueryLimitType.LAST,
+                        value: 'since'
+                    }
+                }
+            );
+        }*/
 
     viewModel.putReserveIntoDay = function (timeTableWorker, month, date, displayName, endDate, startDate, uidClient, emailClient) {
         return firebase.push("/timeTables/" + timeTableWorker + "/" + month + "/" + date, {
@@ -264,7 +267,7 @@ function Reservations() {
                 console.error("ERROR: getAllTattooPhotos() -> " + error);
             });
     };
-    
+
     //Extra --------------------------------------------------------------------------
     viewModel.getCurrentUser = function () {
         return firebase.getCurrentUser()

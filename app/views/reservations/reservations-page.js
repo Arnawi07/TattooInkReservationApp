@@ -30,7 +30,10 @@ exports.loadedReservation = function (args) {
     pageData.set("actualYearCalendar", today.getFullYear()); //Se settea la variable del mes al mes actual.
     reservations.emptyArrayWorkersListNames();
     reservations.getWorkersList(); //Se rellenan las listas de los nombres de los trabajadores y de sus timeTables.
+    reservations.emptyArrayReservationsCalendar();
+    reservations.emptyArrayHolidays();
     reservations.getHolidays();
+    pageData.set("showFloatingButton", false);
     page.bindingContext = pageData;
 };
 
@@ -128,8 +131,13 @@ function setCalendarEvents() {
                 const endDate = new Date(reserve.endDate);
 
                 if (user.uid == reserve.uidClient) {
-                    title = reserve.displayName;
-                    color = new Color("#5abfce");
+                    if(user.displayName != null){
+                        title = reserve.displayName;
+                        color = new Color("#5abfce");
+                    }else{
+                        title = reserve.email;
+                        color = new Color("#5abfce");
+                    }   
                 } else {
                     title = "Reservado";
                     color = new Color("#e57283");
@@ -166,7 +174,7 @@ exports.reserve = function (args) {
 
 
 function updateEventsCalendar() {
-    reservations.emptyArrayReservationCalendar();
+    reservations.emptyArrayReservationsCalendar();
     const actualMonthReservation = monthsOfYear[pageData.get("actualMonthCalendar")]; //Cuando se cambia el tatuador, se recoge el mes en el que esta el usuario y se coge el nombre del mes.  
     const actualYearReservation = pageData.get("actualYearCalendar");
     reservations.getReservationsListForMonth(pageData.get("timeTableWorker"), actualMonthReservation, actualYearReservation);  //Se llama a la funcion para que se rellene la lista con las reservas de ese mes y de ese trabajador.
