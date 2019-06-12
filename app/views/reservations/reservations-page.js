@@ -11,6 +11,7 @@ var monthsOfYear = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "juli
 var page;
 var dayOfWeekSelected = -1;
 var dateOfDateSelected;
+var maxDate = new Date().setMonth(parseInt(new Date().getMonth()+2));
 
 var pageData = new observableModule.fromObject({
     reservations: reservations,
@@ -19,7 +20,9 @@ var pageData = new observableModule.fromObject({
     actualYearCalendar: 0,
     timeTableWorker: "",
     showFloatingButton: false,
-    uid: ""
+    uid: "",
+    minDate: new Date(),
+    maxDate: new Date(maxDate)
 });
 
 
@@ -28,11 +31,14 @@ exports.loadedReservation = function (args) {
     today = new Date();
     pageData.set("actualMonthCalendar", today.getMonth()); //Se settea la variable del mes al mes actual.
     pageData.set("actualYearCalendar", today.getFullYear()); //Se settea la variable del mes al mes actual.
+
     reservations.emptyArrayWorkersListNames();
     reservations.getWorkersList(); //Se rellenan las listas de los nombres de los trabajadores y de sus timeTables.
+
     reservations.emptyArrayReservationsCalendar();
     reservations.emptyArrayHolidays();
     reservations.getHolidays();
+
     pageData.set("showFloatingButton", false);
     page.bindingContext = pageData;
 };

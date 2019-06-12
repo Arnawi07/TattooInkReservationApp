@@ -10,8 +10,8 @@ function User(info) {
     displayName: info.displayName || "",
     /*email: info.email || "",
     password: info.password || "",*/
-    email: "forand2019@gmail.com" || "",
-    password: "pepe123" || "",
+    email: "juanpe@gmail.com" || "",
+    password: "juanpe123" || "",
     isLoggingIn: true,
     showTxtField: true
   });
@@ -43,10 +43,10 @@ function User(info) {
     }).then(function (user) {
       config.uid = user.uid
       console.log(JSON.stringify(user));
-      if (!user.emailVerified) {
+      /*if (!user.emailVerified) {
         console.warn("WARN: Cuenta no verificada.")
         throw new Error("WARN: Cuenta no verificada.");
-      }
+      }*/
       return user;
     });
   }

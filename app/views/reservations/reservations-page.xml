@@ -16,7 +16,7 @@
         </GridLayout>
 
         <GridLayout id="actionBar" rows="auto, *">
-            <calendar:RadCalendar id="calendar" row="1" firstDayOfWeek="1" eventSource="{{ calendarEvents }}" navigatedToDate="navigatedToDate" dateSelected="onDateSelected" viewMode="Month" locale="es-ES">
+            <calendar:RadCalendar id="calendar" row="1" firstDayOfWeek="1" eventSource="{{ calendarEvents }}" navigatedToDate="navigatedToDate" dateSelected="onDateSelected" viewMode="Month" locale="es-ES" minDate="{{minDate}}" maxDate="{{ maxDate }}">
 
                 <!-- calendar-monthview-styling -->
                 <calendar:RadCalendar.monthViewStyle>

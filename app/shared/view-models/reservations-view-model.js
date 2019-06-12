@@ -71,7 +71,6 @@ function Reservations() {
                         //alert(key); //-L50HJKIOPO
                         firebase.getValue("/timeTables/" + timeTableWorker + "/" + month + "/" + day + "/" + key)
                             .then(function (reservation) {
-                                console.log("OBJETO => " + JSON.stringify(reservation));
                                 viewModel.reservationsCalendar.push({
                                     endDate: reservation.value.endDate,
                                     startDate: reservation.value.startDate,
