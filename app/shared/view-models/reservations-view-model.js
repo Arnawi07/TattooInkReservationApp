@@ -31,13 +31,14 @@ function Reservations() {
 
     }
 
-    viewModel.emptyArrayReservationsCalendar = function () {
+    viewModel.emptyArrayReservationCalendar = function () {
         while (viewModel.reservationsCalendar.length) {
             viewModel.reservationsCalendar.pop();
         }
+        /*
         while (viewModel.holidaysCalendar.length) {
             viewModel.holidaysCalendar.pop();
-        }
+        }*/
     }
 
     viewModel.emptyArrayInfoTattoos = function () {

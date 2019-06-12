@@ -16,11 +16,70 @@ var imagePath;
 
 exports.loadedUserProfile = function (args) {
     page = args.object;
-    imagePath = userProfile.imagePath;
+   
     //alert("loadedUserProfile");
     getCurrentUser();
+    setTimeout(function(){
+        //alert("imagePath => "+userProfile.imagePath);
+        userProfile.set("imagePath",userProfile.imagePath);
+    },400);
+
+    //imagePath = userProfile.imagePath;
+    
     page.bindingContext = userProfile;
 };
+
+function editingPhoto() {
+    var milliseconds = (new Date).getTime;
+    var context = imagepicker.create({ mode: "single" }); // use "multiple" for multiple selection
+    context
+        .authorize()
+        .then(function () {
+            return context.present();
+        })
+        .then(function (selection) {
+            selection.forEach(function (selected) {
+                var localPath = null;
+
+                if (platformModule.device.os === "Android") {
+                    localPath = selected._android;
+                } else {
+                    //selected_item.ios for iOS is PHAsset and not path - so we are creating own path
+                    let folder = fs.knownFolders.documents();
+                    let path = fs.path.join(folder.path, milliseconds + ".png");
+                    let saved = imagesource.saveToFile(path, "png");
+                    localPath = path;
+                }
+
+                setTimeout(function () {
+                    userProfile.set("imagePath", localPath);
+                    userProfile.updateProfile(localPath)
+                        .then(function () {
+                            console.info("INFO: Usuario modificado correctamente.");
+                        }).catch(function (error) {
+                            console.error("ERROR: updateProfile() -> " + error);
+                        });
+                }, 300);
+            });
+        }).catch(function (error) {
+            alert("error:" + error);
+            console.error("ERROR ImagePicker: -> " + error);
+        });
+};
+
+function getCurrentUser() {
+    userProfile.getCurrentUser()
+        .then(function (user) {
+            userProfile.set("email", user.email);
+            userProfile.set("password", "********");
+            userProfile.set("imagePath", user.photoURL);
+            firebase.updateProfile({
+                photoURL: user.photoURL
+            });
+        }).catch(function (error) {
+            console.error("ERROR: getCurrentUser() -> " + error);
+        });
+}
 
 exports.changeEmail = function (args) {
     dialogsModule.prompt({
@@ -86,58 +145,6 @@ exports.changePassword = function () {
     });
 }
 
-function editingPhoto() {
-    var milliseconds = (new Date).getTime;
-    var context = imagepicker.create({ mode: "single" }); // use "multiple" for multiple selection
-    context
-        .authorize()
-        .then(function () {
-            return context.present();
-        })
-        .then(function (selection) {
-            selection.forEach(function (selected) {
-                var localPath = null;
-
-                if (platformModule.device.os === "Android") {
-                    localPath = selected._android;
-                } else {
-                    //selected_item.ios for iOS is PHAsset and not path - so we are creating own path
-                    let folder = fs.knownFolders.documents();
-                    let path = fs.path.join(folder.path, milliseconds + ".png");
-                    let saved = imagesource.saveToFile(path, "png");
-                    localPath = path;
-                }
-
-                userProfile.set("imagePath", localPath);
-                userProfile.updateProfile(localPath)
-                    .then(function () {
-                        console.info("INFO: Usuario modificado correctamente.");
-                    }).catch(function (error) {
-                        console.error("ERROR: updateProfile() -> " + error);
-                    });
-
-            });
-
-            //list.items = selection;
-        }).catch(function (error) {
-            alert("error:" + error);
-            console.error("ERROR ImagePicker: -> " + error);
-        });
-};
-
-function getCurrentUser() {
-    userProfile.getCurrentUser()
-        .then(function (user) {
-            userProfile.set("email", user.email);
-            userProfile.set("password", "********");
-            firebase.updateProfile({
-                photoURL: "/imagePath/pepe"
-            });
-        }).catch(function (error) {
-            console.error("ERROR: getCurrentUser() -> " + error);
-        });
-}
-
 function signOut(args) {
     firebase.logout()
         .then(function () {
@@ -151,7 +158,7 @@ function signOut(args) {
             };
             myFrame.navigate(navigationEntry);
             //navigationEntry.navigate("views/login/login-page");
-            alert("logout");
+            //alert("logout");
             //var parent = frameModule.topmost();
             //alert("obj parent: "+parent);
             //alert("obj page: " + parent.page);

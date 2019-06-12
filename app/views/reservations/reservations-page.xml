@@ -9,12 +9,9 @@
         <GridLayout id="actionBar" columns="auto,auto" rows="auto,auto">
             <StackLayout orientation="horizontal">
                 <Label text="Tatuador: "/>
-                <dropDown:DropDown id="dropDown" items="{{ reservations.workersListNames }}" selectedIndex="{{ selectedIndex }}" selectedIndexChanged="getSelectedIndexChanged"/>
+                <dropDown:DropDown id="dropDown" items="{{ reservations.workersListNames }}" selectedIndex="{{ selectedIndex }}" selectedIndexChanged="getSelectedIndexChangedWorker"/>
                 <Button id="month" text="Mes" tap="changeViewMode"/>
                 <Button id="today" text="Hoy" tap="changeViewMode"/>
-            </StackLayout>
-            <StackLayout orientation="horizontal">                
-                <!--<Button id="update" text="Act" tap="updateReservationsCalendar"/>-->
             </StackLayout>
         </GridLayout>
 
@@ -68,7 +65,7 @@
                         </calendar:CalendarDayViewStyle.todayCellStyle>
 
                         <calendar:CalendarDayViewStyle.dayCellStyle>
-                            <calendar:DayCellStyle showEventsText="true" eventTextColor="White" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8"  cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#9ebd9e" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" ios:cellTextSize="12" android:cellTextSize="10"/>
+                            <calendar:DayCellStyle showEventsText="true" eventTextColor="White" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#9ebd9e" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" ios:cellTextSize="12" android:cellTextSize="10"/>
                         </calendar:CalendarDayViewStyle.dayCellStyle>
 
                         <calendar:CalendarDayViewStyle.weekendCellStyle>
@@ -76,7 +73,7 @@
                         </calendar:CalendarDayViewStyle.weekendCellStyle>
 
                         <calendar:CalendarDayViewStyle.selectedDayCellStyle>
-                            <calendar:DayCellStyle eventTextColor="Blue" eventFontName="Times New Roman" eventFontStyle="Bold" eventTextSize="8"  cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#745151" cellBorderWidth="2" cellBordecalendarolor="#f1e8ca" cellTextColor="Black" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="18" />
+                            <calendar:DayCellStyle eventTextColor="Blue" eventFontName="Times New Roman" eventFontStyle="Bold" eventTextSize="8" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#745151" cellBorderWidth="2" cellBordecalendarolor="#f1e8ca" cellTextColor="Black" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="18" />
                         </calendar:CalendarDayViewStyle.selectedDayCellStyle>
 
                         <calendar:CalendarDayViewStyle.weekNumbecalendarellStyle>
