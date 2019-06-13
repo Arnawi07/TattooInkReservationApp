@@ -60,7 +60,7 @@ exports.add = function () {
         .catch(function (error) {
             dialogsModule.alert({
                 message: "An error occurred while adding an item to your list." + error,
-                okButtonText: "MIRA VETE A LA MIERDA"
+                okButtonText: "OK"
             });
         });
 
