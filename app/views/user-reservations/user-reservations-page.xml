@@ -1,12 +1,12 @@
-<Page actionBarHidden="true" loaded="loadedUserReservations">
+<Page actionBarHidden="false" loaded="loaded" xmlns:lv="nativescript-ui-listview">
     <Page.actionBar>
-        <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
+        <ActionBar class="action-bar" title="Mis Reservas"></ActionBar>
     </Page.actionBar>
     <GridLayout rows="auto, *">
-        <lv:RadListView items="{{ userReservationsList }}" row="1" itemSwipeProgressStarted="onSwipeCellStarted" swipeActions="true">
+        <lv:RadListView items="{{ myReservationsList }}" row="0" itemSwipeProgressStarted="onSwipeCellStarted" swipeActions="true">
             <lv:RadListView.itemTemplate>
-                <GridLayout class="grocery-list-item">
-                    <Label class="p-15" text="{{ name }}"/>
+                <GridLayout class="">
+                    <Label class="p-15" text="{{ startDate + ' con tatuador: ' + workerShop }}"/>
                 </GridLayout>
             </lv:RadListView.itemTemplate>
 

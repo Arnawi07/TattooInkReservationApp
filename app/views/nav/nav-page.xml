@@ -1,5 +1,4 @@
-<Page loaded="onLoaded" 
-	xmlns="http://www.nativescript.org/tns.xsd">
+<Page loaded="onLoaded" xmlns="http://www.nativescript.org/tns.xsd" actionBarHidden="true">
 	<Page.actionBar>
 		<ActionBar class="action-bar" title="Tattoo Ink Reservation">
 			<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>
@@ -15,7 +14,7 @@
 				<Frame id="reservationFrame" defaultPage="views/reservations/reservations-page"/>
 			</TabViewItem>
 			<TabViewItem title="" iconSource="~/resources/img/user_profile_icon.png">
-				<Frame id="userProfileFrame" defaultPage="views/homeTemp/home-page"/>
+				<Frame id="userProfileFrame" defaultPage="views/user-reservations/user-reservations-page"/>
 			</TabViewItem>
 			<TabViewItem title="" iconSource="~/resources/img/user_profile_icon.png">
 				<Frame id="userProfileFrame" defaultPage="views/user-profile/user-profile-page"/>

@@ -1,6 +1,6 @@
-<Page id="pageUserProfile" actionBarHidden="true" loaded="loadedUserProfile">
+<Page id="pageUserProfile" actionBarHidden="false" loaded="loadedUserProfile">
     <Page.actionBar>
-        <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
+        <ActionBar class="action-bar" title="Mi Perfil"></ActionBar>
     </Page.actionBar>
     <FlexboxLayout class="loginLayout">
         <StackLayout class="formLayout">

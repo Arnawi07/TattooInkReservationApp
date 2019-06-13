@@ -1,9 +1,9 @@
-<Page id="pageReservations" actionBarHidden="true" loaded="loadedReservation" 
+<Page id="pageReservations" actionBarHidden="false" loaded="loadedReservation" 
     xmlns:calendar="nativescript-ui-calendar" 
     xmlns:dropDown="nativescript-drop-down" 
     xmlns:floatingButton="nativescript-floatingactionbutton">
     <Page.actionBar>
-        <ActionBar class="action-bar" title="Tattoo Ink Reservation"></ActionBar>
+        <ActionBar class="action-bar" title="Calendario de Reservas"></ActionBar>
     </Page.actionBar>
     <StackLayout>
         <GridLayout id="actionBar" columns="auto,auto" rows="auto,auto">
