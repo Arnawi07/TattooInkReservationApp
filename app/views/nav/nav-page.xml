@@ -1,12 +1,12 @@
-<Page loaded="onLoaded" xmlns="http://www.nativescript.org/tns.xsd" actionBarHidden="true">
+<Page loaded="onLoaded" xmlns="http://www.nativescript.org/tns.xsd" actionBarHidden="false">
 	<Page.actionBar>
-		<ActionBar class="action-bar" title="Tattoo Ink Reservation">
+		<ActionBar class="action-bar" title="{{ titleActionBar }}">
 			<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>
 			<ActionItem id="logOut" tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>
 		</ActionBar>
 	</Page.actionBar>
 	<GridLayout rows="*" columns="*">
-		<TabView class="tab-view" loaded="onLoaded" selectedIndex="0" androidTabsPosition="bottom">
+		<TabView class="tab-view" loaded="onLoaded" selectedIndex="{{ tabSelectedIndex }}" selectedIndexChanged="onSelectedIndexChanged" androidTabsPosition="bottom">
 			<TabViewItem title="" iconSource="~/resources/home_icon.png">
 				<Frame id="homeFrame" defaultPage="views/home/home-page"/>
 			</TabViewItem>
@@ -14,7 +14,7 @@
 				<Frame id="reservationFrame" defaultPage="views/reservations/reservations-page"/>
 			</TabViewItem>
 			<TabViewItem title="" iconSource="~/resources/img/user_profile_icon.png">
-				<Frame id="userProfileFrame" defaultPage="views/user-reservations/user-reservations-page"/>
+				<Frame id="myReservationsFrame" defaultPage="views/user-reservations/user-reservations-page"/>
 			</TabViewItem>
 			<TabViewItem title="" iconSource="~/resources/img/user_profile_icon.png">
 				<Frame id="userProfileFrame" defaultPage="views/user-profile/user-profile-page"/>

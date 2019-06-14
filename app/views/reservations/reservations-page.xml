@@ -1,4 +1,4 @@
-<Page id="pageReservations" actionBarHidden="false" loaded="loadedReservation" 
+<Page id="pageReservations" actionBarHidden="true" loaded="loadedReservation" 
     xmlns:calendar="nativescript-ui-calendar" 
     xmlns:dropDown="nativescript-drop-down" 
     xmlns:floatingButton="nativescript-floatingactionbutton">

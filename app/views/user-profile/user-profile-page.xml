@@ -1,4 +1,4 @@
-<Page id="pageUserProfile" actionBarHidden="false" loaded="loadedUserProfile">
+<Page id="pageUserProfile" actionBarHidden="true" loaded="loadedUserProfile">
     <Page.actionBar>
         <ActionBar class="action-bar" title="Mi Perfil">
             <!--<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>

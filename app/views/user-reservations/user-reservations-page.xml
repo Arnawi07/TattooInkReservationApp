@@ -1,5 +1,4 @@
-<Page actionBarHidden="false" loaded="loaded" 
-    xmlns:lv="nativescript-ui-listview">
+<Page actionBarHidden="true" loaded="loaded" xmlns:lv="nativescript-ui-listview">
     <Page.actionBar>
         <ActionBar class="action-bar" title="Mis Reservas">
             <!--<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>

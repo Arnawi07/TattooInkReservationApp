@@ -3,11 +3,14 @@ var firebase = require("nativescript-plugin-firebase");
 var frameModule = require("tns-core-modules/ui/frame");
 
 var page;
-var pageData = new observableModule.fromObject({});
+var pageData = new observableModule.fromObject({
+    tabSelectedIndex: 0,
+    titleActionBar: "InicioS"
+});
 
 exports.onLoaded = function (args) {
     page = args.object;
-    //pageData.set("tabSelectedIndex", 0);
+    pageData.set("tabSelectedIndex", 0);
     page.bindingContext = pageData;
 }
 
@@ -28,31 +31,36 @@ exports.signOut = function (args) {
         });
 }
 
-/*function changeTab(args) {
-    const tabSelectedIndex = vm.get("tabSelectedIndex");
+exports.changeTab = function(args) {
+    const tabSelectedIndex = pageData.get("tabSelectedIndex");
+    alert("selected: " +  tabSelectedIndex);
     if (tabSelectedIndex === 0) {
-        vm.set("tabSelectedIndex", 1);
+        pageData.set("titleActionBar", "Inicio");
     } else if (tabSelectedIndex === 1) {
-        vm.set("tabSelectedIndex", 2);
+        pageData.set("titleActionBar", "Calendario de Reservas");
     } else if (tabSelectedIndex === 2) {
-        vm.set("tabSelectedIndex", 0);
+        pageData.set("titleActionBar", "Mis Reservas");
+    } else if (tabSelectedIndex === 3){
+        pageData.set("titleActionBar", "Mi Perfil");
     }
-}*/
+}
 
 // displaying the old and new TabView selectedIndex
-/*exports.onSelectedIndexChanged = function (args) {
+exports.onSelectedIndexChanged = function (args) {
     if (args.oldIndex !== -1) {
         const newIndex = args.newIndex;
         if (newIndex === 0) {
-            vm.set("tabSelectedIndexResult", "Profile Tab (tabSelectedIndex = 0 )");
+            pageData.set("titleActionBar", "Inicio");
         } else if (newIndex === 1) {
-            vm.set("tabSelectedIndexResult", "Stats Tab (tabSelectedIndex = 1 )");
+            pageData.set("titleActionBar", "Calendario de Reservas");
         } else if (newIndex === 2) {
-            vm.set("tabSelectedIndexResult", "Settings Tab (tabSelectedIndex = 2 )");
+            pageData.set("titleActionBar", "Mis Reservas");
+        } else if( newIndex === 3){
+            pageData.set("titleActionBar", "Mi Perfil");
         }
-        dialogs.alert(`Selected index has changed ( Old index: ${args.oldIndex} New index: ${args.newIndex} )`)
+        /*dialogs.alert(`Selected index has changed ( Old index: ${args.oldIndex} New index: ${args.newIndex} )`)
             .then(() => {
                 console.log("Dialog closed!");
-            });
+            });*/
     }
-}*/
+}
