@@ -8,6 +8,7 @@ function MyReservationsList(items) {
     viewModel.indexOf = indexOf;
 
     viewModel.load = function () {
+        viewModel.empty();
 
         var onQueryEvent = function (result) {
             if (!result.error) {
@@ -19,7 +20,7 @@ function MyReservationsList(items) {
                                 firebase.getValue("/timeTables/" + worker + "/" + month + "/" + date)
                                     .then(function (result) {
                                         for (let key in result.value) {
-                                            var onQueryEvent2 = function (result) {
+                                            /*var onQueryEvent2 = function (result) {
                                                 if (!result.error) {
                                                     console.log("res " + JSON.stringify(result.value));
                                                     console.log(result.value.uidClient + " === " + config.uid);
@@ -34,7 +35,7 @@ function MyReservationsList(items) {
                                                     }
                                                 }
                                             }
-
+ 
                                             return firebase.query(
                                                 onQueryEvent2, "/timeTables/" + worker + "/" + month + "/" + date + "/" + key,
                                                 {
@@ -49,8 +50,8 @@ function MyReservationsList(items) {
                                                         value: 'since'
                                                     }
                                                 }
-                                            );
-                                            /*firebase.getValue("/timeTables/" + worker + "/" + month + "/" + date + "/" + key)
+                                            );*/
+                                            firebase.getValue("/timeTables/" + worker + "/" + month + "/" + date + "/" + key)
                                                 .then(function (result) {
                                                     if (result.value.uidClient === config.uid) {
                                                         viewModel.push({
@@ -60,12 +61,12 @@ function MyReservationsList(items) {
                                                             workerShop: worker
                                                         })
                                                     }
-                                                });*/
+                                                });
                                         }
                                     });
                             }
                         })
-                }                
+                }
             }
         };
 

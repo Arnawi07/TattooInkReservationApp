@@ -2,9 +2,10 @@ var observableModule = require("tns-core-modules/data/observable");
 var ObservableArray = require("tns-core-modules/data/observable-array").ObservableArray;
 var dialogsModule = require("tns-core-modules/ui/dialogs");
 var frameModule = require("tns-core-modules/ui/frame");
+var firebase = require("nativescript-plugin-firebase");
 
 var MyReservationsList = require("../../shared/view-models/user-reservations-view-model");
-var myReservationsList = new MyReservationsList([]);
+var myReservationsList = new MyReservationsList();
 
 var page;
 var pageData = new observableModule.fromObject({
@@ -18,27 +19,9 @@ exports.loaded = function (args) {
 
     myReservationsList.empty();
     //pageData.set("isLoading", true);
-    myReservationsList.load().then(function () {
-        //pageData.set("isLoading", false);
-    }).catch(function (error) {
-        alert("ERROR:" + error);
-    });
+
+    myReservationsList.load();
 };
-
-
-/*exports.addDocument = function(){
-    home.addToMyDatabase()
-        .then(function(){
-            console.info("INFO: Documento añadido.")
-            dialogsModule.alert("Document added!");
-        }).catch(function(error){
-            console.error("ERROR: addDocument() ->" + error);
-            dialogsModule.alert({
-                message: error,
-                okButtonText: "OK"
-            });
-        });
-}*/
 
 exports.delete = function (args) {
     dialogsModule.confirm({
@@ -51,7 +34,7 @@ exports.delete = function (args) {
         if (accept) {
             var item = args.view.bindingContext;
             var index = myReservationsList.indexOf(item);
-        
+
             myReservationsList.deleteReservation(index);
         }
     });
@@ -66,16 +49,19 @@ exports.onSwipeCellStarted = function (args) {
     swipeLimits.threshold = rightItem.getMeasuredWidth() / 2;
 };
 
-/*exports.getDocument = function(){
-    home.getToMyDatabase()
-        .then(function(){
-            console.info("INFO: Documento recogido.")
-            dialogsModule.alert("Document got!");
-        }).catch(function(error){
-            console.error("ERROR: getDocument() -> " + error);
-            dialogsModule.alert({
-                message: error,
-                okButtonText: "OK"
-            });
+exports.signOut = function (args) {
+    firebase.logout()
+        .then(function () {
+            console.info("INFO: Sesión cerrada.");
+            const button = args.object;
+            const page = button.page;
+            const myFrame = page.frame;
+            const navigationEntry = {
+                moduleName: "views/login/login-page",
+                clearHistory: true //Este atributo es super importante, ya que sin él, el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion sin tener que iniciar sesion
+            };
+            myFrame.navigate(navigationEntry);
+        }, function (error) {
+            console.error("ERROR: signOut() -> " + error);
         });
-}*/
+}

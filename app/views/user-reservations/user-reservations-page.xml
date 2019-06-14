@@ -1,6 +1,10 @@
-<Page actionBarHidden="false" loaded="loaded" xmlns:lv="nativescript-ui-listview">
+<Page actionBarHidden="false" loaded="loaded" 
+    xmlns:lv="nativescript-ui-listview">
     <Page.actionBar>
-        <ActionBar class="action-bar" title="Mis Reservas"></ActionBar>
+        <ActionBar class="action-bar" title="Mis Reservas">
+            <!--<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>
+            <ActionItem id="logOut" tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>-->
+        </ActionBar>
     </Page.actionBar>
     <GridLayout rows="auto, *">
         <lv:RadListView items="{{ myReservationsList }}" row="0" itemSwipeProgressStarted="onSwipeCellStarted" swipeActions="true">

@@ -1,6 +1,5 @@
 var dialogsModule = require("tns-core-modules/ui/dialogs");
 var frameModule = require("tns-core-modules/ui/frame");
-
 var UserViewModel = require("../../shared/view-models/login-view-model");
 var user = new UserViewModel({});
 
@@ -64,6 +63,8 @@ function login(args) {
 }
 
 function signUp() {
+    var checkBoxCkecked = page.getViewById("aceptTerms").checked;
+    if(checkBoxCkecked){
     user.register()
         .then(function () {
             console.info("INFO: Usuario registrado.");
@@ -76,6 +77,9 @@ function signUp() {
                 okButtonText: "OK"
             });
         });
+    }else{
+        alert("Porfavor acepta los términos y condiciones de uso");
+    }
 }
 
 
@@ -90,4 +94,13 @@ exports.resetPassword = function () {
                 okButtonText: "OK"
             });
         })
+}
+
+exports.modalTermsAndCondition = function (args) {
+    const modalViewModule = "views/terms/terms-modal";
+    const mainView = args.object;
+    const context = {};
+    const fullscreen = true;
+    mainView.showModal(modalViewModule, context, function () {
+    }, fullscreen);
 }

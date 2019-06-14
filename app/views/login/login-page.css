@@ -11,12 +11,12 @@
 }
 
 .logo {
-  margin-bottom: 20;
-  height: 200;
+  margin-bottom: 10;
+  height: 175;
 }
 
 Button, TextField {
-  margin-bottom: 5;
+  margin-bottom: 3;
 }
 
 .btn-primary {
@@ -28,7 +28,7 @@ Button, TextField {
 }
 
 .input-field {
-  margin-bottom: 25;
+  margin-bottom: 10;
 }
 
 .input {
@@ -37,11 +37,16 @@ Button, TextField {
   placeholder-color: rgb(255, 255, 255, 0.6);
   background-color: transparent;
 }
+.check {
+  font-size: 18;
+  color: #fff;
+  background-color: transparent;
+}
 .hr-light{
   background-color: #fff;
 }
 
-#recoverPassword {
+.underlinesWords {
  text-align: right;
  color: #fff; 
  text-decoration: underline;

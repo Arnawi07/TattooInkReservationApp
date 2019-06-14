@@ -1,6 +1,11 @@
-<Page id="pageHome" actionBarHidden="false" loaded="loadedHome" xmlns:Card="nativescript-cardview" xmlns:lv="nativescript-ui-listview">
+<Page id="pageHome" actionBarHidden="false" loaded="loadedHome" 
+    xmlns:Card="nativescript-cardview" 
+    xmlns:lv="nativescript-ui-listview">
     <Page.actionBar>
-        <ActionBar class="action-bar" title="Inicio"></ActionBar>
+        <ActionBar class="action-bar" title="Inicio">
+            <!--<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>
+            <ActionItem id="logOut" tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>-->
+        </ActionBar>
     </Page.actionBar>
     <ScrollView>
         <StackLayout>

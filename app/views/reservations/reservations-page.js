@@ -1,4 +1,5 @@
 var observableModule = require("tns-core-modules/data/observable");
+var firebase = require("nativescript-plugin-firebase");
 var ObservableArray = require("tns-core-modules/data/observable-array").ObservableArray;
 var calendarModule = require("nativescript-ui-calendar");
 var timerModule = require("tns-core-modules/timer");
@@ -194,4 +195,21 @@ function dateToDateFormatCompare(dateSelected) {
     const monthFormat = parseInt(dateSelected.getMonth() + 1) < 10 ? "0" + parseInt(dateSelected.getMonth() + 1) : parseInt(dateSelected.getMonth() + 1);
     const dateFormatCompare = dateSelected.getFullYear() + "-" + monthFormat + "-" + dayFormat;
     return dateFormatCompare;
+}
+
+exports.signOut = function (args) {
+    firebase.logout()
+        .then(function () {
+            console.info("INFO: Sesión cerrada.");
+            const button = args.object;
+            const page = button.page;
+            const myFrame = page.frame;
+            const navigationEntry = {
+                moduleName: "views/login/login-page",
+                clearHistory: true //Este atributo es super importante, ya que sin él, el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion sin tener que iniciar sesion
+            };
+            myFrame.navigate(navigationEntry);
+        }, function (error) {
+            console.error("ERROR: signOut() -> " + error);
+        });
 }

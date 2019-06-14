@@ -1,5 +1,5 @@
 var observableModule = require("tns-core-modules/data/observable");
-
+var firebase = require("nativescript-plugin-firebase");
 var TattooPhotosList = require("../../shared/view-models/home-view-model");
 var tattooPhotosList = new TattooPhotosList([]);
 
@@ -30,6 +30,24 @@ exports.openModal = function (args) {
   mainView.showModal(modalViewModule, context, function (photoUrl, title) {
   }, fullscreen);
 }
+
+exports.signOut = function (args) {
+  firebase.logout()
+      .then(function () {
+          console.info("INFO: Sesión cerrada.");
+          const button = args.object;
+          const page = button.page;
+          const myFrame = page.frame;
+          const navigationEntry = {
+              moduleName: "views/login/login-page",
+              clearHistory: true //Este atributo es super importante, ya que sin él, el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion sin tener que iniciar sesion
+          };
+          myFrame.navigate(navigationEntry);
+      }, function (error) {
+          console.error("ERROR: signOut() -> " + error);
+      });
+}
+
 
 /*exports.animationCard = function () {
     const card = page.getViewById('jokerCard');

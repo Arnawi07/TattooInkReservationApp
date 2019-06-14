@@ -1,6 +1,9 @@
 <Page id="pageUserProfile" actionBarHidden="false" loaded="loadedUserProfile">
     <Page.actionBar>
-        <ActionBar class="action-bar" title="Mi Perfil"></ActionBar>
+        <ActionBar class="action-bar" title="Mi Perfil">
+            <!--<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>
+            <ActionItem id="logOut" tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>-->
+        </ActionBar>
     </Page.actionBar>
     <FlexboxLayout class="loginLayout">
         <StackLayout class="formLayout">

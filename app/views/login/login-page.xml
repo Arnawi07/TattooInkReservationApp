@@ -1,4 +1,5 @@
-<Page class="page" loaded="loaded">
+<Page class="page" loaded="loaded" 
+    xmlns:CheckBox="nativescript-checkbox">
     <FlexboxLayout class="loginLayout">
         <StackLayout class="formLayout">
             <Image class="logo" src="~/resources/img/logoTattoShop.png" />
@@ -24,13 +25,19 @@
             </StackLayout>
 
             <StackLayout visibility="{{ showTxtField ? 'visible' : 'collapse' }}">
-                <Label id="recoverPassword" text="¿ Has olvidado la contraseña ?" tap="resetPassword"/>
+                <Label id="recoverPassword" class="underlinesWords" text="¿ Has olvidado la contraseña ?" tap="resetPassword"/>
             </StackLayout>
 
             <StackLayout class="input-field" visibility="{{ showTxtField ? 'collapse' : 'visible' }}">
                 <TextField id="passwordConfirmationXML" class="input" hint="Confirmar contraseña" secure="true" />
                 <Label class="hr-light" />
             </StackLayout>
+
+            <StackLayout class="input-field" visibility="{{ showTxtField ? 'collapse' : 'visible' }}">
+                <CheckBox:CheckBox id="check" class="check" text="He leído y acepto los" checked="false"/>
+                <Label id="aceptTerms" class="underlinesWords" text="términos y condiciones de uso" tap="modalTermsAndCondition"/>
+            </StackLayout>
+
 
             <Button class="btn btn-primary" text="{{ isLoggingIn ? 'Inicia sesión' : 'Regístrate' }}" tap="submit" />
             <Button text="{{ isLoggingIn ? 'Regístrate' : 'Volver a inicio de sesión' }}" tap="toggleDisplay" />

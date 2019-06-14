@@ -3,7 +3,10 @@
     xmlns:dropDown="nativescript-drop-down" 
     xmlns:floatingButton="nativescript-floatingactionbutton">
     <Page.actionBar>
-        <ActionBar class="action-bar" title="Calendario de Reservas"></ActionBar>
+        <ActionBar class="action-bar" title="Calendario de Reservas">
+            <!--<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>
+            <ActionItem id="logOut" tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>-->
+        </ActionBar>
     </Page.actionBar>
     <StackLayout>
         <GridLayout id="actionBar" columns="auto,auto" rows="auto,auto">
