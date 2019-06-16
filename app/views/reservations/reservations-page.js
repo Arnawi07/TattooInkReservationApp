@@ -43,6 +43,9 @@ exports.onLoaded = function (args) {
     reservations.emptyArrayReservationsCalendar();
     reservations.emptyArrayHolidays();    
     reservations.getHolidays();
+    if (pageData.get("timeTableWorker") !== "") {
+        updateEventsCalendar();
+    }
 
     pageData.set("showFloatingButton", false);
     page.bindingContext = pageData;
@@ -89,26 +92,27 @@ exports.navigatedToDate = function (args) {
 exports.onDateSelected = function (args) {  //ENTRA 3 VECES!!!!!!!!!! PONCE MAL
     const calendar = args.object;
     const dateSelected = args.date;
-    const dateFormatCompare = dateToDateFormatCompare(dateSelected);
-    console.log("dateSel: " + dateFormatCompare);
-    if (pageData.get("timeTableWorker") !== "") {
-        if ((reservations.holidaysDay).indexOf(dateFormatCompare) === -1 && dateSelected.getDay() != 0) {   //Si dia seleccionado no es festivo ni domingo entra.
-            dayOfWeekSelected = dateSelected.getDay();  //Se recoge aqui porque se tiene que pasar a reserve-modal con un dia de la semana valido.
-            if (calendar.viewMode == calendarModule.CalendarViewMode.Month) {   //Si esta en la vista 'Month' cambiará a 'Day' solamente cuando seleccione/clique una fecha.
-                pageData.set("showFloatingButton", true);
-                calendar.viewMode = calendarModule.CalendarViewMode.Day;
-                calendar.selectedDate = args.date;
-                calendar.displayedDate = args.date;
+    const dateFormatCompare = dateToDateFormatCompare(dateSelected);    
+        console.log("dateSel: " + dateFormatCompare);
+        if (pageData.get("timeTableWorker") !== "") {
+            if ((reservations.holidaysDay).indexOf(dateFormatCompare) === -1 && dateSelected.getDay() != 0) {   //Si dia seleccionado no es festivo ni domingo entra.
+                dayOfWeekSelected = dateSelected.getDay();  //Se recoge aqui porque se tiene que pasar a reserve-modal con un dia de la semana valido.
+                if (calendar.viewMode == calendarModule.CalendarViewMode.Month) {   //Si esta en la vista 'Month' cambiará a 'Day' solamente cuando seleccione/clique una fecha.
+                    pageData.set("showFloatingButton", true);
+                    
+                    calendar.viewMode = calendarModule.CalendarViewMode.Day;
+                    calendar.selectedDate = args.date;                                        
+                    calendar.displayedDate = args.date;
+                } else {
+                    pageData.set("showFloatingButton", true);
+                }
             } else {
-                pageData.set("showFloatingButton", true);
+                pageData.set("showFloatingButton", false);
+                alert("No puedes reservar un día festivo o no laboral.");
             }
         } else {
-            pageData.set("showFloatingButton", false);
-            alert("No puedes reservar un día festivo o no laboral.");
+            alert("Debes seleccionar un tatuador.");
         }
-    } else {
-        alert("Debes seleccionar un tatuador.");
-    }
 }
 
 exports.changeViewMode = function (args) {

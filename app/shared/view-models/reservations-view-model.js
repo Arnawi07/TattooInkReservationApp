@@ -17,8 +17,7 @@ function Reservations() {
     viewModel.tattooDurations = new ObservableArray([]);
     viewModel.timeTableShop = "";
 
-
-
+    firebase.onDisconnect("/timeTables").cancel().then(function() { console.log("Success")}).catch(function(error){ console.log(error)});
 
     viewModel.emptyArrayWorkersListNames = function () {
         while (viewModel.workersListNames.length) {

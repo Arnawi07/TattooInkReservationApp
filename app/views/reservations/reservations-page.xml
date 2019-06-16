@@ -13,7 +13,7 @@
         </GridLayout>
 
         <GridLayout id="actionBar" rows="auto, *">
-            <calendar:RadCalendar id="calendar" row="1" firstDayOfWeek="1" eventSource="{{ calendarEvents }}" navigatedToDate="navigatedToDate" dateSelected="onDateSelected" viewMode="Month" locale="es-ES" minDate="{{minDate}}" maxDate="{{ maxDate }}">
+            <calendar:RadCalendar id="calendar" row="1" firstDayOfWeek="1" eventSource="{{ calendarEvents }}" navigatedToDate="navigatedToDate" dateSelected="onDateSelected" viewMode="{{ calendarViewMode2 }}" locale="es-ES" minDate="{{minDate}}" maxDate="{{ maxDate }}">
 
                 <!-- calendar-monthview-styling -->
                 <calendar:RadCalendar.monthViewStyle>
@@ -97,7 +97,7 @@
                 <!-- << calendar-dayview-styling -->
             </calendar:RadCalendar>
 
-            <floatingButton:fab tap="reserve" visibility="{{ showFloatingButton ? 'visible' : 'collapse' }}" row="1" icon="~/resources/delete.png" rippleColor="#f1f1f1" class="fab-button" />
+            <floatingButton:fab tap="reserve" visibility="{{ showFloatingButton ? 'visible' : 'collapse' }}" row="1" icon="~/resources/add_reserve_icon.png" rippleColor="#f1f1f1" class="fab-button" />
         </GridLayout>
     </StackLayout>
 </Page>

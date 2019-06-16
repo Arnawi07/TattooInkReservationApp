@@ -32,20 +32,25 @@ exports.signOut = function (args) {
         });
 }
 
+exports.openModalContact = function(args){
+    const modalViewModule = "views/contact/contact-modal";
+    const mainView = args.object;
+    const context = { };
+    const fullscreen = true;
+    mainView.showModal(modalViewModule, context, function () {
+    }, fullscreen);
+}
+
 exports.onSelectedIndexChanged = function (args) {
     if (args.oldIndex !== -1) {
         const newIndex = args.newIndex;
         if (newIndex === 0) {
-            const pageHome = getFrameById("homeFrame").currentPage;
             pageData.set("titleActionBar", "Inicio");
         } else if (newIndex === 1) {
-            const pageHome = getFrameById("reservationFrame").currentPage;
             pageData.set("titleActionBar", "Calendario de Reservas");
         } else if (newIndex === 2) {
-            const pageHome = getFrameById("myReservationsFrame").currentPage;
             pageData.set("titleActionBar", "Mis Reservas");
         } else if( newIndex === 3){
-            const pageHome = getFrameById("userProfileFrame").currentPage;
             pageData.set("titleActionBar", "Mi Perfil");
         }
     }

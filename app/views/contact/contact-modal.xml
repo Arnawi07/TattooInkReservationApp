@@ -1,0 +1,24 @@
+<Page loaded="onLoaded" actionBarHidden="true" shownModally="onShownModally" navigatingFrom="onNavigatedFrom">
+    <FlexboxLayout class="loginLayout">
+        <StackLayout class="formLayout">
+            <StackLayout class="input-field">
+                <GridLayout columns="auto,100" rows="auto,auto">
+                    <Label col="0" row="0" text="Nombre: "/>
+                    <Label col="1" row="0" id="nameShopXML" text="{{ contact.nameShop }}"/>
+                </GridLayout>
+                <GridLayout columns="auto,100" rows="auto,auto">
+                    <Label col="0" row="0" text="Numero de telefono: "/>
+                    <Label col="1" row="0" id="telephoneShopXML" text="{{ contact.telephoneShop }}"/>
+                </GridLayout>
+                <GridLayout columns="auto,100" rows="auto,auto">
+                    <Label col="0" row="0" text="Correo electronico: "/>
+                    <Label col="1" row="0" id="emailShopXML" text="{{ contact.emailShop }}"/>
+                </GridLayout>
+                <GridLayout columns="auto,100" rows="auto,auto">
+                    <Label col="0" row="0" text="Dirección: "/>
+                    <Label col="1" row="0" id="addressShopXML" text="{{ contact.addressShop }}"/>
+                </GridLayout>
+            </StackLayout>
+        </StackLayout>
+    </FlexboxLayout>
+</Page>

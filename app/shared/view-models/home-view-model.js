@@ -36,7 +36,6 @@ function TattooPhotosList(items) {
                 }
             }
         );
-
     };
 
     return viewModel;
