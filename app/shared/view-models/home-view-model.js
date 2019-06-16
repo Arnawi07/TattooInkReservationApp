@@ -10,25 +10,6 @@ function TattooPhotosList(items) {
         }
     }
 
-    viewModel.getAllTattooPhotos = function () {
-        return firebase.getValue("/photosUrlHome")
-            .then(function (result) {
-                for (let key in result.value) {
-                    firebase.getValue("/photosUrlHome/" + key)
-                        .then(function (result) {
-                            viewModel.push({
-                                photoUrl: result.value.url,
-                                title: result.value.title
-                            });
-                        }).catch(function (error) {
-                            console.error("ERROR: getAllTattooPhotos().getValue() -> " + error);
-                        });
-                }
-            }).catch(function (error) {
-                console.error("ERROR: getAllTattooPhotos() -> " + error);
-            });
-    }
-
     viewModel.getAllTattooPhotosOrderBy = function () {
         var onQueryEvent = function (result) {
             if (!result.error) {

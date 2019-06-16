@@ -12,18 +12,20 @@ var pageData = new observableModule.fromObject({
     myReservationsList: myReservationsList
 });
 
-exports.loaded = function (args) {
+exports.onLoaded = function (args) {
     page = args.object;
     page.bindingContext = pageData;
-    //page.bindingContext = home;
 
     myReservationsList.empty();
-    //pageData.set("isLoading", true);
-
-    myReservationsList.load();
+    myReservationsList.load()
+        .then(function(){
+            console.info("INFO: lista de mis reservas cargada");
+        }).catch(function(error){
+            console.error("ERROR: load() -> " + error);
+        });
 };
 
-exports.delete = function (args) {
+exports.deleteReserve = function (args) {
     dialogsModule.confirm({
         title: "Anular reserva",
         message: "Estás seguro de que quieres eliminar la reserva? Una vez eliminada no se puede recuperar.",
@@ -32,36 +34,24 @@ exports.delete = function (args) {
     }).then(function (result) {
         accept = result;
         if (accept) {
-            var item = args.view.bindingContext;
-            var index = myReservationsList.indexOf(item);
+            const item = args.view.bindingContext;
+            const index = myReservationsList.indexOf(item);
 
-            myReservationsList.deleteReservation(index);
+            myReservationsList.deleteReservation(index)
+                .then(function(){
+                    console.info("INFO: reserva eliminada");
+                }).catch(function(error){
+                    console.error("ERROR: deleteReservation() -> " + error);
+                });
         }
     });
 }
 
 exports.onSwipeCellStarted = function (args) {
-    var swipeLimits = args.data.swipeLimits;
-    var swipeView = args.object;
-    var rightItem = swipeView.getViewById('delete-view');
+    const swipeLimits = args.data.swipeLimits;
+    const swipeView = args.object;
+    const rightItem = swipeView.getViewById('delete-view');
     swipeLimits.right = rightItem.getMeasuredWidth();
     swipeLimits.left = 0;
     swipeLimits.threshold = rightItem.getMeasuredWidth() / 2;
 };
-
-exports.signOut = function (args) {
-    firebase.logout()
-        .then(function () {
-            console.info("INFO: Sesión cerrada.");
-            const button = args.object;
-            const page = button.page;
-            const myFrame = page.frame;
-            const navigationEntry = {
-                moduleName: "views/login/login-page",
-                clearHistory: true //Este atributo es super importante, ya que sin él, el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion sin tener que iniciar sesion
-            };
-            myFrame.navigate(navigationEntry);
-        }, function (error) {
-            console.error("ERROR: signOut() -> " + error);
-        });
-}

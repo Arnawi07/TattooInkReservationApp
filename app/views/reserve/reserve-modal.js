@@ -1,5 +1,6 @@
 const observableModule = require("tns-core-modules/data/observable");
 const Observable = require("tns-core-modules/data/observable").Observable;
+var dialogsModule = require("tns-core-modules/ui/dialogs");
 
 const isAndroid = require("tns-core-modules/platform").isAndroid;
 const isIOS = require("tns-core-modules/platform").isIOS;
@@ -7,17 +8,21 @@ const isIOS = require("tns-core-modules/platform").isIOS;
 var Reservations = require("../../shared/view-models/reservations-view-model");
 var reservations = new Reservations();
 
-var pageData = new observableModule.fromObject({
-  reservations: reservations,
-  tattooAreas: ["Muslo", "Brazo", "Espalda", "Hombro", "Pectoral", "Abdomen", "Costado", "Dedos", "Empeine", "Gemelo", "Rodilla", "Cara", "Cabeza"]
-});
-
 var page;
 var dayOfweekSelected;
 var startDateHour;
 var endDateHour;
 var startDateMin;
 var endDateMin;
+
+var pageData = new observableModule.fromObject({
+  reservations: reservations,
+  tattooAreas: ["Muslo", "Brazo", "Espalda", "Hombro", "Pectoral", "Abdomen", "Costado", "Dedos", "Empeine", "Gemelo", "Rodilla", "Cara", "Cabeza"],
+  startDateHour: startDateHour,
+  startDateMin: startDateMin
+});
+
+
 
 //Parametros para el metodo de recoger las reservas del dia
 var timeTableWorker;
@@ -37,22 +42,36 @@ exports.onShownModally = function (args) {
   actualYearCalendar = context.actualYearCalendar;
 
   reservations.emptyArrayInfoTattoos();
-  reservations.getInfoTattoos();
-  reservations.getTimeTableShop(dayOfweekSelected);
+  //Posible setTimeout
+  reservations.getInfoTattoos()
+    .then(function(){
+      console.info("INFO: listas de información de tattoos rellena");
+    }).catch(function(error){
+      console.error("ERROR: getInfoTattoos() -> " + error);
+    });
+  reservations.getTimeTableShop(dayOfweekSelected)
+    .then(function(){
+      console.info("INFO: horario de la tienda recogido");
+    }).catch(function(error){
+      console.error("ERROR: getTimeTableShop(...) -> " + error);
+    });
 
   setTimeout(function () {
     page.getViewById("timeTableshop").text = "Info. Horario: " + reservations.timeTableShop;
     splitTimeTable = reservations.timeTableShop.split(" - ");
     startDateHour = splitTimeTable[0].substring(0, 2);
-    endDateHour = splitTimeTable[1].substring(0, 2);
     startDateMin = splitTimeTable[0].substring(3, 5);
+    endDateHour = splitTimeTable[1].substring(0, 2);    
     endDateMin = splitTimeTable[1].substring(3, 5);
-  }, 500);
+
+    pageData.set("startDateHour", startDateHour);
+    pageData.set("startDateMin", startDateMin);
+  }, 800);
 
   page.bindingContext = pageData;
 }
 
-exports.onNavigatedFrom = function (args) {
+exports.onNavigatedFrom = function (args) { //NO entra!!!!
   if (args.isBackNavigation === true) {
     args.object.closeModal();
   }
@@ -61,8 +80,6 @@ exports.onNavigatedFrom = function (args) {
 exports.onPickerLoaded = function (args) {
   const timePicker = args.object;
 
-  timePicker.hour = 10;
-  timePicker.minute = 0;
   timePicker.minuteInterval = 15;
 
   if (isAndroid) {
@@ -71,6 +88,7 @@ exports.onPickerLoaded = function (args) {
     const local = NSLocale.alloc().initWithLocaleIdentifier("ES");
     timePicker.ios.locale = local;
   }
+  console.info("INFO: TimePicker cargado.");
 }
 
 exports.getSelectedIndexChanged = function (args) {
@@ -90,9 +108,10 @@ exports.makeReserve = function (args) {
   const tpMin = parseInt(page.getViewById("timePicker").minute);
   const hour = "T00:00:00";
 
-  startDateSchedule = new Date(dateOfDateSelected + hour);
-  endDateSchedule = new Date(dateOfDateSelected + hour);
-  startDateSelected = new Date(dateOfDateSelected + hour);
+  const startDateSchedule = new Date(dateOfDateSelected + hour);
+  const endDateSchedule = new Date(dateOfDateSelected + hour);
+  const startDateSelected = new Date(dateOfDateSelected + hour);
+  const todayDate = new Date();
   //startDateSelected = new Date(dateOfDateSelected + hour);
 
   startDateSchedule.setHours(startDateHour);
@@ -107,8 +126,18 @@ exports.makeReserve = function (args) {
   startDateSelected.setMinutes(tpMin);
   startDateSelected.setSeconds(0);
 
+  todayDate.setHours(parseInt(todayDate.getHours - 1)); //Puedes reservar con 1h de antelación como minimo
+
   if (!(startDateSelected >= startDateSchedule && startDateSelected < endDateSchedule)) {
-    alert("Debes de seleccionar una hora dentro del horario de apertura.");
+    dialogsModule.alert({
+      message: "Debes de seleccionar una hora dentro del horario de apertura.",
+      okButtonText: "Vale"
+    });                                                                           
+  } else if(startDateSelected.getDate() == todayDate.getDate() && startDateSelected.getMonth() == todayDate.getMonth() && startDateSelected <= todayDate){
+    dialogsModule.alert({
+      message: "Debes de reservar con un minimo de antelación de 1h.",
+      okButtonText: "Vale"
+    });
   } else {
     var indexTypeTattoo = page.getViewById("dropDownType").selectedIndex;
     var durationTattoo;
@@ -124,44 +153,54 @@ exports.makeReserve = function (args) {
     //Primero vacio el array de reservas
     reservations.emptyArrayReservationsCalendar();
     //Llamo al metodo para que me devuleva las reservas que hay en el dia "dateOfDateSelected";
-    reservations.getReservationsListForDay(timeTableWorker, actualMonthReservation, dateOfDateSelected);
-
+    reservations.getReservationsListForDay(timeTableWorker, actualMonthReservation, dateOfDateSelected)
+      .then(function(){
+        console.info("INFO: Reservas del día recogidas.");
+      }).catch(function(error){
+        console.error("ERROR: getReservationsListForDay(...) -> " + error);
+      });
+    
     setTimeout(function () {
       var insert = true;
+      var messageReserve = "";
       reservations.reservationsCalendar.forEach(function (reserve, index) {
-        //console.log(startDateSelected + ">=" + new Date(reserve.startDate) + "&&" + startDateSelected +"<" + new Date(reserve.endDate));
         if (startDateSelected >= new Date(reserve.startDate) && startDateSelected < new Date(reserve.endDate)) {
           insert = false;
-        }
-        //console.log(endDateSelected + ">=" + new Date(reserve.startDate) + "&&" + endDateSelected +"<" + new Date(reserve.endDate));
-        if (endDateSelected > new Date(reserve.startDate) && endDateSelected <= new Date(reserve.endDate)) {
+          messageReserve = "La reserva coincide con la reserva de otro usuario.";
+        } else if (endDateSelected > new Date(reserve.startDate) && endDateSelected <= new Date(reserve.endDate)) {
           insert = false;
-        }
-        if (endDateSelected > endDateSchedule) {
+          messageReserve = "La reserva coincide con la reserva de otro usuario.";
+        } else if (endDateSelected > endDateSchedule) {
           insert = false;
-        }
+          messageReserve = "La reserva se pasa del horario de cierre de la tienda.";
+        }        
       });
-      //COMRPOBAR QUE NO SE SALGA DE LAS HORAS DE TRABAJO!!!
       //hasta que no se seleccione el tamaño del tatto no se puede clicar "RESERVAR"
 
       if (insert) {
-        alert("ESTOY GRABANDO");
         reservations.getCurrentUser()
           .then(function (user) {
               const startDateFormatSelected = formatDate(startDateSelected);
-              //alert("startDateFormatSelected => "+startDateFormatSelected);
-
               const endDateFormatSelected = formatDate(endDateSelected);
-              //alert("endDateFormatSelected => "+endDateFormatSelected);
-              //alert("timeTableWorker => " + timeTableWorker);
-              //alert("actualMonthReservation => " + actualMonthReservation);
-              //alert("dateOfDateSelected => " + dateOfDateSelected);
-              reservations.putReserveIntoDay(timeTableWorker, actualMonthReservation, dateOfDateSelected, user.displayName, endDateFormatSelected, startDateFormatSelected, user.uid, user.email).catch(function (error) {
-                alert("Error => " + error);
-              });
+
+              reservations.putReserveIntoDay(timeTableWorker, actualMonthReservation, dateOfDateSelected, user.displayName, endDateFormatSelected, startDateFormatSelected, user.uid, user.email)
+                .then(function(){
+                  console.info("INFO: Reserva completada.");
+                  messageReserve = "Reserva completada correctamente para la fecha: " + formatDateClient(startDateSelected);
+                  dialogsModule.alert({
+                    message: messageReserve,
+                    okButtonText: "Vale"
+                  });
+                })
+                .catch(function (error) {
+                  console.error("ERROR: putReserveIntoDay(...) -> " + error);
+                });
           });
       } else {
-        alert("Tu reserva coincide con la reserva de otro usuario.");
+        dialogsModule.alert({
+          message: messageReserve,
+          okButtonText: "Vale"
+        });
       }
     }, 300);
   }
@@ -175,4 +214,20 @@ function formatDate(date) {
   const secondsOfStartDateSelected = parseInt(date.getSeconds()) < 10 ? "0" + parseInt(date.getSeconds()) : parseInt(date.getSeconds());
 
   return date.getFullYear() + "-" + monthOfStartDateSelected + "-" + dayOfStartDateSelected + "T" + hourOfStartDateSelected + ":" + minutesOfStartDateSelected + ":" + secondsOfStartDateSelected;
+}
+
+function formatDateClient(date) {
+  const dayOfStartDateSelected = parseInt(date.getDate()) < 10 ? "0" + parseInt(date.getDate()) : parseInt(date.getDate());
+  const monthOfStartDateSelected = parseInt(date.getMonth() + 1) < 10 ? "0" + parseInt(date.getMonth() + 1) : parseInt(date.getMonth() + 1);
+  const hourOfStartDateSelected = parseInt(date.getHours()) < 10 ? "0" + parseInt(date.getHours()) : parseInt(date.getHours());
+  const minutesOfStartDateSelected = parseInt(date.getMinutes()) < 10 ? "0" + parseInt(date.getMinutes()) : parseInt(date.getMinutes());
+  
+  var conector = "";
+  if(hourOfStartDateSelected == 13){
+    conector = "a la";
+  }else{
+    conector = "a las";
+  }
+
+  return String(dayOfStartDateSelected + "-" + monthOfStartDateSelected + "-" + date.getFullYear() + " " + conector + " " + hourOfStartDateSelected + ":" + minutesOfStartDateSelected + "h");
 }

@@ -16,7 +16,7 @@ firebase.init({
       console.info("INFO: Firebase inicializado.");
     },
     function (error) {
-      console.error("ERROR: firebase.init -> " + error);
+      console.error("ERROR: init() -> " + error);
     }
 );
 

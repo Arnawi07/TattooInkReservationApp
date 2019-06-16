@@ -1,13 +1,7 @@
-<Page class="page" loaded="loaded" 
-    xmlns:CheckBox="nativescript-checkbox">
+<Page class="page" loaded="onLoaded" actionBarHidden="true" xmlns:CheckBox="nativescript-checkbox">
     <FlexboxLayout class="loginLayout">
         <StackLayout class="formLayout">
             <Image class="logo" src="~/resources/img/logoTattoShop.png" />
-
-            <!--<StackLayout class="input-field">
-				<TextField id="usernameXML" class="input" text="{{ username }}" hint="Nombre de usuario" autocorrect="false" autocapitalizationType="none"/>
-				<Label class="hr-light" />
-			</StackLayout>-->
 
             <StackLayout class="input-field" visibility="{{ showTxtField ? 'collapse' : 'visible' }}">
                 <TextField id="displayNameXML" class="input" text="{{ displayName }}" hint="Nombre y apellido"/>
@@ -33,9 +27,9 @@
                 <Label class="hr-light" />
             </StackLayout>
 
-            <StackLayout class="input-field" visibility="{{ showTxtField ? 'collapse' : 'visible' }}">
-                <CheckBox:CheckBox id="check" class="check" text="He leído y acepto los" checked="false"/>
-                <Label id="aceptTerms" class="underlinesWords" text="términos y condiciones de uso" tap="modalTermsAndCondition"/>
+            <StackLayout class="input-field" visibility="{{ showTxtField ? 'collapse' : 'visible' }}" orientation="horizontal">
+                <CheckBox:CheckBox id="checkTerms" class="check" text="He leído y acepto los" checked="false"/>
+                <Label id="termsAndConditions" class="underlinesWords" text="términos y condiciones de uso" tap="openModalTermsAndConditions"/>
             </StackLayout>
 
 

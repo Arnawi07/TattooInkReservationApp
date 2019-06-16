@@ -1,4 +1,4 @@
-<Page loaded="onLoaded" xmlns="http://www.nativescript.org/tns.xsd" actionBarHidden="false">
+<Page loaded="onLoaded" xmlns="http://www.nativescript.org/tns.xsd">
 	<Page.actionBar>
 		<ActionBar class="action-bar" title="{{ titleActionBar }}">
 			<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>

@@ -5,8 +5,7 @@
         <StackLayout class="formLayout">
             <Label text="RESERVA CONSULTA"/>
             <Label text="Hora para la consulta" style="text-decoration: underline"/>
-            <!--<datetime:TimePickerField pickerTitle="Reserva" hint="Selecciona hora" timeFormat="HH:mm" locale="es_ES"/>-->
-            <TimePicker id="timePicker" loaded="onPickerLoaded"/>
+            <TimePicker id="timePicker" loaded="onPickerLoaded" hour="{{ startDateHour }}" minute="{{ startDateMin }}"/>
             <Label id="timeTableshop" text=""/>
             <Label text="Tipos de tatuajes" style="text-decoration: underline"/>
 

@@ -47,7 +47,8 @@ Button, TextField {
 }
 
 .underlinesWords {
- text-align: right;
- color: #fff; 
- text-decoration: underline;
+  margin-top: 6;
+  text-align: right;
+  color: #fff; 
+  text-decoration: underline;
 }

@@ -10,14 +10,13 @@ var pageData = new observableModule.fromObject({
 });
 
 
-exports.loadedHome = function (args) {
+exports.onLoaded = function (args) {
   page = args.object;
-  //alert("loadedHome");
-  //alert(pageData.get("isLoading"));
-  if (pageData.get("isLoading")) {
-    tattooPhotosList.getAllTattooPhotosOrderBy().then(function () {
-      pageData.set("isLoading", false);
-    });
+  if (pageData.get("isLoading")) {  //Para que se ejecute una sola vez al abrir la app
+    tattooPhotosList.getAllTattooPhotosOrderBy()
+      .then(function () {
+        pageData.set("isLoading", false);
+      });
   }
   page.bindingContext = pageData;
 }
@@ -30,24 +29,6 @@ exports.openModal = function (args) {
   mainView.showModal(modalViewModule, context, function (photoUrl, title) {
   }, fullscreen);
 }
-
-exports.signOut = function (args) {
-  firebase.logout()
-      .then(function () {
-          console.info("INFO: Sesión cerrada.");
-          const button = args.object;
-          const page = button.page;
-          const myFrame = page.frame;
-          const navigationEntry = {
-              moduleName: "views/login/login-page",
-              clearHistory: true //Este atributo es super importante, ya que sin él, el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion sin tener que iniciar sesion
-          };
-          myFrame.navigate(navigationEntry);
-      }, function (error) {
-          console.error("ERROR: signOut() -> " + error);
-      });
-}
-
 
 /*exports.animationCard = function () {
     const card = page.getViewById('jokerCard');

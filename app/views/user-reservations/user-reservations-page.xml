@@ -1,21 +1,15 @@
-<Page actionBarHidden="true" loaded="loaded" xmlns:lv="nativescript-ui-listview">
-    <Page.actionBar>
-        <ActionBar class="action-bar" title="Mis Reservas">
-            <!--<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>
-            <ActionItem id="logOut" tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>-->
-        </ActionBar>
-    </Page.actionBar>
+<Page loaded="onLoaded" actionBarHidden="true" xmlns:lv="nativescript-ui-listview">
     <GridLayout rows="auto, *">
         <lv:RadListView items="{{ myReservationsList }}" row="0" itemSwipeProgressStarted="onSwipeCellStarted" swipeActions="true">
             <lv:RadListView.itemTemplate>
                 <GridLayout class="">
-                    <Label class="p-15" text="{{ startDate + ' con tatuador: ' + workerShop }}"/>
+                    <Label class="p-15" text="{{ startDate + ' (tatuador: ' + workerShop + ')' }}"/>
                 </GridLayout>
             </lv:RadListView.itemTemplate>
 
             <lv:RadListView.itemSwipeTemplate>
                 <GridLayout columns="*,auto" backgroundColor="red">
-                    <StackLayout id="delete-view" col="1" tap="delete" class="delete-view">
+                    <StackLayout id="delete-view" col="1" tap="deleteReserve" class="delete-view">
                         <Image src="~/resources/img/delete.png" />
                     </StackLayout>
                 </GridLayout>

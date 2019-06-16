@@ -14,18 +14,12 @@ var page;
 var currentUser;
 var imagePath;
 
-exports.loadedUserProfile = function (args) {
+exports.onLoaded = function (args) {
     page = args.object;
-   
-    //alert("loadedUserProfile");
-    getCurrentUser();
+    setPhotoUrlUser();
     setTimeout(function(){
-        //alert("imagePath => "+userProfile.imagePath);
         userProfile.set("imagePath",userProfile.imagePath);
     },400);
-
-    //imagePath = userProfile.imagePath;
-    
     page.bindingContext = userProfile;
 };
 
@@ -67,7 +61,7 @@ function editingPhoto() {
         });
 };
 
-function getCurrentUser() {
+function setPhotoUrlUser() {
     userProfile.getCurrentUser()
         .then(function (user) {
             userProfile.set("email", user.email);
@@ -77,7 +71,7 @@ function getCurrentUser() {
                 photoURL: user.photoURL
             });
         }).catch(function (error) {
-            console.error("ERROR: getCurrentUser() -> " + error);
+            console.error("ERROR: setPhotoUrlUser() -> " + error);
         });
 }
 
@@ -144,54 +138,6 @@ exports.changePassword = function () {
         }
     });
 }
-
-/*function signOut(args) {
-    firebase.logout()
-        .then(function () {
-            console.info("INFO: Sesión cerrada.");
-            const button = args.object;
-            const page = button.page;
-            const myFrame = page.frame;
-            const navigationEntry = {
-                moduleName: "views/nav/nav-page",
-                clearHistory: true //Este atributo es super importante, ya que sin él, el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion sin tener que iniciar sesion
-            };
-            myFrame.navigate(navigationEntry);
-            //navigationEntry.navigate("views/login/login-page");
-            //alert("logout");
-            //var parent = frameModule.topmost();
-            //alert("obj parent: "+parent);
-            //alert("obj page: " + parent.page);
-            //alert("obj actionItem: " + parent.page.getViewById("logOut"));
-
-            //var actionItem = parent.page.getViewById("logOut");
-            //actionItem.notify({eventName: "tap", object: this});
-
-            //parent.navigate("views/login/login-page");
-
-        }, function (error) {
-            console.error("ERROR: signOut() -> " + error);
-            alert(error);
-        });
-}*/
-
-exports.signOut = function (args) {
-    firebase.logout()
-        .then(function () {
-            console.info("INFO: Sesión cerrada.");
-            const button = args.object;
-            const page = button.page;
-            const myFrame = page.frame;
-            const navigationEntry = {
-                moduleName: "views/login/login-page",
-                clearHistory: true //Este atributo es super importante, ya que sin él, el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion sin tener que iniciar sesion
-            };
-            myFrame.navigate(navigationEntry);
-        }, function (error) {
-            console.error("ERROR: signOut() -> " + error);
-        });
-}
-
 
 function sendEmailVerification() {
     firebase.sendEmailVerification().then(

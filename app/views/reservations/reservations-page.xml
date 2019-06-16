@@ -1,13 +1,7 @@
-<Page id="pageReservations" actionBarHidden="true" loaded="loadedReservation" 
+<Page loaded="onLoaded" actionBarHidden="true"  
     xmlns:calendar="nativescript-ui-calendar" 
     xmlns:dropDown="nativescript-drop-down" 
     xmlns:floatingButton="nativescript-floatingactionbutton">
-    <Page.actionBar>
-        <ActionBar class="action-bar" title="Calendario de Reservas">
-            <!--<ActionItem ios.systemIcon="16" ios.position="right" text="Configuración" android.position="popup" icon="~/resources/settings_icon.png"></ActionItem>
-            <ActionItem id="logOut" tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>-->
-        </ActionBar>
-    </Page.actionBar>
     <StackLayout>
         <GridLayout id="actionBar" columns="auto,auto" rows="auto,auto">
             <StackLayout orientation="horizontal">
@@ -49,7 +43,7 @@
                         </calendar:CalendarMonthViewStyle.dayNameCellStyle>
 
                         <calendar:CalendarMonthViewStyle.titleCellStyle>
-                            <calendar:CellStyle cellBackgroundColor="#bbcbdb" cellBorderWidth="1" cellBordecalendarolor="#745151" cellTextColor="#dd855c" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="20" />
+                            <calendar:CellStyle cellBackgroundColor="#bbcbdb" cellBorderWidth="1" cellBordecalendarolor="#745151" cellTextColor="#000000" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="20" />
                         </calendar:CalendarMonthViewStyle.titleCellStyle>
 
                         <calendar:CalendarMonthviewStyle.inlineEventCellStyle>

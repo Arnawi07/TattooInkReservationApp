@@ -23,21 +23,25 @@ var pageData = new observableModule.fromObject({
     showFloatingButton: false,
     uid: "",
     minDate: new Date(),
-    maxDate: new Date(maxDate)
+    maxDate: new Date(maxDate),
+    loaded: true
 });
 
 
-exports.loadedReservation = function (args) {
+exports.onLoaded = function (args) {
     page = args.object;
     today = new Date();
     pageData.set("actualMonthCalendar", today.getMonth()); //Se settea la variable del mes al mes actual.
     pageData.set("actualYearCalendar", today.getFullYear()); //Se settea la variable del mes al mes actual.
-
-    reservations.emptyArrayWorkersListNames();
-    reservations.getWorkersList(); //Se rellenan las listas de los nombres de los trabajadores y de sus timeTables.
+    
+    if(pageData.get("loaded")){
+        pageData.set("loaded", false);
+        reservations.emptyArrayWorkersListNames();
+        reservations.getWorkersList(); //Se rellenan las listas de los nombres de los trabajadores y de sus timeTables.        
+    }
 
     reservations.emptyArrayReservationsCalendar();
-    reservations.emptyArrayHolidays();
+    reservations.emptyArrayHolidays();    
     reservations.getHolidays();
 
     pageData.set("showFloatingButton", false);
@@ -82,11 +86,11 @@ exports.navigatedToDate = function (args) {
 };
 
 //Recoge la fecha seleccionada y cambia a la vista 'Day' si estas en la vista 'Month'.
-exports.onDateSelected = function (args) {
+exports.onDateSelected = function (args) {  //ENTRA 3 VECES!!!!!!!!!! PONCE MAL
     const calendar = args.object;
     const dateSelected = args.date;
     const dateFormatCompare = dateToDateFormatCompare(dateSelected);
-
+    console.log("dateSel: " + dateFormatCompare);
     if (pageData.get("timeTableWorker") !== "") {
         if ((reservations.holidaysDay).indexOf(dateFormatCompare) === -1 && dateSelected.getDay() != 0) {   //Si dia seleccionado no es festivo ni domingo entra.
             dayOfWeekSelected = dateSelected.getDay();  //Se recoge aqui porque se tiene que pasar a reserve-modal con un dia de la semana valido.
@@ -195,21 +199,4 @@ function dateToDateFormatCompare(dateSelected) {
     const monthFormat = parseInt(dateSelected.getMonth() + 1) < 10 ? "0" + parseInt(dateSelected.getMonth() + 1) : parseInt(dateSelected.getMonth() + 1);
     const dateFormatCompare = dateSelected.getFullYear() + "-" + monthFormat + "-" + dayFormat;
     return dateFormatCompare;
-}
-
-exports.signOut = function (args) {
-    firebase.logout()
-        .then(function () {
-            console.info("INFO: Sesión cerrada.");
-            const button = args.object;
-            const page = button.page;
-            const myFrame = page.frame;
-            const navigationEntry = {
-                moduleName: "views/login/login-page",
-                clearHistory: true //Este atributo es super importante, ya que sin él, el historial no se limpia y cuando cierres sesion y tires hacia atras te volvera a la aplicacion sin tener que iniciar sesion
-            };
-            myFrame.navigate(navigationEntry);
-        }, function (error) {
-            console.error("ERROR: signOut() -> " + error);
-        });
 }

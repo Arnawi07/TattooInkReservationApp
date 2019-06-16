@@ -1,14 +1,12 @@
 var dialogsModule = require("tns-core-modules/ui/dialogs");
-var frameModule = require("tns-core-modules/ui/frame");
 var UserViewModel = require("../../shared/view-models/login-view-model");
 var user = new UserViewModel({});
 
 var page;
 
 
-exports.loaded = function (args) {
+exports.onLoaded = function (args) {
     page = args.object;
-    page.actionBarHidden = true;
     isLoggingIn = user.isLoggingIn;
     showTxtField = user.showTxtField;
     page.bindingContext = user;
@@ -19,10 +17,11 @@ exports.toggleDisplay = function () {
     showTxtField = !showTxtField;
 
     //Vacia los campos cuando cambia a registro/inicio sesión    
-    page.getViewById("displayNameXML").text = ""
-    page.getViewById("emailXML").text = ""
-    page.getViewById("passwordXML").text = ""
-    page.getViewById("passwordConfirmationXML").text = ""
+    page.getViewById("displayNameXML").text = "";
+    page.getViewById("emailXML").text = "";
+    page.getViewById("passwordXML").text = "";
+    page.getViewById("passwordConfirmationXML").text = "";
+    page.getViewById("checkTerms").checked = false;
 
     user.set("isLoggingIn", isLoggingIn);
     user.set("showTxtField", showTxtField);
@@ -32,13 +31,35 @@ exports.submit = function (args) {
     if (isLoggingIn) {
         login(args);
     } else {
-        if (page.getViewById("passwordXML").text == page.getViewById("passwordConfirmationXML").text) {
+        if (validationNewUser()) {
             signUp();
-        } else {
-            dialogsModule.alert("La contraseña de confirmación es diferente.");
         }
     }
 };
+
+exports.resetPassword = function () {
+    dialogsModule.alert({
+        title: "Recuperación de Contraseña",
+        message: "Te hemos enviado un correo de recuperación de contraseña.",
+        okButtonText: "Vale"
+    });
+    user.resetPassword(page.getViewById("emailXML").text)
+        .then(function () {
+            console.info("INFO: Correo de recuperación de contraseña enviado.")
+        }).catch(function (error) {
+            console.error("ERROR: resetPassword() -> " + error);
+        })
+}
+
+exports.openModalTermsAndConditions = function (args) {
+    const modalViewModule = "views/terms/terms-modal";
+    const mainView = args.object;
+    const context = {};
+    const fullscreen = true;
+    mainView.showModal(modalViewModule, context, function () {
+    }, fullscreen);
+}
+
 
 function login(args) {
     user.login()
@@ -63,44 +84,39 @@ function login(args) {
 }
 
 function signUp() {
-    var checkBoxCkecked = page.getViewById("aceptTerms").checked;
-    if(checkBoxCkecked){
     user.register()
         .then(function () {
             console.info("INFO: Usuario registrado.");
-            dialogsModule.alert("Tu cuenta ha sido creada correctamente.");
+            dialogsModule.alert({
+                message: "Tu cuenta ha sido creada correctamente.",
+                okButtonText: "Vale"
+            });
             //frameModule.topmost().navigate("views/login/login-page");
         }).catch(function (error) {
             console.error("ERROR: signUp() -> " + error);
-            dialogsModule.alert({
-                message: error,
-                okButtonText: "OK"
-            });
         });
-    }else{
-        alert("Porfavor acepta los términos y condiciones de uso");
+}
+
+function validationNewUser(){
+    const passwd = page.getViewById("passwordXML").text;
+    const passwdConfirmation = page.getViewById("passwordConfirmationXML").text;
+    const checkBoxChecked = page.getViewById("checkTerms").checked;
+
+    if(passwd !== passwdConfirmation){
+        console.warn("WARN: validationNewUser() -> Contraseña de confirmación diferente");
+        dialogsModule.alert({
+            message:"La contraseña de confirmación no coincide.",
+            okButtonText:"Vale"
+        });
+    } else if(!checkBoxChecked){
+        console.warn("WARN: validationNewUser() -> No checked acceptTerms");
+        dialogsModule.alert({
+            message: "Porfavor lee y acepta los términos y condiciones de uso.",
+            okButtonText: "Vale"
+        });
+    } else{
+        console.info("INFO: validaciones correctas");
+        return true;
     }
-}
-
-
-exports.resetPassword = function () {
-    user.resetPassword(page.getViewById("emailXML").text)
-        .then(function () {
-            console.info("INFO: Correo de reset de contraseña enviado.")
-        }).catch(function (error) {
-            console.error("ERROR: resetPassword() -> " + error);
-            dialogsModule.alert({
-                message: error,
-                okButtonText: "OK"
-            });
-        })
-}
-
-exports.modalTermsAndCondition = function (args) {
-    const modalViewModule = "views/terms/terms-modal";
-    const mainView = args.object;
-    const context = {};
-    const fullscreen = true;
-    mainView.showModal(modalViewModule, context, function () {
-    }, fullscreen);
+    return false;
 }

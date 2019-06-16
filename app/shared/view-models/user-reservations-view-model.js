@@ -8,70 +8,43 @@ function MyReservationsList(items) {
     viewModel.indexOf = indexOf;
 
     viewModel.load = function () {
-        viewModel.empty();
+        viewModel.empty();  //?¿?¿?¿?¿?¿?¿
 
         var onQueryEvent = function (result) {
             if (!result.error) {
-                const worker = result.key;
-                for (let month in result.value) {
-                    firebase.getValue("/timeTables/" + worker + "/" + month)
-                        .then(function (result) {
-                            for (let date in result.value) {
-                                firebase.getValue("/timeTables/" + worker + "/" + month + "/" + date)
-                                    .then(function (result) {
-                                        for (let key in result.value) {
-                                            /*var onQueryEvent2 = function (result) {
-                                                if (!result.error) {
-                                                    console.log("res " + JSON.stringify(result.value));
-                                                    console.log(result.value.uidClient + " === " + config.uid);
-                                                    if (result.value.uidClient === config.uid) {
-                                                        console.log("Estoy dentro");
-                                                        viewModel.push({
-                                                            keyReservation: key,
-                                                            path: "/timeTables/" + worker + "/" + month + "/" + date + "/" + key,
-                                                            startDate: result.value.startDate,
-                                                            workerShop: worker
-                                                        })
-                                                    }
+                const workerTimeTable = result.key;
+                const workerName = result.value.name + " " + result.value.surname;
+                firebase.getValue("/timeTables/" + workerTimeTable)
+                    .then(function(result){
+                        for (let month in result.value) {
+                            firebase.getValue("/timeTables/" + workerTimeTable + "/" + month)
+                                .then(function (result) {
+                                    for (let date in result.value) {
+                                        firebase.getValue("/timeTables/" + workerTimeTable + "/" + month + "/" + date)
+                                            .then(function (result) {
+                                                for (let key in result.value) {
+                                                    firebase.getValue("/timeTables/" + workerTimeTable + "/" + month + "/" + date + "/" + key)
+                                                        .then(function (result) {
+                                                            if (result.value.uidClient === config.uid) {
+                                                                viewModel.push({
+                                                                    keyReservation: key,
+                                                                    path: "/timeTables/" + workerTimeTable + "/" + month + "/" + date + "/" + key,
+                                                                    startDate: formatDateClient(result.value.startDate),
+                                                                    workerShop: workerName
+                                                                })
+                                                            }
+                                                        });
                                                 }
-                                            }
- 
-                                            return firebase.query(
-                                                onQueryEvent2, "/timeTables/" + worker + "/" + month + "/" + date + "/" + key,
-                                                {
-                                                    singleEvent: false,
-                                    
-                                                    orderBy: {
-                                                        type: firebase.QueryOrderByType.CHILD,
-                                                        value: 'startDate'
-                                                    },
-                                                    limit: {
-                                                        type: firebase.QueryLimitType.LAST,
-                                                        value: 'since'
-                                                    }
-                                                }
-                                            );*/
-                                            firebase.getValue("/timeTables/" + worker + "/" + month + "/" + date + "/" + key)
-                                                .then(function (result) {
-                                                    if (result.value.uidClient === config.uid) {
-                                                        viewModel.push({
-                                                            keyReservation: key,
-                                                            path: "/timeTables/" + worker + "/" + month + "/" + date + "/" + key,
-                                                            startDate: result.value.startDate,
-                                                            workerShop: worker
-                                                        })
-                                                    }
-                                                });
-                                        }
-                                    });
-                            }
-                        })
-                }
+                                            });
+                                    }
+                                })
+                        }
+                    })                
             }
         };
 
         return firebase.query(
-            onQueryEvent, "/timeTables",
+            onQueryEvent, "/employees",
             {
                 singleEvent: false,
 
@@ -111,5 +84,22 @@ function indexOf(item) {
     });
     return match;
 }
+
+function formatDateClient(dateD) {
+    const date = new Date(dateD);
+    const dayOfStartDateSelected = parseInt(date.getDate()) < 10 ? "0" + parseInt(date.getDate()) : parseInt(date.getDate());
+    const monthOfStartDateSelected = parseInt(date.getMonth() + 1) < 10 ? "0" + parseInt(date.getMonth() + 1) : parseInt(date.getMonth() + 1);
+    const hourOfStartDateSelected = parseInt(date.getHours()) < 10 ? "0" + parseInt(date.getHours()) : parseInt(date.getHours());
+    const minutesOfStartDateSelected = parseInt(date.getMinutes()) < 10 ? "0" + parseInt(date.getMinutes()) : parseInt(date.getMinutes());
+    
+    var conector = "";
+    if(hourOfStartDateSelected == 13){
+      conector = "a la";
+    }else{
+      conector = "a las";
+    }
+  
+    return String(dayOfStartDateSelected + "-" + monthOfStartDateSelected + "-" + date.getFullYear() + " " + conector + " " + hourOfStartDateSelected + ":" + minutesOfStartDateSelected + "h");
+  }
 
 module.exports = MyReservationsList;
