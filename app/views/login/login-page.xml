@@ -1,7 +1,7 @@
 <Page class="page" loaded="onLoaded" actionBarHidden="true" xmlns:CheckBox="nativescript-checkbox">
     <FlexboxLayout class="loginLayout">
         <StackLayout class="formLayout">
-            <Image class="logo" src="~/resources/img/logoTattoShop.png" />
+            <Image class="logo" src="res://logo_tatto_shop" />
 
             <StackLayout class="input-field" visibility="{{ showTxtField ? 'collapse' : 'visible' }}">
                 <TextField id="displayNameXML" class="input" text="{{ displayName }}" hint="Nombre y apellido"/>

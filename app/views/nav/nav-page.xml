@@ -7,16 +7,16 @@
 	</Page.actionBar>
 	<GridLayout rows="*" columns="*">
 		<TabView class="tab-view" androidSwipeEnabled="false" androidOffscreenTabLimit="0" loaded="onLoaded" selectedIndex="{{ tabSelectedIndex }}" selectedIndexChanged="onSelectedIndexChanged">
-			<TabViewItem title="" iconSource="~/resources/home_icon.png">
+			<TabViewItem title="" iconSource="res://home_icon">
 				<Frame defaultPage="views/home/home-page"/>
 			</TabViewItem>
-			<TabViewItem title="" iconSource="~/resources/calendar_icon.png">
+			<TabViewItem title="" iconSource="res://calendar_icon">
 				<Frame defaultPage="views/reservations/reservations-page"/>
 			</TabViewItem>
-			<TabViewItem title="" iconSource="~/resources/user_reservation.png">
+			<TabViewItem title="" iconSource="res://user_reservation">
 				<Frame defaultPage="views/user-reservations/user-reservations-page"/>
 			</TabViewItem>
-			<TabViewItem title="" iconSource="~/resources/img/user_profile_icon.png">
+			<TabViewItem title="" iconSource="res://user_profile_icon">
 				<Frame defaultPage="views/user-profile/user-profile-page"/>
 			</TabViewItem>
 		</TabView>

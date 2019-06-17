@@ -97,7 +97,7 @@
                 <!-- << calendar-dayview-styling -->
             </calendar:RadCalendar>
 
-            <floatingButton:fab tap="reserve" visibility="{{ showFloatingButton ? 'visible' : 'collapse' }}" row="1" icon="~/resources/add_reserve_icon.png" rippleColor="#f1f1f1" class="fab-button" />
+            <floatingButton:fab tap="reserve" visibility="{{ showFloatingButton ? 'visible' : 'collapse' }}" row="1" icon="res://add_reserve_icon" rippleColor="#f1f1f1" class="fab-button" />
         </GridLayout>
     </StackLayout>
 </Page>

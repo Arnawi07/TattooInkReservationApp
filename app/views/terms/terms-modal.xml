@@ -3,7 +3,7 @@
     <GridLayout>
         <StackLayout>
             <GridLayout id="actionBar" columns="auto,auto" rows="auto,auto">
-                <Image col="0" row="0" src="~/resources/close.png" tap="onCloseModal"/>
+                <Image col="0" row="0" src="res://close" tap="onCloseModal"/>
                 <Label id="title" col="5" row="0" text="Términos y Condiciones de Uso"/>
             </GridLayout>
             <GridLayout>
