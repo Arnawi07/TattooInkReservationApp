@@ -38,6 +38,7 @@ exports.onLoaded = function (args) {
         pageData.set("loaded", false);
         reservations.emptyArrayWorkersListNames();
         reservations.getWorkersList(); //Se rellenan las listas de los nombres de los trabajadores y de sus timeTables.        
+        pageData.set("showFloatingButton", false);
     }
 
     reservations.emptyArrayReservationsCalendar();
@@ -46,8 +47,7 @@ exports.onLoaded = function (args) {
     if (pageData.get("timeTableWorker") !== "") {
         updateEventsCalendar();
     }
-
-    pageData.set("showFloatingButton", false);
+    
     page.bindingContext = pageData;
 };
 
@@ -92,27 +92,32 @@ exports.navigatedToDate = function (args) {
 exports.onDateSelected = function (args) {  //ENTRA 3 VECES!!!!!!!!!! PONCE MAL
     const calendar = args.object;
     const dateSelected = args.date;
-    const dateFormatCompare = dateToDateFormatCompare(dateSelected);    
-        console.log("dateSel: " + dateFormatCompare);
-        if (pageData.get("timeTableWorker") !== "") {
-            if ((reservations.holidaysDay).indexOf(dateFormatCompare) === -1 && dateSelected.getDay() != 0) {   //Si dia seleccionado no es festivo ni domingo entra.
-                dayOfWeekSelected = dateSelected.getDay();  //Se recoge aqui porque se tiene que pasar a reserve-modal con un dia de la semana valido.
-                if (calendar.viewMode == calendarModule.CalendarViewMode.Month) {   //Si esta en la vista 'Month' cambiará a 'Day' solamente cuando seleccione/clique una fecha.
-                    pageData.set("showFloatingButton", true);
-                    
-                    calendar.viewMode = calendarModule.CalendarViewMode.Day;
-                    calendar.selectedDate = args.date;                                        
-                    calendar.displayedDate = args.date;
-                } else {
-                    pageData.set("showFloatingButton", true);
-                }
+    const dateFormatCompare = dateToDateFormatCompare(dateSelected);
+
+    const dayOfDateSelected = parseInt(dateSelected.getDate()) < 10 ? "0" + parseInt(dateSelected.getDate()) : parseInt(dateSelected.getDate());
+    const monthOfDateSelected = parseInt(dateSelected.getMonth() + 1) < 10 ? "0" + parseInt(dateSelected.getMonth() + 1) : parseInt(dateSelected.getMonth() + 1);
+    const yearOfDateSelected = dateSelected.getFullYear();
+    dateOfDateSelected = yearOfDateSelected + "-" + monthOfDateSelected + "-" + dayOfDateSelected;
+
+    if (pageData.get("timeTableWorker") !== "") {
+        if ((reservations.holidaysDay).indexOf(dateFormatCompare) === -1 && dateSelected.getDay() != 0) {   //Si dia seleccionado no es festivo ni domingo entra.
+            dayOfWeekSelected = dateSelected.getDay();  //Se recoge aqui porque se tiene que pasar a reserve-modal con un dia de la semana valido.
+            if (calendar.viewMode == calendarModule.CalendarViewMode.Month) {   //Si esta en la vista 'Month' cambiará a 'Day' solamente cuando seleccione/clique una fecha.
+                pageData.set("showFloatingButton", true);
+                
+                calendar.viewMode = calendarModule.CalendarViewMode.Day;
+                calendar.selectedDate = args.date;                                        
+                calendar.displayedDate = args.date;
             } else {
-                pageData.set("showFloatingButton", false);
-                alert("No puedes reservar un día festivo o no laboral.");
+                pageData.set("showFloatingButton", true);
             }
         } else {
-            alert("Debes seleccionar un tatuador.");
+            pageData.set("showFloatingButton", false);
+            alert("No puedes reservar un día festivo o no laborable.");
         }
+    } else {
+        alert("Debes seleccionar un tatuador.");
+    }
 }
 
 exports.changeViewMode = function (args) {
@@ -180,6 +185,7 @@ exports.reserve = function (args) {
     const actualMonthReservation = monthsOfYear[pageData.get("actualMonthCalendar")]; //Cuando se cambia el tatuador, se recoge el mes en el que esta el usuario y se coge el nombre del mes.  
     const modalViewModule = "views/reserve/reserve-modal";
     const mainView = args.object;
+    console.log("reserveDate: " + dateOfDateSelected);
     const context = { dayOfWeekSelected: dayOfWeekSelected, timeTableWorker: pageData.get("timeTableWorker"), actualMonthReservation: actualMonthReservation, dateOfDateSelected: dateOfDateSelected, actualYearCalendar: pageData.get("actualYearCalendar") };
     const fullscreen = true;
     mainView.showModal(modalViewModule, context, function (dayOfWeekSelected, timeTableWorker, actualMonthReservation, dateOfDateSelected, actualYearCalendar) {

@@ -107,12 +107,10 @@ exports.makeReserve = function (args) {
   const tpHour = parseInt(page.getViewById("timePicker").hour);
   const tpMin = parseInt(page.getViewById("timePicker").minute);
   const hour = "T00:00:00";
-
   const startDateSchedule = new Date(dateOfDateSelected + hour);
   const endDateSchedule = new Date(dateOfDateSelected + hour);
   const startDateSelected = new Date(dateOfDateSelected + hour);
   const todayDate = new Date();
-  //startDateSelected = new Date(dateOfDateSelected + hour);
 
   startDateSchedule.setHours(startDateHour);
   startDateSchedule.setMinutes(startDateMin);
@@ -126,8 +124,7 @@ exports.makeReserve = function (args) {
   startDateSelected.setMinutes(tpMin);
   startDateSelected.setSeconds(0);
 
-  todayDate.setHours(parseInt(todayDate.getHours - 1)); //Puedes reservar con 1h de antelación como minimo
-
+  todayDate.setHours(parseInt(todayDate.getHours() + 2 + 1)); //Puedes reservar con 1h de antelación como minimo
   if (!(startDateSelected >= startDateSchedule && startDateSelected < endDateSchedule)) {
     dialogsModule.alert({
       message: "Debes de seleccionar una hora dentro del horario de apertura.",
@@ -135,7 +132,7 @@ exports.makeReserve = function (args) {
     });                                                                           
   } else if(startDateSelected.getDate() == todayDate.getDate() && startDateSelected.getMonth() == todayDate.getMonth() && startDateSelected <= todayDate){
     dialogsModule.alert({
-      message: "Debes de reservar con un minimo de antelación de 1h.",
+      message: "Debes de reservar con un minimo de 1h antelación.",
       okButtonText: "Vale"
     });
   } else {
@@ -170,11 +167,12 @@ exports.makeReserve = function (args) {
         } else if (endDateSelected > new Date(reserve.startDate) && endDateSelected <= new Date(reserve.endDate)) {
           insert = false;
           messageReserve = "La reserva coincide con la reserva de otro usuario.";
-        } else if (endDateSelected > endDateSchedule) {
-          insert = false;
-          messageReserve = "La reserva se pasa del horario de cierre de la tienda.";
-        }        
+        }         
       });
+      if (insert && endDateSelected > endDateSchedule) {
+        insert = false;
+        messageReserve = "La reserva se pasa del horario de cierre de la tienda.";
+      }
       //hasta que no se seleccione el tamaño del tatto no se puede clicar "RESERVAR"
 
       if (insert) {
