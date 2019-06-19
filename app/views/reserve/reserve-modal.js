@@ -44,15 +44,15 @@ exports.onShownModally = function (args) {
   reservations.emptyArrayInfoTattoos();
   //Posible setTimeout
   reservations.getInfoTattoos()
-    .then(function(){
+    .then(function () {
       console.info("INFO: listas de información de tattoos rellena");
-    }).catch(function(error){
+    }).catch(function (error) {
       console.error("ERROR: getInfoTattoos() -> " + error);
     });
   reservations.getTimeTableShop(dayOfweekSelected)
-    .then(function(){
+    .then(function () {
       console.info("INFO: horario de la tienda recogido");
-    }).catch(function(error){
+    }).catch(function (error) {
       console.error("ERROR: getTimeTableShop(...) -> " + error);
     });
 
@@ -61,7 +61,7 @@ exports.onShownModally = function (args) {
     splitTimeTable = reservations.timeTableShop.split(" - ");
     startDateHour = splitTimeTable[0].substring(0, 2);
     startDateMin = splitTimeTable[0].substring(3, 5);
-    endDateHour = splitTimeTable[1].substring(0, 2);    
+    endDateHour = splitTimeTable[1].substring(0, 2);
     endDateMin = splitTimeTable[1].substring(3, 5);
 
     pageData.set("startDateHour", startDateHour);
@@ -106,91 +106,92 @@ exports.getSelectedIndexChanged = function (args) {
       duration = reservations.tattooDurations.getItem(index);
     }
   });
-  
+
   page.getViewById("durationTattoo").text = 'Duración aproximada:  ' + duration + 'min.';
   page.getViewById("priceTattoo").text = 'Coste aproximado:  ' + approxPrice + '€';
 };
 
 exports.makeReserve = function (args) {
-  const tpHour = parseInt(page.getViewById("timePicker").hour);
-  const tpMin = parseInt(page.getViewById("timePicker").minute);
-  const hour = "T00:00:00";
-  const startDateSchedule = new Date(dateOfDateSelected + hour);
-  const endDateSchedule = new Date(dateOfDateSelected + hour);
-  const startDateSelected = new Date(dateOfDateSelected + hour);
-  const todayDate = new Date();
+  if (page.getViewById("dropDownType").selectedIndex != null) {
+    const tpHour = parseInt(page.getViewById("timePicker").hour);
+    const tpMin = parseInt(page.getViewById("timePicker").minute);
+    const hour = "T00:00:00";
+    const startDateSchedule = new Date(dateOfDateSelected + hour);
+    const endDateSchedule = new Date(dateOfDateSelected + hour);
+    const startDateSelected = new Date(dateOfDateSelected + hour);
+    const todayDate = new Date();
 
-  startDateSchedule.setHours(startDateHour);
-  startDateSchedule.setMinutes(startDateMin);
-  startDateSchedule.setSeconds(0);
+    startDateSchedule.setHours(startDateHour);
+    startDateSchedule.setMinutes(startDateMin);
+    startDateSchedule.setSeconds(0);
 
-  endDateSchedule.setHours(endDateHour);
-  endDateSchedule.setMinutes(endDateMin);
-  endDateSchedule.setSeconds(0);
+    endDateSchedule.setHours(endDateHour);
+    endDateSchedule.setMinutes(endDateMin);
+    endDateSchedule.setSeconds(0);
 
-  startDateSelected.setHours(tpHour);
-  startDateSelected.setMinutes(tpMin);
-  startDateSelected.setSeconds(0);
+    startDateSelected.setHours(tpHour);
+    startDateSelected.setMinutes(tpMin);
+    startDateSelected.setSeconds(0);
 
-  todayDate.setHours(parseInt(todayDate.getHours() + 2 + 1)); //Puedes reservar con 1h de antelación como minimo
-  if (!(startDateSelected >= startDateSchedule && startDateSelected < endDateSchedule)) {
-    dialogsModule.alert({
-      message: "Debes de seleccionar una hora dentro del horario de apertura.",
-      okButtonText: "Vale"
-    });                                                                           
-  } else if(startDateSelected.getDate() == todayDate.getDate() && startDateSelected.getMonth() == todayDate.getMonth() && startDateSelected <= todayDate){
-    dialogsModule.alert({
-      message: "Debes de reservar con un minimo de 1h antelación.",
-      okButtonText: "Vale"
-    });
-  } else {
-    var indexTypeTattoo = page.getViewById("dropDownType").selectedIndex;
-    var durationTattoo;
-    var endDateSelected;
-    reservations.tattooDurations.forEach(function (duration, index) {
-      if (index == indexTypeTattoo) {
-        durationTattoo = duration;
-        endDateSelected = new Date(startDateSelected);
-        endDateSelected.setMinutes(parseInt(startDateSelected.getMinutes() + durationTattoo));
-      }
-    });
-
-    //Primero vacio el array de reservas
-    reservations.emptyArrayReservationsCalendar();
-    //Llamo al metodo para que me devuleva las reservas que hay en el dia "dateOfDateSelected";
-    reservations.getReservationsListForDay(timeTableWorker, actualMonthReservation, dateOfDateSelected)
-      .then(function(){
-        console.info("INFO: Reservas del día recogidas.");
-      }).catch(function(error){
-        console.error("ERROR: getReservationsListForDay(...) -> " + error);
+    todayDate.setHours(parseInt(todayDate.getHours() + 2 + 1)); //Puedes reservar con 1h de antelación como minimo
+    if (!(startDateSelected >= startDateSchedule && startDateSelected < endDateSchedule)) {
+      dialogsModule.alert({
+        message: "Debes de seleccionar una hora dentro del horario de apertura.",
+        okButtonText: "Vale"
       });
-    
-    setTimeout(function () {
-      var insert = true;
-      var messageReserve = "";
-      reservations.reservationsCalendar.forEach(function (reserve, index) {
-        if (startDateSelected >= new Date(reserve.startDate) && startDateSelected < new Date(reserve.endDate)) {
-          insert = false;
-          messageReserve = "La reserva coincide con la reserva de otro usuario.";
-        } else if (endDateSelected > new Date(reserve.startDate) && endDateSelected <= new Date(reserve.endDate)) {
-          insert = false;
-          messageReserve = "La reserva coincide con la reserva de otro usuario.";
-        }         
+    } else if (startDateSelected.getDate() == todayDate.getDate() && startDateSelected.getMonth() == todayDate.getMonth() && startDateSelected <= todayDate) {
+      dialogsModule.alert({
+        message: "Debes de reservar con un minimo de 1h antelación.",
+        okButtonText: "Vale"
       });
-      if (insert && endDateSelected > endDateSchedule) {
-        insert = false;
-        messageReserve = "La reserva se pasa del horario de cierre de la tienda.";
-      }
-      //hasta que no se seleccione el tamaño del tatto no se puede clicar "RESERVAR"
+    } else {
+      var indexTypeTattoo = page.getViewById("dropDownType").selectedIndex;
+      var durationTattoo;
+      var endDateSelected;
+      reservations.tattooDurations.forEach(function (duration, index) {
+        if (index == indexTypeTattoo) {
+          durationTattoo = duration;
+          endDateSelected = new Date(startDateSelected);
+          endDateSelected.setMinutes(parseInt(startDateSelected.getMinutes() + durationTattoo));
+        }
+      });
 
-      if (insert) {
-        reservations.getCurrentUser()
-          .then(function (user) {
+      //Primero vacio el array de reservas
+      reservations.emptyArrayReservationsCalendar();
+      //Llamo al metodo para que me devuleva las reservas que hay en el dia "dateOfDateSelected";
+      reservations.getReservationsListForDay(timeTableWorker, actualMonthReservation, dateOfDateSelected)
+        .then(function () {
+          console.info("INFO: Reservas del día recogidas.");
+        }).catch(function (error) {
+          console.error("ERROR: getReservationsListForDay(...) -> " + error);
+        });
+
+      setTimeout(function () {
+        var insert = true;
+        var messageReserve = "";
+        reservations.reservationsCalendar.forEach(function (reserve, index) {
+          if (startDateSelected >= new Date(reserve.startDate) && startDateSelected < new Date(reserve.endDate)) {
+            insert = false;
+            messageReserve = "La reserva coincide con la reserva de otro usuario.";
+          } else if (endDateSelected > new Date(reserve.startDate) && endDateSelected <= new Date(reserve.endDate)) {
+            insert = false;
+            messageReserve = "La reserva coincide con la reserva de otro usuario.";
+          }
+        });
+        if (insert && endDateSelected > endDateSchedule) {
+          insert = false;
+          messageReserve = "La reserva se pasa del horario de cierre de la tienda.";
+        }
+        //hasta que no se seleccione el tamaño del tatto no se puede clicar "RESERVAR"
+
+        if (insert) {
+          reservations.getCurrentUser()
+            .then(function (user) {
               const startDateFormatSelected = formatDate(startDateSelected);
               const endDateFormatSelected = formatDate(endDateSelected);
 
               reservations.putReserveIntoDay(timeTableWorker, actualMonthReservation, dateOfDateSelected, user.displayName, endDateFormatSelected, startDateFormatSelected, user.uid, user.email)
-                .then(function(){
+                .then(function () {
                   console.info("INFO: Reserva completada.");
                   messageReserve = "Reserva completada correctamente para la fecha: " + formatDateClient(startDateSelected);
                   dialogsModule.alert({
@@ -201,16 +202,24 @@ exports.makeReserve = function (args) {
                 .catch(function (error) {
                   console.error("ERROR: putReserveIntoDay(...) -> " + error);
                 });
+            });
+        } else {
+          dialogsModule.alert({
+            message: messageReserve,
+            okButtonText: "Vale"
           });
-      } else {
-        dialogsModule.alert({
-          message: messageReserve,
-          okButtonText: "Vale"
-        });
-      }
-    }, 300);
+        }
+      }, 300);
+    }
+  } else {
+    dialogsModule.alert({
+      message: "Debes seleccionar un tamaño de tatuaje.",
+      okButtonText: "Vale"
+    });
   }
+
 }
+
 
 function formatDate(date) {
   const dayOfStartDateSelected = parseInt(date.getDate()) < 10 ? "0" + parseInt(date.getDate()) : parseInt(date.getDate());
@@ -227,11 +236,11 @@ function formatDateClient(date) {
   const monthOfStartDateSelected = parseInt(date.getMonth() + 1) < 10 ? "0" + parseInt(date.getMonth() + 1) : parseInt(date.getMonth() + 1);
   const hourOfStartDateSelected = parseInt(date.getHours()) < 10 ? "0" + parseInt(date.getHours()) : parseInt(date.getHours());
   const minutesOfStartDateSelected = parseInt(date.getMinutes()) < 10 ? "0" + parseInt(date.getMinutes()) : parseInt(date.getMinutes());
-  
+
   var conector = "";
-  if(hourOfStartDateSelected == 13){
+  if (hourOfStartDateSelected == 13) {
     conector = "a la";
-  }else{
+  } else {
     conector = "a las";
   }
 

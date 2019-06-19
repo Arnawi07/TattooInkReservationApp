@@ -18,7 +18,11 @@ exports.onLoaded = function (args) {
     page = args.object;
     setPhotoUrlUser();
     setTimeout(function(){
-        userProfile.set("imagePath",userProfile.imagePath);
+        if(userProfile.imagePath == null){
+            userProfile.set("imagePath", "~/resources/img/userProfileIcon.png");    
+        }else{
+            userProfile.set("imagePath", userProfile.imagePath);
+        }
     },400);
     page.bindingContext = userProfile;
 };

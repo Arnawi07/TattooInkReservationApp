@@ -1,6 +1,6 @@
 <Page class="page" loaded="onLoaded" actionBarHidden="true">
     <StackLayout class="profileLayout">
-        <Image class="imageUser" src="~/resources/img/userProfileIcon.png"/>
+        <Image class="imageUser" src="{{ imagePath }}"/>
 
         <StackLayout class="input-edit" orientation="horizontal">
             <Label class="underlinesWords" text="editar" tap="editingPhoto"/>
