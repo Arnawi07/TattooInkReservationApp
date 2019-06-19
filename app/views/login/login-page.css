@@ -1,54 +1,43 @@
 .loginLayout {
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(62, 62, 62);
-}
-
-.formLayout {
-  padding: 0 30 0 30;
-  flex-grow: 2;
   vertical-align: middle;
+  padding: 0 50 0 50;
 }
 
 .logo {
-  margin-bottom: 10;
   height: 175;
+  margin-bottom: 10;
 }
 
-Button, TextField {
-  margin-bottom: 3;
+.input-field {
+  margin-bottom: 5;
+}
+
+.input {
+  font-size: 18;
+  color: rgb(0, 0, 0);
+  placeholder-color: rgba(105, 105, 105, 0.6);
+  background-color: transparent;
+}
+
+.hr-light{
+  background-color: rgba(105, 105, 105);
 }
 
 .btn-primary {
-  height: 50;
-  margin: 30 70 15 70;
+  margin: 35 50 5 50;
   border-radius: 5;
   font-size: 20;
   font-weight: 600;
 }
 
-.input-field {
-  margin-bottom: 10;
-}
-
-.input {
-  font-size: 18;
-  color: #fff;
-  placeholder-color: rgb(255, 255, 255, 0.6);
-  background-color: transparent;
-}
-.check {
-  font-size: 18;
-  color: #fff;
-  background-color: transparent;
-}
-.hr-light{
-  background-color: #fff;
-}
-
 .underlinesWords {
-  margin-top: 6;
-  text-align: right;
-  color: #fff; 
+  margin-top: 5;
   text-decoration: underline;
+  text-align: right;
+  color: #1A0DAB;
+  font-size:15
+}
+
+.extra{
+  margin-top: 5;
 }

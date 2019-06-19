@@ -16,6 +16,22 @@ The imported CSS rules must precede all other types of rules.
 The following CSS rule changes the font size of all UI
 components that have the btn class name.
 */
-.btn {
-    font-size: 18;
+
+.page{
+    background-color: #EEEEEE;
+}
+.action-bar{
+    background-color: #E0E0E0;
+}
+.action-bar-modal {
+    padding: 15 15 15 15;
+}
+.cards-dialogs{
+    background-color: #FAFAFA;
+}
+.title-modal {
+    text-align: center;
+    font-size: 20;
+    font-weight: bold;
+    margin-left: 10;
 }

@@ -8,7 +8,7 @@ function UserProfile(info) {
     var viewModel = new observableModule.fromObject({
         email: info.email || "",
         password: info.password || "",
-        imagePath: info.imagePath || ""
+        imagePath: info.imagePath || "~/resources/img/userProfileIcon.png"
     });
 
     viewModel.getCurrentUser = function () {

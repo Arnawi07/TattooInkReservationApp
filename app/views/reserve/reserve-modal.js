@@ -57,7 +57,7 @@ exports.onShownModally = function (args) {
     });
 
   setTimeout(function () {
-    page.getViewById("timeTableshop").text = "Info. Horario: " + reservations.timeTableShop;
+    page.getViewById("timeTableshop").text = "Info. de horario de apertura: " + reservations.timeTableShop;
     splitTimeTable = reservations.timeTableShop.split(" - ");
     startDateHour = splitTimeTable[0].substring(0, 2);
     startDateMin = splitTimeTable[0].substring(3, 5);
@@ -71,7 +71,11 @@ exports.onShownModally = function (args) {
   page.bindingContext = pageData;
 }
 
-exports.onNavigatedFrom = function (args) { //NO entra!!!!
+exports.onCloseModal = function (args) {
+  args.object.closeModal();
+}
+
+exports.onNavigatedFrom = function (args) {
   if (args.isBackNavigation === true) {
     args.object.closeModal();
   }
@@ -94,12 +98,16 @@ exports.onPickerLoaded = function (args) {
 exports.getSelectedIndexChanged = function (args) {
   const dropDownTattooType = args.object;
   var approxPrice;
+  var duration;
 
   reservations.tattooPrices.forEach(function (price, index) {
     if (index == dropDownTattooType.selectedIndex) {
       approxPrice = price;
+      duration = reservations.tattooDurations.getItem(index);
     }
   });
+  
+  page.getViewById("durationTattoo").text = 'Duración aproximada:  ' + duration + 'min.';
   page.getViewById("priceTattoo").text = 'Coste aproximado:  ' + approxPrice + '€';
 };
 

@@ -3,7 +3,7 @@ var firebase = require("nativescript-plugin-firebase");
 var ObservableArray = require("tns-core-modules/data/observable-array").ObservableArray;
 var calendarModule = require("nativescript-ui-calendar");
 var timerModule = require("tns-core-modules/timer");
-const Color = require("color").Color;
+const Color = require("tns-core-modules/color").Color;
 
 var Reservations = require("../../shared/view-models/reservations-view-model");
 var reservations = new Reservations();
@@ -130,7 +130,6 @@ exports.changeViewMode = function (args) {
         calendar.viewMode = calendarModule.CalendarViewMode.Month;
     } else {
         const dateFormatCompare = dateToDateFormatCompare(new Date());
-        alert(dateFormatCompare);
         if ((reservations.holidaysDay).indexOf(dateFormatCompare) === -1 && new Date().getDay() != 0) {
             pageData.set("showFloatingButton", true);
         } else {

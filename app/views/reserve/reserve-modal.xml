@@ -1,27 +1,35 @@
-<Page xmlns="http://www.nativescript.org/tns.xsd" 
-    xmlns:dropDown="nativescript-drop-down" 
-    xmlns:datetime="nativescript-datetimepicker" shownModally="onShownModally" navigatingFrom="onNavigatedFrom">
-    <FlexboxLayout class="loginLayout">
-        <StackLayout class="formLayout">
-            <Label text="RESERVA CONSULTA"/>
-            <Label text="Hora para la consulta" style="text-decoration: underline"/>
-            <TimePicker id="timePicker" loaded="onPickerLoaded" hour="{{ startDateHour }}" minute="{{ startDateMin }}"/>
-            <Label id="timeTableshop" text=""/>
-            <Label text="Tipos de tatuajes" style="text-decoration: underline"/>
+<Page xmlns="http://www.nativescript.org/tns.xsd" shownModally="onShownModally" navigatingFrom="onNavigatedFrom" xmlns:dropDown="nativescript-drop-down" xmlns:datetime="nativescript-datetimepicker">
+    <StackLayout>
+        <GridLayout class="action-bar action-bar-modal" columns="auto,auto" rows="auto,auto">
+                <Image col="0" row="0" src="res://close" tap="onCloseModal"/>
+                <Label class="title-modal" col="1" row="0" text="Reserva de Sesión"/>
+        </GridLayout>
 
-            <StackLayout orientation="horizontal">
-                <Label text="Tamaño: "/>
+        <StackLayout class="formLayout">
+            <Label class="subtitle" text="Hora para la sesión"/>
+            <StackLayout class="input">
+                <Label id="timeTableshop" text=""/>
+                <TimePicker id="timePicker" loaded="onPickerLoaded" hour="{{ startDateHour }}" minute="{{ startDateMin }}"/>
+            </StackLayout>
+
+            <Label class="subtitle" text="Tipo de tatuaje"/>
+            <StackLayout class="input" orientation="horizontal">
+                <Label class="label-dropDown" text="Tamaño: "/>
                 <dropDown:DropDown id="dropDownType" items="{{ reservations.tattooTypes }}" selectedIndexChanged="getSelectedIndexChanged"/>
             </StackLayout>
 
-            <StackLayout orientation="horizontal">
-                <Label text="Zona: "/>
+            <StackLayout class="input" orientation="horizontal">
+                <Label class="label-dropDown" text="Zona: "/>
                 <dropDown:DropDown id="dropDownAreas" items="{{ tattooAreas }}" selectedIndex="0"/>
             </StackLayout>
 
-            <Label id="priceTattoo" text=""/>
+            <Label class="subtitle" text="Info de reserva" style="margin-top:20;"/>
+            <StackLayout class="info">
+                <Label id="durationTattoo" text="" style="margin-bottom:5;"/>
+                <Label id="priceTattoo" text=""/>
+            </StackLayout>            
 
-            <Button text="RESERVAR" tap="makeReserve"/>
+            <Button class="btn-primary" text="Reservar" tap="makeReserve"/>
         </StackLayout>
-    </FlexboxLayout>
+    </StackLayout>
 </Page>

@@ -38,17 +38,24 @@ exports.submit = function (args) {
 };
 
 exports.resetPassword = function () {
-    dialogsModule.alert({
+    dialogsModule.prompt({
         title: "Recuperación de Contraseña",
-        message: "Te hemos enviado un correo de recuperación de contraseña.",
-        okButtonText: "Vale"
-    });
-    user.resetPassword(page.getViewById("emailXML").text)
-        .then(function () {
-            console.info("INFO: Correo de recuperación de contraseña enviado.")
-        }).catch(function (error) {
-            console.error("ERROR: resetPassword() -> " + error);
-        })
+        message: "Introduce el correo electrónico asociado a la cuenta. Te enviaremos un correo de recuperación de contraseña.",
+        okButtonText: "Aceptar",
+        cancelButtonText: "Cancelar",
+        inputType: dialogsModule.inputType.email
+    }).then(function (res) {
+            accept = res.result;
+            emailRecuperation = res.text.trim();
+            if (accept) {
+                user.resetPassword(emailRecuperation)
+                    .then(function () {
+                        console.info("INFO: Correo de recuperación de contraseña enviado.");            
+                    }).catch(function (error) {
+                        console.error("ERROR: resetPassword() -> " + error);
+                    });
+            }
+        });    
 }
 
 exports.openModalTermsAndConditions = function (args) {
@@ -88,7 +95,7 @@ function signUp() {
         .then(function () {
             console.info("INFO: Usuario registrado.");
             dialogsModule.alert({
-                message: "Tu cuenta ha sido creada correctamente.",
+                message: "Tu cuenta ha sido creada correctamente. Te hemos enviado un correo de verificación de cuenta.",
                 okButtonText: "Vale"
             });
             //frameModule.topmost().navigate("views/login/login-page");

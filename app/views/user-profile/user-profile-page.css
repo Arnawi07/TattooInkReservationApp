@@ -1,46 +1,25 @@
-.input-field {
-    margin-top: 10;
-}
-
-.hr-light {
-    width: 70%;
-}
-
-.input {
-    font-size: 18;
-    color: #fff;
-    background-color: transparent;
-    width: 200;
-}
-
-#imageUser {   
-    border-radius: 100%;
-    width: 50%;
-}
-
-#iconEdit {
-    margin-left: 20%;
-    width: 9%;
-    margin-bottom: 5%;
-}
-
-#iconDataUser  {
-    margin-right: 20%;
-    width: 11%;
-}
-
-#iconSave {
-    width: 10%;
-    margin-left: 5%;
-}
-
-.loginLayout {
-    justify-content: center;
-    align-items: center;
-    background-color: white;    
-}
-
-.formLayout {
+.profileLayout {
     vertical-align: middle;
-    padding: 0 40 0 40;
+    padding: 0 50 0 50;
+}
+.imageUser {   
+    border-radius: 100%;
+    width: 35%;
+}
+.underlinesWords {
+    margin-top: 5;
+    text-decoration: underline;
+    text-align: right;
+    color: #1A0DAB;
+    font-size:15
+}
+.iconEdit {
+    width: 9%;
+}
+.input-edit{
+    padding-left: 135;
+    margin-bottom: 50;
+}
+.input-field {
+    margin-top: 5;
 }

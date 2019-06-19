@@ -1,0 +1,14 @@
+.formLayout {
+    padding: 0 0 0 40;
+    vertical-align: middle;
+    font-size: 16;
+}
+.input{
+    margin-top: 5;
+}
+.imp{
+    font-weight: bold;
+}
+.img{
+    width:75%;
+}

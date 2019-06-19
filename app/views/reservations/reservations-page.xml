@@ -1,16 +1,18 @@
-<Page loaded="onLoaded" actionBarHidden="true"  
+<Page class="page" loaded="onLoaded" actionBarHidden="true"  
     xmlns:calendar="nativescript-ui-calendar" 
     xmlns:dropDown="nativescript-drop-down" 
     xmlns:floatingButton="nativescript-floatingactionbutton">
     <StackLayout>
-        <GridLayout id="actionBar" columns="auto,auto" rows="auto,auto">
+        <StackLayout class="cabeceraLayout">
             <StackLayout orientation="horizontal">
-                <Label text="Tatuador: "/>
-                <dropDown:DropDown id="dropDown" items="{{ reservations.workersListNames }}" selectedIndex="{{ selectedIndex }}" selectedIndexChanged="getSelectedIndexChangedWorker"/>
+                <Label class="label-dropDown" text="Tatuador: "/>
+                <dropDown:DropDown id="dropDown" items="{{ reservations.workersListNames }}" selectedIndex="{{ selectedIndex }}" selectedIndexChanged="getSelectedIndexChangedWorker"/>                
+            </StackLayout>
+            <StackLayout orientation ="horizontal">
                 <Button id="month" text="Mes" tap="changeViewMode"/>
                 <Button id="today" text="Hoy" tap="changeViewMode"/>
             </StackLayout>
-        </GridLayout>
+        </StackLayout>
 
         <GridLayout id="actionBar" rows="auto, *">
             <calendar:RadCalendar id="calendar" row="1" firstDayOfWeek="1" eventSource="{{ calendarEvents }}" navigatedToDate="navigatedToDate" dateSelected="onDateSelected" viewMode="Month" locale="es-ES" minDate="{{minDate}}" maxDate="{{ maxDate }}">
@@ -39,7 +41,7 @@
                         </calendar:CalendarMonthViewStyle.weekNumbecalendarellStyle>
 
                         <calendar:CalendarMonthViewStyle.dayNameCellStyle>
-                            <calendar:CellStyle cellBackgroundColor="#f1e8ca" cellBorderWidth="1" cellBordecalendarolor="#745151" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="13" />
+                            <calendar:CellStyle cellBackgroundColor="#90AFC5" cellBorderWidth="1" cellBordecalendarolor="#745151" cellTextColor="#000000" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="13" />
                         </calendar:CalendarMonthViewStyle.dayNameCellStyle>
 
                         <calendar:CalendarMonthViewStyle.titleCellStyle>
@@ -58,35 +60,35 @@
                 <calendar:RadCalendar.dayViewStyle>
                     <calendar:CalendarDayViewStyle backgroundColor="#dd855c" showTitle="true" showWeekNumbers="false" showDayNames="true">
                         <calendar:CalendarDayViewStyle.todayCellStyle>
-                            <calendar:DayCellStyle cellBackgroundColor="#dd855c" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="14" />
+                            <calendar:DayCellStyle cellBackgroundColor="#66bbae" cellBorderWidth="2" cellBordecalendarolor="#f1e8ca" cellTextColor="#5b391e" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="16" />
                         </calendar:CalendarDayViewStyle.todayCellStyle>
 
                         <calendar:CalendarDayViewStyle.dayCellStyle>
-                            <calendar:DayCellStyle showEventsText="true" eventTextColor="White" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#9ebd9e" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" ios:cellTextSize="12" android:cellTextSize="10"/>
+                            <calendar:DayCellStyle showEventsText="true" eventTextColor="White" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8" cellAlignment="" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#9ebd9e" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" ios:cellTextSize="14" android:cellTextSize="12"/>
                         </calendar:CalendarDayViewStyle.dayCellStyle>
 
                         <calendar:CalendarDayViewStyle.weekendCellStyle>
-                            <calendar:DayCellStyle eventTextColor="BlueViolet" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#f1e8ca" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="12" />
+                            <calendar:DayCellStyle eventTextColor="BlueViolet" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8" cellAlignment="" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#dd855c" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="12" />
                         </calendar:CalendarDayViewStyle.weekendCellStyle>
 
                         <calendar:CalendarDayViewStyle.selectedDayCellStyle>
-                            <calendar:DayCellStyle eventTextColor="Blue" eventFontName="Times New Roman" eventFontStyle="Bold" eventTextSize="8" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#745151" cellBorderWidth="2" cellBordecalendarolor="#f1e8ca" cellTextColor="Black" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="18" />
+                            <calendar:DayCellStyle eventTextColor="Blue" eventFontName="Times New Roman" eventFontStyle="Bold" eventTextSize="8" cellAlignment="" cellPaddingHorizontal="10" cellPaddingVertical="5" cellBackgroundColor="#dbcbbb" cellBorderWidth="2" cellBordecalendarolor="#745151" cellTextColor="Black" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="18" />
                         </calendar:CalendarDayViewStyle.selectedDayCellStyle>
 
                         <calendar:CalendarDayViewStyle.weekNumbecalendarellStyle>
-                            <calendar:CellStyle cellBackgroundColor="#bbcbdb" cellBorderWidth="2" cellBordecalendarolor="#745151" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="8" />
+                            <calendar:CellStyle cellBackgroundColor="#bbcbdb" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="8" />
                         </calendar:CalendarDayViewStyle.weekNumbecalendarellStyle>
 
                         <calendar:CalendarDayViewStyle.dayNameCellStyle>
-                            <calendar:CellStyle cellBackgroundColor="#bbcbdb" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="10" />
+                            <calendar:CellStyle cellBackgroundColor="#90AFC5" cellBorderWidth="1" cellBordecalendarolor="#745151" cellTextColor="#000000" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="13" />
                         </calendar:CalendarDayViewStyle.dayNameCellStyle>
 
                         <calendar:CalendarDayViewStyle.titleCellStyle>
-                            <calendar:CellStyle cellBackgroundColor="#dd855c" cellBorderWidth="1" cellBordecalendarolor="#f1e8ca" cellTextColor="#745151" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="18" />
+                            <calendar:CellStyle cellBackgroundColor="#bbcbdb" cellBorderWidth="1" cellBordecalendarolor="#745151" cellTextColor="#000000" cellTextFontName="Times New Roman" cellTextFontStyle="Bold" cellTextSize="20" />
                         </calendar:CalendarDayViewStyle.titleCellStyle>
 
                         <calendar:CalendarDayViewStyle.dayEventsViewStyle>
-                            <calendar:DayEventsViewStyle backgroundColor="#B5B5F9" timeLabelFormat="HH:mm" timeLabelTextColor="#0023ff" timeLabelTextSize="12"/>
+                            <calendar:DayEventsViewStyle backgroundColor="#B5B5F9" timeLabelFormat="HH:mm" timeLabelTextColor="#000" timeLabelTextSize="12"/>
                         </calendar:CalendarDayViewStyle.dayEventsViewStyle>
 
                         <calendar:CalendarDayViewStyle.allDayEventsViewStyle>

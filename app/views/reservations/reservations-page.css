@@ -5,4 +5,11 @@
     background-color: #ff4081;
     horizontal-align: right;
     vertical-align: bottom;
-  }
+}
+.cabeceraLayout{
+  padding: 5;
+}
+.label-dropDown{
+  font-size:16;
+  font-weight: bold;
+}

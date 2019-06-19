@@ -56,7 +56,6 @@ function editingPhoto() {
                 }, 300);
             });
         }).catch(function (error) {
-            alert("error:" + error);
             console.error("ERROR ImagePicker: -> " + error);
         });
 };
@@ -77,7 +76,8 @@ function setPhotoUrlUser() {
 
 exports.changeEmail = function (args) {
     dialogsModule.prompt({
-        title: "Cambiar Correo Electrónico",
+        title: "Cambio correo electrónico",
+        message: "Introduce el nuevo correo electrónico:",
         okButtonText: "Aceptar",
         cancelButtonText: "Cancelar",
         inputType: dialogsModule.inputType.email
@@ -90,21 +90,19 @@ exports.changeEmail = function (args) {
                 .then(function () {
                     console.info("INFO: Correo electrónico actualizado.");
                     sendEmailVerification();
+                    dialogsModule.alert({
+                        title: "Verificar correo electrónico",
+                        message: "Debes verificar tu nuevo correo electrónico para poder iniciar sesión de nuevo la próxima vez.",
+                        okButtonText: "Vale"
+                    });
                 }).catch(function (error) {
                     console.error("ERROR: changeEmail() -> " + error);
                     dialogsModule.alert({
-                        title: "Error",
-                        message: error,
-                        okButtonText: "Aceptar"
+                        title: "Correo electrónico incorrecto",
+                        message: "El formato de correo electrónico es incorrecto.",
+                        okButtonText: "Vale"
                     });
-                });
-
-
-            dialogsModule.alert({
-                title: "Verificar Correo Electrónico",
-                message: "Debes verificar tu nuevo correo electrónico para poder iniciar sesión de nuevo la próxima vez.",
-                okButtonText: "Aceptar"
-            });
+                });            
         }
     });
 }
@@ -112,7 +110,8 @@ exports.changeEmail = function (args) {
 
 exports.changePassword = function () {
     dialogsModule.prompt({
-        title: "Cambiar Contraseña",
+        title: "Cambio contraseña",
+        message: "Introduce la nueva contraseña:",
         okButtonText: "Aceptar",
         cancelButtonText: "Cancelar",
         inputType: dialogsModule.inputType.password
@@ -120,21 +119,25 @@ exports.changePassword = function () {
         accept = res.result;
         newPassword = res.text;
         if (accept) {
-            userProfile.changePassword(newPassword)
-                .then(function () {
-                    console.info("INFO: Contraseña actualizada.");
-                    dialogsModule.alert({
-                        title: "Contraseña Actualizada",
-                        okButtonText: "Aceptar"
+            if(!validationPassword(newPassword)){
+                userProfile.changePassword(newPassword)
+                    .then(function () {
+                        console.info("INFO: Contraseña actualizada.");
+                        dialogsModule.alert({
+                            title: "Contraseña actualizada",
+                            message: "Se ha actualizado correctamente la contraseña.",
+                            okButtonText: "Vale"
+                        });
+                    }).catch(function (error) {
+                        console.error("ERROR: changePassword() -> " + error);
                     });
-                }).catch(function (error) {
-                    console.error("ERROR: changePassword() -> " + error);
-                    dialogsModule.alert({
-                        title: "Error",
-                        message: error,
-                        okButtonText: "Aceptar"
-                    });
+            }else{
+                dialogsModule.alert({
+                    title: "Nueva contraseña incorrecta",
+                    message: "La nueva contraseña esta vacía o tiene una longitud inferior a 6 caracteres.", 
+                    okButtonText: "Vale"
                 });
+            }
         }
     });
 }
@@ -148,6 +151,10 @@ function sendEmailVerification() {
             console.error("ERROR: sendEmailVerification() -> " + error);
         }
     );
+}
+
+function validationPassword(passwdValidation) {
+    return (!passwdValidation || 0 === passwdValidation.length || 6>passwdValidation.length);
 }
 
 exports.editingPhoto = editingPhoto;

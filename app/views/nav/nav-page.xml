@@ -1,7 +1,7 @@
 <Page loaded="onLoaded" xmlns="http://www.nativescript.org/tns.xsd">
 	<Page.actionBar>
 		<ActionBar class="action-bar" title="{{ titleActionBar }}">
-			<ActionItem ios.systemIcon="16" ios.position="right" tap="openModalContact" text="Contactanos" android.position="popup"></ActionItem>
+			<ActionItem ios.systemIcon="16" ios.position="right" tap="openModalContact" text="Contáctanos" android.position="popup"></ActionItem>
 			<ActionItem id="logOut" tap="signOut" ios.systemIcon="16" ios.position="right" text="Cerrar Sesión" android.position="popup"></ActionItem>
 		</ActionBar>
 	</Page.actionBar>
@@ -10,7 +10,7 @@
 			<TabViewItem title="" iconSource="res://home_icon">
 				<Frame defaultPage="views/home/home-page"/>
 			</TabViewItem>
-			<TabViewItem title="" iconSource="res://calendar_icon">
+			<TabViewItem title="" iconSource="res://calendar">
 				<Frame defaultPage="views/reservations/reservations-page"/>
 			</TabViewItem>
 			<TabViewItem title="" iconSource="res://user_reservation">

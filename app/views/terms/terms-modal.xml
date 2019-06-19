@@ -1,14 +1,14 @@
-<Page xmlns="http://www.nativescript.org/tns.xsd" shownModally="onShownModally" navigatingFrom="onNavigatedFrom">
+<Page class="page" xmlns="http://www.nativescript.org/tns.xsd" shownModally="onShownModally" navigatingFrom="onNavigatedFrom">
 
     <GridLayout>
         <StackLayout>
-            <GridLayout id="actionBar" columns="auto,auto" rows="auto,auto">
+            <GridLayout class="action-bar action-bar-modal" columns="auto,auto" rows="auto,auto">
                 <Image col="0" row="0" src="res://close" tap="onCloseModal"/>
-                <Label id="title" col="5" row="0" text="Términos y Condiciones de Uso"/>
+                <Label class="title-modal" col="1" row="0" text="Términos y Condiciones de Uso"/>
             </GridLayout>
             <GridLayout>
                 <ScrollView>
-                    <Label id="terms" textWrap="true" text="TÉRMINOS DE SERVICIO
+                    <Label class="text" textWrap="true" text="TÉRMINOS DE SERVICIO
 
 ----
 

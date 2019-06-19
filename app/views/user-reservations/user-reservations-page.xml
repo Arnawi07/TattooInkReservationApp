@@ -1,4 +1,4 @@
-<Page loaded="onLoaded" actionBarHidden="true" xmlns:lv="nativescript-ui-listview">
+<Page class="page" loaded="onLoaded" actionBarHidden="true" xmlns:lv="nativescript-ui-listview">
     <GridLayout rows="auto, *">
         <lv:RadListView items="{{ myReservationsList }}" row="0" itemSwipeProgressStarted="onSwipeCellStarted" swipeActions="true">
             <lv:RadListView.itemTemplate>
@@ -10,7 +10,7 @@
             <lv:RadListView.itemSwipeTemplate>
                 <GridLayout columns="*,auto" backgroundColor="red">
                     <StackLayout id="delete-view" col="1" tap="deleteReserve" class="delete-view">
-                        <Image src="~/resources/img/delete.png" />
+                        <Image src="res://close"/>
                     </StackLayout>
                 </GridLayout>
             </lv:RadListView.itemSwipeTemplate>

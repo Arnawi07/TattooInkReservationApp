@@ -1,22 +1,24 @@
-<Page loaded="onLoaded" actionBarHidden="true">
-    <FlexboxLayout class="loginLayout">
-        <StackLayout class="formLayout">
-            <Image id="imageUser" src="{{ imagePath }}"/>
-            <Image id="iconEdit" src="res://edit_icon" tap="editingPhoto"/>
+<Page class="page" loaded="onLoaded" actionBarHidden="true">
+    <StackLayout class="profileLayout">
+        <Image class="imageUser" src="~/resources/img/userProfileIcon.png"/>
 
-            <StackLayout class="input-field">
-                <GridLayout columns="auto,100" rows="auto,auto">
-                    <Label col="0" row="0" id="emailXML" text="{{ email }}"/>
-                    <Image col="1" row="0" id="iconEdit" src="res://edit_icon" tap="changeEmail"/>
-                </GridLayout>
-            </StackLayout>
-
-            <StackLayout class="input-field">
-                <GridLayout columns="auto,100" rows="auto,auto">
-                    <Label id="passwordXML" text="{{ password }}" secure="true"/>
-                    <Image col="1" row="0" id="iconEdit" src="res://edit_icon" tap="changePassword"/>
-                </GridLayout>
-            </StackLayout>
+        <StackLayout class="input-edit" orientation="horizontal">
+            <Label class="underlinesWords" text="editar" tap="editingPhoto"/>
+            <Image class="iconEdit" src="res://edit_icon" tap="editingPhoto"/>
         </StackLayout>
-    </FlexboxLayout>
+
+        <StackLayout class="input-field">
+            <GridLayout columns="auto,100" rows="auto,auto">
+                <Label col="0" row="0" id="emailXML" text="{{ 'Correo: ' + email }}"/>
+                <Image col="1" row="0" class="iconEdit" src="res://edit_icon" tap="changeEmail"/>
+            </GridLayout>
+        </StackLayout>
+
+        <StackLayout class="input-field">
+            <GridLayout columns="auto,100" rows="auto,auto">
+                <Label col="0" row="0" id="passwordXML" text="{{ 'Contraseña: ' + password + '                     '}}" secure="true"/>
+                <Image col="1" row="0" class="iconEdit" src="res://edit_icon" tap="changePassword"/>
+            </GridLayout>
+        </StackLayout>
+    </StackLayout>
 </Page>

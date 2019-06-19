@@ -1,10 +1,24 @@
-.loginLayout {
-    justify-content: center;
-    align-items: center;
-}
-
 .formLayout {
-    padding: 0 30 0 30;
-    flex-grow: 2;
+    padding: 0 40 0 40;
     vertical-align: middle;
 }
+.subtitle{
+    font-size: 16;
+    text-decoration: underline;
+    font-weight: bold;
+}
+.input{
+    margin-top: 5;
+}
+.info{
+    margin: 5 0 75 0;
+}
+.label-dropDown{
+    margin-top:2;
+}
+.btn-primary {
+    margin: 0 50 0 50;
+    border-radius: 5;
+    font-size: 18;
+    font-weight: 600;
+  }
